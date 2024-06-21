@@ -5,10 +5,10 @@ table_Promotions:
 ; Syntax        promotionSection [CLASS_]enum,..[CLASS_]enum
                 
                 promotionSection &      ; 00: Regular base classes
-                    SDMN, KNTE, WARR, MAGE, PRST, ACHR, BDMN, WFMN, RNGR, PHNK, THIF, TORT
+                    SDMN, KNTE, WARR, MAGE_1,  MAGE_2, MAGE_3, MAGE_4, PRST, ACHR, BDMN, WFMN, RNGR, PHNK, THIF, TORT, RWAR, DRD, CNST
                 
                 promotionSection &      ; 01: Regular promoted classes
-                    HERO, PLDN, GLDT, WIZ, VICR, SNIP, BDBT, WFBR, BWNT, PHNX, NINJ, MNST
+                    HERO, PLDN, GLDT, WIZ, WIZ, WIZ, WIZ, VICR, SNIP, BDBT, WFBR, BWNT, PHNX, NINJ, MNST, RDBN, RBT, GLM
                 
                 promotionSection &      ; 02: Pegasus Wing base classes
                     KNTE
@@ -23,10 +23,10 @@ table_Promotions:
                     BRN
                 
                 promotionSection &      ; 06: Secret Book base classes
-                    MAGE
+                    MAGE_1, MAGE_2, MAGE_3, MAGE_4
                 
                 promotionSection &      ; 07: Secret Book promoted classes
-                    SORC
+                    SORC_1, SORC_2, SORC_3, SORC_4
                 
                 promotionSection &      ; 08: Vigor Ball base classes
                     PRST
@@ -54,7 +54,10 @@ table_PromotionItems:
                 
 table_LoseAllSpellsClasses:
                 ; Class, replacement spell
-                dc.b CLASS_SORC, SPELL_DAO
+                dc.b CLASS_SORC_1, SPELL_DAO
+				dc.b CLASS_SORC_2, SPELL_DAO
+				dc.b CLASS_SORC_3, SPELL_DAO
+				dc.b CLASS_SORC_4, SPELL_DAO
                 
                 tableEnd.b
                 
