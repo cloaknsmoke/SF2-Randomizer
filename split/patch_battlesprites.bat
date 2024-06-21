@@ -17,4 +17,3 @@ CHCP 65001
 .\xdelta3_x86_64_win.exe -v -d -s "..\disasm\data\graphics\battles\battlesprites\allies\allybattlesprite25.bin" ".\vcdiff\allybattlesprite25.bin.vcdiff" "..\disasm\data\graphics\battles\battlesprites\allies\allyallybattlesprite23.bin"
 .\xdelta3_x86_64_win.exe -v -d -s "..\disasm\data\graphics\battles\battlesprites\allies\allybattlesprite31.bin" ".\vcdiff\allybattlesprite31.bin.vcdiff" "..\disasm\data\graphics\battles\battlesprites\allies\allyallybattlesprite25.bin"
 .\xdelta3_x86_64_win.exe -v -d -s "..\disasm\data\graphics\battles\battlesprites\allies\allybattlesprite00.bin" ".\vcdiff\allybattlesprite00.bin.vcdiff" "..\disasm\data\graphics\battles\battlesprites\allies\allyallybattlesprite31.bin"
-echo Completed!
