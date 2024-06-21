@@ -17,7 +17,7 @@ table_SpellNames:
                 spellName "Blaze"
                 spellName "Freeze"
                 spellName "Bolt"
-                spellName "Hell", 13, "Blast"
+                spellName "Wind", 13, "Blast"
                 spellName "Absorb"
                 spellName "Healing"
                 spellName "Flame", 13, "Breath"
