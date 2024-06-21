@@ -5,4 +5,6 @@ echo Executing tools/splitrom.exe ...
 cd ../disasm/
 @"../tools/splitrom" ../rom/sf2.bin ../split/sf2splits.txt
 echo End of split operation. Data extracted in disasm/ folder.
+cd ../split
+@./patch_battlesprites.bat
 pause
