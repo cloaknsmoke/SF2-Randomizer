@@ -1,24 +1,40 @@
 
 ; ASM FILE data\stats\allies\stats\allystats22.asm :
 ; 0x1EE6FB..0x1EE726 : Ally stats 22
-AllyStats22:    forClass  VICR
+AllyStats22:    forClass  PRST
+                hpGrowth  8, 42, LINEAR
+                mpGrowth  7, 44, MIDDLE
+                attGrowth 5, 25, LINEAR
+                defGrowth 5, 25, LINEAR
+                agiGrowth 6, 31, LINEAR
+                spellList &
+                    1, HEAL, &
+                    4, DETOX, &
+                    11, HEAL|LV2, &
+                    15, DETOX|LV2, &
+                    29, AURA, &
+                    32, DETOX|LV3, &
+                    35, AURA|LV2, &
+                    37, DETOX|LV4, &
+                    40, AURA|LV3, &
+                    42, ATTACK, &
+                    45, AURA|LV4, &
+                    49, HEAL|LV3, &
+                    52, HEAL|LV4
+                
+                forClass  VICR
                 hpGrowth  30, 81, LINEAR
                 mpGrowth  32, 74, LINEAR
                 attGrowth 18, 42, LINEAR
                 defGrowth 18, 59, LATE
                 agiGrowth 22, 58, LINEAR
-                spellList &
-                    1, HEAL, &
-                    5, DETOX, &
-                    13, HEAL|LV2, &
-                    17, DETOX|LV2, &
-                    34, AURA, &
-                    37, DETOX|LV3, &
-                    40, AURA|LV2, &
-                    43, DETOX|LV4, &
-                    46, AURA|LV3, &
-                    49, ATTACK, &
-                    52, AURA|LV4, &
-                    56, HEAL|LV3, &
-                    60, HEAL|LV4
+                useFirstSpellList
+				
+				forClass  MMNK
+                hpGrowth  30, 81, LINEAR
+                mpGrowth  32, 61, LINEAR
+                attGrowth 18, 49, LINEAR
+                defGrowth 18, 60, MIDDLE
+                agiGrowth 22, 58, LINEAR
+                useFirstSpellList
                 

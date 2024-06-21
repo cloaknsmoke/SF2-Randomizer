@@ -9,18 +9,18 @@ AllyStats15:    forClass  PRST
                 agiGrowth 6, 29, LINEAR
                 spellList &
                     1, HEAL, &
-                    5, HEAL|LV2, &
-                    8, BLAST, &
-                    12, BOOST, &
-                    16, BLAST|LV2, &
-                    22, HEAL|LV3, &
-                    26, BLAST|LV3, &
-                    30, BOOST|LV2, &
-                    33, AURA, &
-                    37, BLAST|LV4, &
-                    41, AURA|LV2, &
-                    55, AURA|LV3, &
-                    60, AURA|LV4
+                    4, HEAL|LV2, &
+                    7, BLAST, &
+                    10, BOOST, &
+                    14, BLAST|LV2, &
+                    19, HEAL|LV3, &
+                    23, BLAST|LV3, &
+                    26, BOOST|LV2, &
+                    29, AURA, &
+                    32, BLAST|LV4, &
+                    36, AURA|LV2, &
+                    48, AURA|LV3, &
+                    52, AURA|LV4
                 
                 forClass  VICR
                 hpGrowth  33, 92, LATE
