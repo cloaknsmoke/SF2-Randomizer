@@ -45,7 +45,7 @@ table_AllyStartDefinitions:
                     NOTHING, &
                     NOTHING
                 
-                startClass MAGE         ; 4: KAZIN
+                startClass MAGE_1         ; 4: KAZIN
                 startLevel 4
                 startItems &
                     WOODEN_ROD|EQUIPPED, &
@@ -149,7 +149,7 @@ table_AllyStartDefinitions:
                     NOTHING, &
                     NOTHING
                 
-                startClass MAGE         ; 17: TYRIN
+                startClass MAGE_2         ; 17: TYRIN
                 startLevel 24
                 startItems &
                     POWER_STICK|EQUIPPED, &
@@ -181,7 +181,7 @@ table_AllyStartDefinitions:
                     NOTHING, &
                     NOTHING
                 
-                startClass SORC         ; 21: TAYA
+                startClass SORC_3         ; 21: TAYA
                 startLevel 11
                 startItems &
                     INDRA_STAFF|EQUIPPED, &
@@ -241,7 +241,7 @@ table_AllyStartDefinitions:
                 startLevel 19
                 startItems &
                     DARK_SWORD, &
-                    NOTHING, &
+                    GREAT_SWORD|EQUIPPED, &
                     NOTHING, &
                     NOTHING
                 
