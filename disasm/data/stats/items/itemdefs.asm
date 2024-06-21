@@ -237,7 +237,7 @@ table_ItemDefinitions:
                 
                 ; 19: Power Ring
                 equipFlags   ALL
-                equipFlags2  NONE
+                equipFlags2  ALL
                 range        0, 0
                 price        3000
                 itemType     RING|RARE|BREAKABLE
@@ -248,7 +248,7 @@ table_ItemDefinitions:
                 
                 ; 20: Protect Ring
                 equipFlags   ALL
-                equipFlags2  NONE
+                equipFlags2  ALL
                 range        0, 0
                 price        3000
                 itemType     RING|RARE|BREAKABLE
@@ -259,7 +259,7 @@ table_ItemDefinitions:
                 
                 ; 21: Quick Ring
                 equipFlags   ALL
-                equipFlags2  NONE
+                equipFlags2  ALL
                 range        0, 0
                 price        3000
                 itemType     RING|RARE|BREAKABLE
@@ -270,7 +270,7 @@ table_ItemDefinitions:
                 
                 ; 22: Running Ring
                 equipFlags   ALL
-                equipFlags2  NONE
+                equipFlags2  ALL
                 range        0, 0
                 price        3000
                 itemType     RING|RARE
@@ -291,8 +291,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 24: Black Ring
-                equipFlags   WIZ|SORC
-                equipFlags2  NONE
+                equipFlags   WIZ|SORC_1
+                equipFlags2  SORC_2|SORC_3|SORC_4
                 range        0, 0
                 price        5000
                 itemType     RING|RARE|CURSED|BREAKABLE
@@ -302,8 +302,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 25: Evil Ring
-                equipFlags   WIZ|SORC|VICR
-                equipFlags2  NONE
+                equipFlags   WIZ|SORC_1|VICR
+                equipFlags2  SORC_2|SORC_3|SORC_4
                 range        0, 0
                 price        5000
                 itemType     RING|RARE|CURSED|BREAKABLE
@@ -390,8 +390,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 33: Short Axe
-                equipFlags   WARR|GLDT|BRN|RDBN
-                equipFlags2  NONE
+                equipFlags   WARR|GLDT|BRN|RWAR
+                equipFlags2  RDBN
                 range        1, 1
                 price        120
                 itemType     WEAPON
@@ -401,8 +401,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 34: Hand Axe
-                equipFlags   WARR|GLDT|BRN|RDBN
-                equipFlags2  NONE
+                equipFlags   WARR|GLDT|BRN|RWAR
+                equipFlags2  RDBN
                 range        1, 1
                 price        340
                 itemType     WEAPON
@@ -412,8 +412,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 35: Middle Axe
-                equipFlags   WARR|GLDT|BRN|RDBN
-                equipFlags2  NONE
+                equipFlags   WARR|GLDT|BRN|RWAR
+                equipFlags2  RDBN
                 range        1, 1
                 price        610
                 itemType     WEAPON
@@ -423,8 +423,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 36: Power Axe
-                equipFlags   WARR|GLDT|BRN|RDBN
-                equipFlags2  NONE
+                equipFlags   WARR|GLDT|BRN|RWAR
+                equipFlags2  RDBN
                 range        1, 1
                 price        1100
                 itemType     WEAPON
@@ -434,8 +434,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 37: Battle Axe
-                equipFlags   WARR|GLDT|BRN|RDBN
-                equipFlags2  NONE
+                equipFlags   WARR|GLDT|BRN|RWAR
+                equipFlags2  RDBN
                 range        1, 1
                 price        1370
                 itemType     WEAPON
@@ -445,8 +445,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 38: Large Axe
-                equipFlags   GLDT|BRN|RDBN
-                equipFlags2  NONE
+                equipFlags   GLDT|BRN
+                equipFlags2  RDBN
                 range        1, 1
                 price        2250
                 itemType     WEAPON
@@ -456,8 +456,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 39: Great Axe
-                equipFlags   GLDT|BRN|RDBN
-                equipFlags2  NONE
+                equipFlags   GLDT|BRN
+                equipFlags2  RDBN
                 range        1, 1
                 price        4600
                 itemType     WEAPON
@@ -467,8 +467,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 40: Heat Axe
-                equipFlags   GLDT|BRN|RDBN
-                equipFlags2  NONE
+                equipFlags   GLDT|BRN
+                equipFlags2  RDBN
                 range        1, 1
                 price        7200
                 itemType     WEAPON|RARE|BREAKABLE
@@ -478,8 +478,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 41: Atlas Axe
-                equipFlags   GLDT|BRN|RDBN
-                equipFlags2  NONE
+                equipFlags   GLDT|BRN
+                equipFlags2  RDBN
                 range        1, 1
                 price        9600
                 itemType     WEAPON|RARE|BREAKABLE
@@ -489,8 +489,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 42: Ground Axe
-                equipFlags   GLDT|BRN|RDBN
-                equipFlags2  NONE
+                equipFlags   GLDT|BRN
+                equipFlags2  RDBN
                 range        1, 1
                 price        10000
                 itemType     WEAPON|RARE
@@ -500,8 +500,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 43: Rune Axe
-                equipFlags   GLDT|BRN|RDBN
-                equipFlags2  NONE
+                equipFlags   GLDT|BRN
+                equipFlags2  RDBN
                 range        1, 1
                 price        10000
                 itemType     WEAPON|RARE|BREAKABLE
@@ -511,8 +511,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 44: Evil Axe
-                equipFlags   GLDT|BRN|RDBN
-                equipFlags2  NONE
+                equipFlags   GLDT|BRN
+                equipFlags2  RDBN
                 range        1, 1
                 price        15000
                 itemType     WEAPON|RARE|CURSED
@@ -654,8 +654,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 57: Short Sword
-                equipFlags   SDMN|BDMN|HERO|BRN|BDBT|NINJ|RDBN
-                equipFlags2  NONE
+                equipFlags   SDMN|BDMN|HERO|BRN|BDBT|RWAR
+                equipFlags2  NINJ|RDBN
                 range        1, 1
                 price        140
                 itemType     WEAPON
@@ -665,8 +665,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 58: Middle Sword
-                equipFlags   SDMN|BDMN|HERO|BRN|BDBT|NINJ|RDBN
-                equipFlags2  NONE
+                equipFlags   SDMN|BDMN|HERO|BRN|BDBT|RWAR
+                equipFlags2  NINJ|RDBN
                 range        1, 1
                 price        340
                 itemType     WEAPON
@@ -676,8 +676,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 59: Long Sword
-                equipFlags   SDMN|BDMN|HERO|BRN|BDBT|NINJ|RDBN
-                equipFlags2  NONE
+                equipFlags   SDMN|BDMN|HERO|BRN|BDBT|RWAR
+                equipFlags2  NINJ|RDBN
                 range        1, 1
                 price        620
                 itemType     WEAPON
@@ -687,8 +687,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 60: Steel Sword
-                equipFlags   SDMN|BDMN|HERO|BRN|BDBT|NINJ|RDBN
-                equipFlags2  NONE
+                equipFlags   SDMN|BDMN|HERO|BRN|BDBT|RWAR
+                equipFlags2  NINJ|RDBN
                 range        1, 1
                 price        1120
                 itemType     WEAPON
@@ -709,8 +709,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 62: Broad Sword
-                equipFlags   HERO|BRN|BDBT|NINJ|RDBN
-                equipFlags2  NONE
+                equipFlags   HERO|BRN|BDBT
+                equipFlags2  NINJ|RDBN
                 range        1, 1
                 price        1600
                 itemType     WEAPON
@@ -720,8 +720,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 63: Buster Sword
-                equipFlags   HERO|BRN|BDBT|NINJ|RDBN
-                equipFlags2  NONE
+                equipFlags   HERO|BRN|BDBT
+                equipFlags2  NINJ|RDBN
                 range        1, 1
                 price        2600
                 itemType     WEAPON
@@ -731,8 +731,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 64: Great Sword
-                equipFlags   HERO|BRN|BDBT|NINJ|RDBN
-                equipFlags2  NONE
+                equipFlags   HERO|BRN|BDBT
+                equipFlags2  NINJ|RDBN
                 range        1, 1
                 price        5100
                 itemType     WEAPON
@@ -742,8 +742,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 65: Critical Sword
-                equipFlags   HERO|BRN|BDBT|NINJ|RDBN
-                equipFlags2  NONE
+                equipFlags   HERO|BRN|BDBT
+                equipFlags2  NINJ|RDBN
                 range        1, 1
                 price        7200
                 itemType     WEAPON|RARE
@@ -753,8 +753,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 66: Battle Sword
-                equipFlags   HERO|BRN|BDBT|RDBN
-                equipFlags2  NONE
+                equipFlags   HERO|BRN|BDBT
+                equipFlags2  NINJ|RDBN
                 range        1, 1
                 price        9200
                 itemType     WEAPON|RARE
@@ -775,8 +775,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 68: Counter Sword
-                equipFlags   HERO|BRN|BDBT|RDBN
-                equipFlags2  NONE
+                equipFlags   HERO|BRN|BDBT
+                equipFlags2  NINJ|RDBN
                 range        1, 1
                 price        13000
                 itemType     WEAPON|RARE
@@ -797,8 +797,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 70: Dark Sword
-                equipFlags   HERO|BRN|BDBT|NINJ|RDBN
-                equipFlags2  NONE
+                equipFlags   HERO|BRN|BDBT
+                equipFlags2  NINJ|RDBN
                 range        1, 1
                 price        17000
                 itemType     WEAPON|RARE|CURSED|BREAKABLE
@@ -808,8 +808,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 71: Wooden Sword
-                equipFlags   SDMN|BDMN|HERO|BRN|BDBT|NINJ|RDBN
-                equipFlags2  NONE
+                equipFlags   SDMN|BDMN|HERO|BRN|BDBT|RWAR
+                equipFlags2  NINJ|RDBN
                 range        1, 1
                 price        60
                 itemType     WEAPON
@@ -962,8 +962,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 85: Wooden Rod
-                equipFlags   MAGE|PRST|WIZ|SORC|VICR
-                equipFlags2  NONE
+                equipFlags   MAGE_1|MAGE_2|MAGE_3|MAGE_4|PRST|WIZ|SORC_1|VICR
+                equipFlags2  SORC_2|SORC_3|SORC_4
                 range        1, 1
                 price        60
                 itemType     WEAPON
@@ -973,8 +973,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 86: Short Rod
-                equipFlags   MAGE|PRST|WIZ|SORC|VICR
-                equipFlags2  NONE
+                equipFlags   MAGE_1|MAGE_2|MAGE_3|MAGE_4|PRST|WIZ|SORC_1|VICR
+                equipFlags2  SORC_2|SORC_3|SORC_4
                 range        1, 1
                 price        130
                 itemType     WEAPON
@@ -984,8 +984,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 87: Bronze Rod
-                equipFlags   MAGE|PRST|WIZ|SORC|VICR
-                equipFlags2  NONE
+                equipFlags   MAGE_1|MAGE_2|MAGE_3|MAGE_4|PRST|WIZ|SORC_1|VICR
+                equipFlags2  SORC_2|SORC_3|SORC_4
                 range        1, 1
                 price        360
                 itemType     WEAPON
@@ -995,8 +995,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 88: Iron Rod
-                equipFlags   MAGE|PRST|WIZ|SORC|VICR
-                equipFlags2  NONE
+                equipFlags   MAGE_1|MAGE_2|MAGE_3|MAGE_4|PRST|WIZ|SORC_1|VICR
+                equipFlags2  SORC_2|SORC_3|SORC_4
                 range        1, 1
                 price        560
                 itemType     WEAPON
@@ -1006,8 +1006,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 89: Power Stick
-                equipFlags   MAGE|PRST|WIZ|SORC|VICR
-                equipFlags2  NONE
+                equipFlags   MAGE_1|MAGE_2|MAGE_3|MAGE_4|PRST|WIZ|SORC_1|VICR
+                equipFlags2  SORC_2|SORC_3|SORC_4
                 range        1, 1
                 price        1050
                 itemType     WEAPON
@@ -1017,8 +1017,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 90: Flail
-                equipFlags   WIZ|SORC|VICR
-                equipFlags2  NONE
+                equipFlags   WIZ|SORC_1|VICR
+                equipFlags2  SORC_2|SORC_3|SORC_4
                 range        1, 1
                 price        1490
                 itemType     WEAPON
@@ -1028,8 +1028,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 91: Guardian Staff
-                equipFlags   WIZ|SORC|VICR
-                equipFlags2  NONE
+                equipFlags   WIZ|SORC_1|VICR
+                equipFlags2  SORC_2|SORC_3|SORC_4
                 range        1, 1
                 price        2380
                 itemType     WEAPON
@@ -1039,8 +1039,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 92: Indra Staff
-                equipFlags   WIZ|SORC|VICR
-                equipFlags2  NONE
+                equipFlags   WIZ|SORC_1|VICR
+                equipFlags2  SORC_2|SORC_3|SORC_4
                 range        1, 1
                 price        3200
                 itemType     WEAPON|BREAKABLE
@@ -1050,8 +1050,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 93: Mage Staff
-                equipFlags   WIZ|SORC
-                equipFlags2  NONE
+                equipFlags   WIZ|SORC_1
+                equipFlags2  SORC_2|SORC_3|SORC_4
                 range        1, 1
                 price        6300
                 itemType     WEAPON|RARE|BREAKABLE
@@ -1072,8 +1072,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 95: Great Rod
-                equipFlags   WIZ|SORC|VICR
-                equipFlags2  NONE
+                equipFlags   WIZ|SORC_1|VICR
+                equipFlags2  SORC_2|SORC_3|SORC_4
                 range        1, 1
                 price        7900
                 itemType     WEAPON|RARE
@@ -1083,8 +1083,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 96: Supply Staff
-                equipFlags   WIZ|SORC
-                equipFlags2  NONE
+                equipFlags   WIZ|SORC_1
+                equipFlags2  SORC_2|SORC_3|SORC_4
                 range        1, 1
                 price        8500
                 itemType     WEAPON|RARE|BREAKABLE
@@ -1105,8 +1105,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 98: Freeze Staff
-                equipFlags   WIZ|SORC
-                equipFlags2  NONE
+                equipFlags   WIZ|SORC_1
+                equipFlags2  SORC_2|SORC_3|SORC_4
                 range        1, 1
                 price        9500
                 itemType     WEAPON|RARE|BREAKABLE
@@ -1127,8 +1127,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 100: Mystery Staff
-                equipFlags   WIZ|SORC|VICR
-                equipFlags2  NONE
+                equipFlags   WIZ|SORC_1|VICR
+                equipFlags2  SORC_2|SORC_3|SORC_4
                 range        1, 1
                 price        10000
                 itemType     WEAPON|RARE
@@ -1138,8 +1138,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 101: Demon Rod
-                equipFlags   WIZ|SORC|VICR
-                equipFlags2  NONE
+                equipFlags   WIZ|SORC_1|VICR
+                equipFlags2  SORC_2|SORC_3|SORC_4
                 range        1, 1
                 price        12500
                 itemType     WEAPON|RARE|CURSED|BREAKABLE
@@ -1204,8 +1204,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 107: Katana
-                equipFlags   NINJ
-                equipFlags2  NONE
+                equipFlags   NONE
+                equipFlags2  NINJ
                 range        1, 1
                 price        9600
                 itemType     WEAPON|RARE
@@ -1215,8 +1215,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 108: Ninja Katana
-                equipFlags   NINJ
-                equipFlags2  NONE
+                equipFlags   NONE
+                equipFlags2  NINJ
                 range        1, 1
                 price        11500
                 itemType     WEAPON|RARE
@@ -1226,8 +1226,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 109: Gisarme
-                equipFlags   NINJ
-                equipFlags2  NONE
+                equipFlags   NONE
+                equipFlags2  NINJ
                 range        1, 1
                 price        15000
                 itemType     WEAPON|RARE
@@ -1391,8 +1391,8 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 124: Life Ring
-                equipFlags   HERO|PLDN|PGNT|GLDT|BRN|WIZ|SORC|VICR|MMNK|SNIP|BRGN|BDBT|WFBR|BWNT|PHNX|NINJ|MNST|RBT|GLM|RDBN
-                equipFlags2  NONE
+                equipFlags   HERO|PLDN|PGNT|GLDT|BRN|WIZ|SORC_1|VICR|MMNK|SNIP|BRGN|BDBT|WFBR|BWNT
+                equipFlags2  SORC_2|SORC_3|SORC_4|NINJ|RDBN|PHNX|MNST|RBT|GLM
                 range        0, 0
                 price        5000
                 itemType     RING|RARE
@@ -1414,7 +1414,7 @@ table_ItemDefinitions:
                 
                 ; 126: Chirrup Sandals
                 equipFlags   ALL
-                equipFlags2  NONE
+                equipFlags2  ALL
                 range        0, 0
                 price        5
                 itemType     RING|RARE
