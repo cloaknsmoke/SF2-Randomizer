@@ -30,9 +30,9 @@ table_AllyBattlesprites:
                 allyBattleSprAndPlt BRN, BRN, 1
                 
 ; 4: KAZIN
-                allyBattleSprAndPlt MAGE, MAGE, 0
+                allyBattleSprAndPlt MAGE_1, MAGE, 0
                 allyBattleSprAndPlt WIZ, WIZ, 2
-                allyBattleSprAndPlt SORC, SORC_MALE, 0
+                allyBattleSprAndPlt SORC_1, SORC_MALE, 0
                 
 ; 5: SLADE
                 allyBattleSprAndPlt THIF, THIF, 0
@@ -65,9 +65,9 @@ table_AllyBattlesprites:
                 allyBattleSprAndPlt NONE, NONE, 0
                 
 ; 11: ROHDE
+                allyBattleSprAndPlt ACHR, ACHR, 2
+                allyBattleSprAndPlt SNIP, SNIP, 2
                 allyBattleSprAndPlt BRGN, BRGN, 1
-                allyBattleSprAndPlt NONE, NONE, 0
-                allyBattleSprAndPlt NONE, NONE, 0
                 
 ; 12: RICK
                 allyBattleSprAndPlt KNTE, KNTE, 1
@@ -95,9 +95,9 @@ table_AllyBattlesprites:
                 allyBattleSprAndPlt BRN, BRN, 2
                 
 ; 17: TYRIN
-                allyBattleSprAndPlt MAGE, MAGE, 1
+                allyBattleSprAndPlt MAGE_2, MAGE, 1
                 allyBattleSprAndPlt WIZ, WIZ, 1
-                allyBattleSprAndPlt SORC, SORC_MALE, 1
+                allyBattleSprAndPlt SORC_2, SORC_MALE, 1
                 
 ; 18: JANET
                 allyBattleSprAndPlt ACHR, ACHR, 0
@@ -105,58 +105,58 @@ table_AllyBattlesprites:
                 allyBattleSprAndPlt BRGN, BRGN, 2
                 
 ; 19: HIGINS
+                allyBattleSprAndPlt KNTE, KNTE, 3
                 allyBattleSprAndPlt PLDN, PLDN, 2
-                allyBattleSprAndPlt NONE, NONE, 0
-                allyBattleSprAndPlt NONE, NONE, 0
+                allyBattleSprAndPlt PGNT, PGNT, 4
                 
 ; 20: SKREECH
+                allyBattleSprAndPlt BDMN, BDMN, 1
                 allyBattleSprAndPlt BDBT, BDBT, 1
-                allyBattleSprAndPlt NONE, NONE, 0
                 allyBattleSprAndPlt NONE, NONE, 0
                 
 ; 21: TAYA
-                allyBattleSprAndPlt SORC, SORC_FEMALE, 0
-                allyBattleSprAndPlt NONE, NONE, 0
-                allyBattleSprAndPlt NONE, NONE, 0
+                allyBattleSprAndPlt MAGE_3, MAGE, 2
+                allyBattleSprAndPlt WIZ, WIZ, 3
+                allyBattleSprAndPlt SORC_3, SORC_FEMALE, 0
                 
 ; 22: FRAYJA
+                allyBattleSprAndPlt PRST, PRST, 2
                 allyBattleSprAndPlt VICR, VICR, 0
-                allyBattleSprAndPlt NONE, NONE, 0
-                allyBattleSprAndPlt NONE, NONE, 0
+                allyBattleSprAndPlt MMNK, MMNK, 3
                 
 ; 23: JARO
+                allyBattleSprAndPlt KNTE, KNTE, 4
+                allyBattleSprAndPlt PLDN, PLDN, 4
                 allyBattleSprAndPlt PGNT, PGNT, 3
-                allyBattleSprAndPlt NONE, NONE, 0
-                allyBattleSprAndPlt NONE, NONE, 0
                 
 ; 24: GYAN
+                allyBattleSprAndPlt WARR, WARR, 2
                 allyBattleSprAndPlt GLDT, GLDT, 0
-                allyBattleSprAndPlt NONE, NONE, 0
-                allyBattleSprAndPlt NONE, NONE, 0
+                allyBattleSprAndPlt BRN, BRN, 3
                 
 ; 25: SHEELA
+                allyBattleSprAndPlt PRST, PRST, 3
+                allyBattleSprAndPlt VICR, VICR, 3
                 allyBattleSprAndPlt MMNK, MMNK, 0
-                allyBattleSprAndPlt NONE, NONE, 0
-                allyBattleSprAndPlt NONE, NONE, 0
                 
 ; 26: ZYNK
+                allyBattleSprAndPlt DRD, RBT, 1
                 allyBattleSprAndPlt RBT, RBT, 0
-                allyBattleSprAndPlt NONE, NONE, 0
                 allyBattleSprAndPlt NONE, NONE, 0
                 
 ; 27: CHAZ
+                allyBattleSprAndPlt MAGE_4, MAGE, 3
                 allyBattleSprAndPlt WIZ, WIZ, 0
-                allyBattleSprAndPlt NONE, NONE, 0
-                allyBattleSprAndPlt NONE, NONE, 0
+                allyBattleSprAndPlt SORC_4, SORC_MALE, 2
                 
 ; 28: LEMON
+                allyBattleSprAndPlt RWAR, SDMN, 1
                 allyBattleSprAndPlt RDBN, BRN, 0
-                allyBattleSprAndPlt NONE, NONE, 0
                 allyBattleSprAndPlt NONE, NONE, 0
                 
 ; 29: CLAUDE
+                allyBattleSprAndPlt CNST, GLM, 1
                 allyBattleSprAndPlt GLM, GLM, 0
-                allyBattleSprAndPlt NONE, NONE, 0
                 allyBattleSprAndPlt NONE, NONE, 0
                 
                 ; Additional entries to be defined with force members expansion patch
