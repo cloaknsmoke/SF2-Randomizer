@@ -7,4 +7,4 @@ list_BlacksmithEligibleClasses:
 ;
 ; Syntax        classes [CLASS_]enum,..[CLASS_]enum
                 
-                classes HERO, PLDN, PGNT, GLDT, BRN, WIZ, SORC, VICR, MMNK, SNIP, BRGN, BDBT, BWNT, NINJ, RDBN
+                classes HERO, PLDN, PGNT, GLDT, BRN, WIZ, SORC_1, VICR, MMNK, SNIP, BRGN, BDBT, BWNT, NINJ, RDBN, SORC_2, SORC_3, SORC_4
