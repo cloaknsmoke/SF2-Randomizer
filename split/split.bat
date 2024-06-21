@@ -6,5 +6,10 @@ cd ../disasm/
 @"../tools/splitrom" ../rom/sf2.bin ../split/sf2splits.txt
 echo End of split operation. Data extracted in disasm/ folder.
 cd ../split
-@./patch_battlesprites.bat
+@call ./patch_battlesprites.bat
+echo Patched battlesprites
+@python ./expand_mapsprites.py
+echo Expanded mapsprites
+@call ./patch_mapsprites.bat
+echo Patched mapsprites
 pause
