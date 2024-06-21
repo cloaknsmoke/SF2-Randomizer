@@ -23,7 +23,22 @@ table_ClassDefinitions:
                 moveType   REGULAR
                 prowess    CRITICAL125_1IN16|DOUBLE_1IN32|COUNTER_1IN32
                 
-                mov 5                   ; 3: MAGE
+                mov 5                   ; 3: MAGE_1
+                resistance NONE
+                moveType   MAGE
+                prowess    CRITICAL125_1IN16|DOUBLE_1IN32|COUNTER_1IN32
+				
+				mov 5                   ; 3: MAGE_2
+                resistance NONE
+                moveType   MAGE
+                prowess    CRITICAL125_1IN16|DOUBLE_1IN32|COUNTER_1IN32
+                    
+                mov 5                   ; 3: MAGE_3
+                resistance NONE
+                moveType   MAGE
+                prowess    CRITICAL125_1IN16|DOUBLE_1IN32|COUNTER_1IN32
+                    
+                mov 5                   ; 3: MAGE_4
                 resistance NONE
                 moveType   MAGE
                 prowess    CRITICAL125_1IN16|DOUBLE_1IN32|COUNTER_1IN32
@@ -66,6 +81,21 @@ table_ClassDefinitions:
                 mov 5                   ; 11: TORT
                 resistance NONE
                 moveType   STEALTH
+                prowess    CRITICAL125_1IN16|DOUBLE_1IN32|COUNTER_1IN32
+				
+				mov 6                   ; 32: RWAR
+                resistance NONE
+                moveType   REGULAR
+                prowess    CRITICAL125_1IN8|DOUBLE_1IN32|COUNTER_1IN16
+                    
+                mov 4                   ; 33: DRD
+                resistance WIND_NONE|LIGHTNING_NONE|ICE_NONE|FIRE_MINOR|NEUTRAL_NONE|STATUS_NONE
+                moveType   REGULAR
+                prowess    CRITICAL125_1IN16|DOUBLE_1IN32|COUNTER_1IN32
+                    
+                mov 4                   ; 34: CNST
+                resistance WIND_MINOR|LIGHTNING_MINOR|ICE_MINOR|FIRE_MINOR|NEUTRAL_NONE|STATUS_NONE
+                moveType   REGULAR
                 prowess    CRITICAL125_1IN16|DOUBLE_1IN32|COUNTER_1IN32
                 
                 mov 6                   ; 12: HERO
@@ -138,6 +168,8 @@ table_ClassDefinitions:
                 moveType   CENTAUR_ARCHER
                 prowess    CRITICAL125_1IN16|DOUBLE_1IN32|COUNTER_1IN16
                 
+            if (STANDARD_BUILD&EXPANDED_CLASSES=1)
+				
                 mov 7                   ; 26: PHNX
                 resistance FIRE_MAJOR|STATUS_MAJOR
                 moveType   FLYING
@@ -149,17 +181,17 @@ table_ClassDefinitions:
                 prowess    CRITICAL150_1IN8|DOUBLE_1IN16|COUNTER_1IN8
                 
                 mov 7                   ; 28: MNST
-                resistance NEUTRAL_MAJOR|UNDEFINED1_MAJOR|UNDEFINED2_MAJOR|STATUS_MAJOR
+                resistance WIND_MAJOR|LIGHTNING_MAJOR|ICE_MAJOR|FIRE_MAJOR|NEUTRAL_NONE|STATUS_NONE
                 moveType   HOVERING
                 prowess    CRITICAL125_1IN16|DOUBLE_1IN32|COUNTER_1IN16
                 
                 mov 4                   ; 29: RBT
-                resistance NEUTRAL_MINOR|STATUS_MINOR
+                resistance WIND_NONE|LIGHTNING_MINOR|ICE_NONE|FIRE_MINOR|NEUTRAL_NONE|STATUS_NONE
                 moveType   REGULAR
                 prowess    CRITICAL125_1IN16|DOUBLE_1IN32|COUNTER_1IN16
                 
                 mov 4                   ; 30: GLM
-                resistance FIRE_MAJOR|NEUTRAL_MINOR|UNDEFINED1_MINOR|UNDEFINED2_MINOR|STATUS_MINOR
+                resistance WIND_MINOR|LIGHTNING_MINOR|ICE_MINOR|FIRE_MINOR|NEUTRAL_NONE|STATUS_MAJOR
                 moveType   REGULAR
                 prowess    CRITICAL125_1IN16|DOUBLE_1IN32|COUNTER_1IN16
                 
@@ -167,53 +199,21 @@ table_ClassDefinitions:
                 resistance NONE
                 moveType   REGULAR
                 prowess    CRITICAL150_1IN8|DOUBLE_1IN32|COUNTER_1IN8
-                
-            if (STANDARD_BUILD&EXPANDED_CLASSES=1)
                     
-                mov 6                   ; 32: 
-                resistance WIND_NONE|LIGHTNING_NONE|ICE_NONE|FIRE_NONE|NEUTRAL_NONE|STATUS_NONE
-                moveType   REGULAR
-                prowess    CRITICAL_NONE|DOUBLE_1IN32|COUNTER_1IN32
+                mov 5                   ; 18: SORC
+                resistance NONE
+                moveType   MAGE
+                prowess    CRITICAL125_1IN16|DOUBLE_1IN32|COUNTER_1IN16
                     
-                mov 6                   ; 33: 
-                resistance WIND_NONE|LIGHTNING_NONE|ICE_NONE|FIRE_NONE|NEUTRAL_NONE|STATUS_NONE
-                moveType   REGULAR
-                prowess    CRITICAL_NONE|DOUBLE_1IN32|COUNTER_1IN32
+                mov 5                   ; 18: SORC
+                resistance NONE
+                moveType   MAGE
+                prowess    CRITICAL125_1IN16|DOUBLE_1IN32|COUNTER_1IN16
                     
-                mov 6                   ; 34: 
-                resistance WIND_NONE|LIGHTNING_NONE|ICE_NONE|FIRE_NONE|NEUTRAL_NONE|STATUS_NONE
-                moveType   REGULAR
-                prowess    CRITICAL_NONE|DOUBLE_1IN32|COUNTER_1IN32
-                    
-                mov 6                   ; 35: 
-                resistance WIND_NONE|LIGHTNING_NONE|ICE_NONE|FIRE_NONE|NEUTRAL_NONE|STATUS_NONE
-                moveType   REGULAR
-                prowess    CRITICAL_NONE|DOUBLE_1IN32|COUNTER_1IN32
-                    
-                mov 6                   ; 36: 
-                resistance WIND_NONE|LIGHTNING_NONE|ICE_NONE|FIRE_NONE|NEUTRAL_NONE|STATUS_NONE
-                moveType   REGULAR
-                prowess    CRITICAL_NONE|DOUBLE_1IN32|COUNTER_1IN32
-                    
-                mov 6                   ; 37: 
-                resistance WIND_NONE|LIGHTNING_NONE|ICE_NONE|FIRE_NONE|NEUTRAL_NONE|STATUS_NONE
-                moveType   REGULAR
-                prowess    CRITICAL_NONE|DOUBLE_1IN32|COUNTER_1IN32
-                    
-                mov 6                   ; 38: 
-                resistance WIND_NONE|LIGHTNING_NONE|ICE_NONE|FIRE_NONE|NEUTRAL_NONE|STATUS_NONE
-                moveType   REGULAR
-                prowess    CRITICAL_NONE|DOUBLE_1IN32|COUNTER_1IN32
-                    
-                mov 6                   ; 39: 
-                resistance WIND_NONE|LIGHTNING_NONE|ICE_NONE|FIRE_NONE|NEUTRAL_NONE|STATUS_NONE
-                moveType   REGULAR
-                prowess    CRITICAL_NONE|DOUBLE_1IN32|COUNTER_1IN32
-                    
-                mov 6                   ; 40: 
-                resistance WIND_NONE|LIGHTNING_NONE|ICE_NONE|FIRE_NONE|NEUTRAL_NONE|STATUS_NONE
-                moveType   REGULAR
-                prowess    CRITICAL_NONE|DOUBLE_1IN32|COUNTER_1IN32
+                mov 5                   ; 18: SORC
+                resistance NONE
+                moveType   MAGE
+                prowess    CRITICAL125_1IN16|DOUBLE_1IN32|COUNTER_1IN16
                     
                 mov 6                   ; 41: 
                 resistance WIND_NONE|LIGHTNING_NONE|ICE_NONE|FIRE_NONE|NEUTRAL_NONE|STATUS_NONE
