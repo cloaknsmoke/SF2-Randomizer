@@ -20,7 +20,8 @@ cs_51406:       textCursor 535
                 nextSingleText $0,ALLY_CHESTER ; "What?  {LEADER}, are you{N}going?  I'm going too!{W1}"
                 setF 600                ; Set after agreeing to try getting into the castle
                 setF 66                 ; Sarah + Chester are followers
-                join 128
+                join ALLY_SARAH
+				join ALLY_CHESTER
                 followEntity ALLY_SARAH,ALLY_BOWIE,2
                 followEntity ALLY_CHESTER,ALLY_SARAH,2
                 setPos 138,27,3,DOWN
@@ -165,7 +166,8 @@ cs_51614:       textCursor 535
                 nextSingleText $0,ALLY_CHESTER ; "What?  {LEADER}, are you{N}going?  I'm going too!{W1}"
                 setF 600                ; Set after agreeing to try getting into the castle
                 setF 66                 ; Sarah + Chester are followers
-                join 128
+                join ALLY_SARAH
+				join ALLY_CHESTER
                 followEntity ALLY_SARAH,ALLY_BOWIE,2
                 followEntity ALLY_CHESTER,ALLY_SARAH,2
                 setPos 138,27,3,DOWN
