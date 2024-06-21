@@ -65,8 +65,8 @@ table_AllyMapsprites:
                 mapsprite DEFAULT
                 
 ; 11: Rohde
-                mapsprite DEFAULT
-                mapsprite DEFAULT
+                mapsprite ROHDE_BASE
+                mapsprite ROHDE_PROMO
                 mapsprite ROHDE_SPECIAL
                 
 ; 12: Rick
@@ -105,57 +105,57 @@ table_AllyMapsprites:
                 mapsprite JANET_SPECIAL
                 
 ; 19: Higins
-                mapsprite DEFAULT
+                mapsprite HIGINS_BASE
                 mapsprite HIGINS_PROMO
-                mapsprite DEFAULT
+                mapsprite HIGINS_SPECIAL
                 
 ; 20: Skreech
-                mapsprite DEFAULT
+                mapsprite SKREECH_BASE
                 mapsprite SKREECH_PROMO
                 mapsprite DEFAULT
                 
 ; 21: Taya
-                mapsprite DEFAULT
-                mapsprite DEFAULT
+                mapsprite TAYA_BASE
+                mapsprite TAYA_PROMO
                 mapsprite TAYA_SPECIAL
                 
 ; 22: Frayja
-                mapsprite DEFAULT
+                mapsprite FRAYJA_BASE
                 mapsprite FRAYJA_PROMO
-                mapsprite DEFAULT
+                mapsprite FRAYJA_SPECIAL
                 
 ; 23: Jaro
-                mapsprite DEFAULT
-                mapsprite DEFAULT
+                mapsprite JARO_BASE
+                mapsprite JARO_PROMO
                 mapsprite JARO_SPECIAL
                 
 ; 24: Gyan
-                mapsprite DEFAULT
+                mapsprite GYAN_BASE
                 mapsprite GYAN_PROMO
-                mapsprite DEFAULT
+                mapsprite GYAN_SPECIAL
                 
 ; 25: Sheela
-                mapsprite DEFAULT
-                mapsprite DEFAULT
+                mapsprite SHEELA_BASE
+                mapsprite SHEELA_PROMO
                 mapsprite SHEELA_SPECIAL
                 
 ; 26: Zynk
-                mapsprite DEFAULT
+                mapsprite ZYNK_BASE
                 mapsprite ZYNK_PROMO
                 mapsprite DEFAULT
                 
 ; 27: Chaz
-                mapsprite DEFAULT
+                mapsprite CHAZ_BASE
                 mapsprite CHAZ_PROMO
-                mapsprite DEFAULT
+                mapsprite CHAZ_SPECIAL
                 
 ; 28: Lemon
-                mapsprite DEFAULT
+                mapsprite LEMON_BASE
                 mapsprite DEFAULT
                 mapsprite LEMON_SPECIAL
                 
 ; 29: Claude
-                mapsprite DEFAULT
+                mapsprite CLAUDE_BASE
                 mapsprite CLAUDE_PROMO
                 mapsprite DEFAULT
                 
@@ -173,9 +173,15 @@ table_AllyMapsprites:
             endif
 
 
-; Allies who use a different mapsprite before joining the Force. Entries are word-sized to accommodate expanded mapsrites.
+; Allies who use a different mapsprite before joining the Force.
 table_AllyMapspritesIfNotJoined:
                 
+            if (EXPANDED_MAPSPRITES=1)
                 dc.w ALLY_ROHDE, MAPSPRITE_NPC_ROHDE
                 
                 tableEnd
+            else
+                dc.b ALLY_ROHDE, MAPSPRITE_NPC_ROHDE
+                
+                tableEnd.b
+            endif
