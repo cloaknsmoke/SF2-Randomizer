@@ -455,12 +455,12 @@ pt_Mapsprites:  dc.l Mapsprite000_0
                 dc.l Mapsprite150_1
                 dc.l Mapsprite150_2
                 dc.l Mapsprite151_0
-                dc.l Mapsprite151_0
-                dc.l Mapsprite151_0
-                dc.l Mapsprite151_0
-                dc.l Mapsprite151_0
-                dc.l Mapsprite151_0
-                dc.l Mapsprite151_0
+                dc.l Mapsprite151_1
+                dc.l Mapsprite151_2
+                dc.l Mapsprite152_0
+                dc.l Mapsprite152_1
+                dc.l Mapsprite152_2
+                dc.l Mapsprite153_0
                 dc.l Mapsprite153_1
                 dc.l Mapsprite153_2
                 dc.l Mapsprite154_0
@@ -475,9 +475,9 @@ pt_Mapsprites:  dc.l Mapsprite000_0
                 dc.l Mapsprite157_0
                 dc.l Mapsprite157_1
                 dc.l Mapsprite157_2
-                dc.l Mapsprite057_0
-                dc.l Mapsprite057_1
-                dc.l Mapsprite057_2
+                dc.l Mapsprite158_0
+                dc.l Mapsprite158_1
+                dc.l Mapsprite158_2
                 dc.l Mapsprite159_0
                 dc.l Mapsprite159_1
                 dc.l Mapsprite159_2
@@ -485,42 +485,42 @@ pt_Mapsprites:  dc.l Mapsprite000_0
                 dc.l Mapsprite160_1
                 dc.l Mapsprite160_2
                 dc.l Mapsprite161_0
-                dc.l Mapsprite161_0
-                dc.l Mapsprite161_0
-                dc.l Mapsprite161_0
-                dc.l Mapsprite161_0
-                dc.l Mapsprite161_0
+                dc.l Mapsprite161_1
+                dc.l Mapsprite161_2
+                dc.l Mapsprite162_0
+                dc.l Mapsprite162_1
+                dc.l Mapsprite162_2
                 dc.l Mapsprite163_0
                 dc.l Mapsprite163_1
                 dc.l Mapsprite163_2
-                dc.l Mapsprite163_0
-                dc.l Mapsprite163_1
-                dc.l Mapsprite163_2
-                dc.l Mapsprite161_0
-                dc.l Mapsprite161_0
-                dc.l Mapsprite161_0
-                dc.l Mapsprite161_0
-                dc.l Mapsprite161_0
-                dc.l Mapsprite161_0
-                dc.l Mapsprite161_0
-                dc.l Mapsprite161_0
-                dc.l Mapsprite161_0
-                dc.l Mapsprite161_0
-                dc.l Mapsprite161_0
-                dc.l Mapsprite161_0
-                dc.l Mapsprite161_0
-                dc.l Mapsprite161_0
-                dc.l Mapsprite161_0
-                dc.l Mapsprite161_0
+                dc.l Mapsprite164_0
+                dc.l Mapsprite164_1
+                dc.l Mapsprite164_2
+                dc.l Mapsprite165_0
+                dc.l Mapsprite165_1
+                dc.l Mapsprite165_2
+                dc.l Mapsprite166_0
+                dc.l Mapsprite166_1
+                dc.l Mapsprite166_2
+                dc.l Mapsprite167_0
+                dc.l Mapsprite167_1
+                dc.l Mapsprite167_2
+                dc.l Mapsprite168_0
+                dc.l Mapsprite168_1
+                dc.l Mapsprite168_2
+                dc.l Mapsprite169_0
+                dc.l Mapsprite169_1
+                dc.l Mapsprite169_2
+                dc.l Mapsprite170_0
                 dc.l Mapsprite170_1
                 dc.l Mapsprite170_2
                 dc.l Mapsprite171_0
-                dc.l Mapsprite171_1
-                dc.l Mapsprite171_2
-                dc.l Mapsprite172_0
-                dc.l Mapsprite172_1
-                dc.l Mapsprite172_2
-                dc.l Mapsprite173_0
+                dc.l Mapsprite171_0
+                dc.l Mapsprite171_0
+                dc.l Mapsprite171_0
+                dc.l Mapsprite171_0
+                dc.l Mapsprite171_0
+                dc.l Mapsprite171_0
                 dc.l Mapsprite173_1
                 dc.l Mapsprite173_2
                 dc.l Mapsprite174_0
@@ -535,9 +535,9 @@ pt_Mapsprites:  dc.l Mapsprite000_0
                 dc.l Mapsprite177_0
                 dc.l Mapsprite177_1
                 dc.l Mapsprite177_2
-                dc.l Mapsprite178_0
-                dc.l Mapsprite178_1
-                dc.l Mapsprite178_2
+                dc.l Mapsprite077_0
+                dc.l Mapsprite077_1
+                dc.l Mapsprite077_2
                 dc.l Mapsprite179_0
                 dc.l Mapsprite179_1
                 dc.l Mapsprite179_2
@@ -545,39 +545,39 @@ pt_Mapsprites:  dc.l Mapsprite000_0
                 dc.l Mapsprite180_1
                 dc.l Mapsprite180_2
                 dc.l Mapsprite181_0
-                dc.l Mapsprite181_1
-                dc.l Mapsprite181_2
-                dc.l Mapsprite182_0
-                dc.l Mapsprite182_1
-                dc.l Mapsprite182_2
+                dc.l Mapsprite181_0
+                dc.l Mapsprite181_0
+                dc.l Mapsprite181_0
+                dc.l Mapsprite181_0
+                dc.l Mapsprite181_0
                 dc.l Mapsprite183_0
                 dc.l Mapsprite183_1
                 dc.l Mapsprite183_2
-                dc.l Mapsprite184_0
-                dc.l Mapsprite184_1
-                dc.l Mapsprite184_2
-                dc.l Mapsprite185_0
-                dc.l Mapsprite185_1
-                dc.l Mapsprite185_2
-                dc.l Mapsprite186_0
-                dc.l Mapsprite186_1
-                dc.l Mapsprite186_2
-                dc.l Mapsprite187_0
-                dc.l Mapsprite187_1
-                dc.l Mapsprite187_2
-                dc.l Mapsprite188_0
-                dc.l Mapsprite188_1
-                dc.l Mapsprite188_2
-                dc.l Mapsprite189_0
-                dc.l Mapsprite189_1
-                dc.l Mapsprite189_2
-                dc.l Mapsprite190_0
+                dc.l Mapsprite183_0
+                dc.l Mapsprite183_1
+                dc.l Mapsprite183_2
+                dc.l Mapsprite181_0
+                dc.l Mapsprite181_0
+                dc.l Mapsprite181_0
+                dc.l Mapsprite181_0
+                dc.l Mapsprite181_0
+                dc.l Mapsprite181_0
+                dc.l Mapsprite181_0
+                dc.l Mapsprite181_0
+                dc.l Mapsprite181_0
+                dc.l Mapsprite181_0
+                dc.l Mapsprite181_0
+                dc.l Mapsprite181_0
+                dc.l Mapsprite181_0
+                dc.l Mapsprite181_0
+                dc.l Mapsprite181_0
+                dc.l Mapsprite181_0
                 dc.l Mapsprite190_1
                 dc.l Mapsprite190_2
                 dc.l Mapsprite191_0
-                dc.l Mapsprite191_0
-                dc.l Mapsprite191_0
-                dc.l Mapsprite191_0
+                dc.l Mapsprite191_1
+                dc.l Mapsprite191_2
+                dc.l Mapsprite192_0
                 dc.l Mapsprite192_1
                 dc.l Mapsprite192_2
                 dc.l Mapsprite193_0
@@ -610,9 +610,9 @@ pt_Mapsprites:  dc.l Mapsprite000_0
                 dc.l Mapsprite202_0
                 dc.l Mapsprite202_1
                 dc.l Mapsprite202_2
-                dc.l Mapsprite188_0
-                dc.l Mapsprite188_1
-                dc.l Mapsprite188_2
+                dc.l Mapsprite203_0
+                dc.l Mapsprite203_1
+                dc.l Mapsprite203_2
                 dc.l Mapsprite204_0
                 dc.l Mapsprite204_1
                 dc.l Mapsprite204_2
@@ -635,17 +635,17 @@ pt_Mapsprites:  dc.l Mapsprite000_0
                 dc.l Mapsprite210_1
                 dc.l Mapsprite210_2
                 dc.l Mapsprite211_0
-                dc.l Mapsprite211_1
-                dc.l Mapsprite211_2
-                dc.l Mapsprite212_0
+                dc.l Mapsprite211_0
+                dc.l Mapsprite211_0
+                dc.l Mapsprite211_0
                 dc.l Mapsprite212_1
                 dc.l Mapsprite212_2
                 dc.l Mapsprite213_0
                 dc.l Mapsprite213_1
                 dc.l Mapsprite213_2
-                dc.l Mapsprite163_0
-                dc.l Mapsprite163_1
-                dc.l Mapsprite163_2
+                dc.l Mapsprite214_0
+                dc.l Mapsprite214_1
+                dc.l Mapsprite214_2
                 dc.l Mapsprite215_0
                 dc.l Mapsprite215_1
                 dc.l Mapsprite215_2
@@ -670,9 +670,9 @@ pt_Mapsprites:  dc.l Mapsprite000_0
                 dc.l Mapsprite222_0
                 dc.l Mapsprite222_1
                 dc.l Mapsprite222_2
-                dc.l Mapsprite223_0
-                dc.l Mapsprite223_1
-                dc.l Mapsprite223_2
+                dc.l Mapsprite208_0
+                dc.l Mapsprite208_1
+                dc.l Mapsprite208_2
                 dc.l Mapsprite224_0
                 dc.l Mapsprite224_1
                 dc.l Mapsprite224_2
@@ -703,9 +703,9 @@ pt_Mapsprites:  dc.l Mapsprite000_0
                 dc.l Mapsprite233_0
                 dc.l Mapsprite233_1
                 dc.l Mapsprite233_2
-                dc.l Mapsprite234_0
-                dc.l Mapsprite234_1
-                dc.l Mapsprite234_2
+                dc.l Mapsprite183_0
+                dc.l Mapsprite183_1
+                dc.l Mapsprite183_2
                 dc.l Mapsprite235_0
                 dc.l Mapsprite235_1
                 dc.l Mapsprite235_2
@@ -713,14 +713,74 @@ pt_Mapsprites:  dc.l Mapsprite000_0
                 dc.l Mapsprite236_1
                 dc.l Mapsprite236_2
                 dc.l Mapsprite237_0
-                dc.l Mapsprite237_0
-                dc.l Mapsprite237_0
-                dc.l Mapsprite237_0
-                dc.l Mapsprite237_0
-                dc.l Mapsprite237_0
-                dc.l Mapsprite237_0
-                dc.l Mapsprite237_0
-                dc.l Mapsprite237_0
+                dc.l Mapsprite237_1
+                dc.l Mapsprite237_2
+                dc.l Mapsprite238_0
+                dc.l Mapsprite238_1
+                dc.l Mapsprite238_2
+                dc.l Mapsprite239_0
+                dc.l Mapsprite239_1
+                dc.l Mapsprite239_2
+                dc.l Mapsprite240_0
+                dc.l Mapsprite240_1
+                dc.l Mapsprite240_2
+                dc.l Mapsprite241_0
+                dc.l Mapsprite241_1
+                dc.l Mapsprite241_2
+                dc.l Mapsprite242_0
+                dc.l Mapsprite242_1
+                dc.l Mapsprite242_2
+                dc.l Mapsprite243_0
+                dc.l Mapsprite243_1
+                dc.l Mapsprite243_2
+                dc.l Mapsprite244_0
+                dc.l Mapsprite244_1
+                dc.l Mapsprite244_2
+                dc.l Mapsprite245_0
+                dc.l Mapsprite245_1
+                dc.l Mapsprite245_2
+                dc.l Mapsprite246_0
+                dc.l Mapsprite246_1
+                dc.l Mapsprite246_2
+                dc.l Mapsprite247_0
+                dc.l Mapsprite247_1
+                dc.l Mapsprite247_2
+                dc.l Mapsprite248_0
+                dc.l Mapsprite248_1
+                dc.l Mapsprite248_2
+                dc.l Mapsprite249_0
+                dc.l Mapsprite249_1
+                dc.l Mapsprite249_2
+                dc.l Mapsprite250_0
+                dc.l Mapsprite250_1
+                dc.l Mapsprite250_2
+                dc.l Mapsprite251_0
+                dc.l Mapsprite251_1
+                dc.l Mapsprite251_2
+                dc.l Mapsprite252_0
+                dc.l Mapsprite252_1
+                dc.l Mapsprite252_2
+                dc.l Mapsprite253_0
+                dc.l Mapsprite253_1
+                dc.l Mapsprite253_2
+                dc.l Mapsprite254_0
+                dc.l Mapsprite254_1
+                dc.l Mapsprite254_2
+                dc.l Mapsprite255_0
+                dc.l Mapsprite255_1
+                dc.l Mapsprite255_2
+                dc.l Mapsprite256_0
+                dc.l Mapsprite256_1
+                dc.l Mapsprite256_2
+                dc.l Mapsprite257_0
+                dc.l Mapsprite257_0
+                dc.l Mapsprite257_0
+                dc.l Mapsprite257_0
+                dc.l Mapsprite257_0
+                dc.l Mapsprite257_0
+                dc.l Mapsprite257_0
+                dc.l Mapsprite257_0
+                dc.l Mapsprite257_0
 Mapsprite000_0: incbin "data/graphics/mapsprites/mapsprite000-0.bin"
 Mapsprite000_1: incbin "data/graphics/mapsprites/mapsprite000-1.bin"
 Mapsprite000_2: incbin "data/graphics/mapsprites/mapsprite000-2.bin"
@@ -1175,6 +1235,12 @@ Mapsprite150_0: incbin "data/graphics/mapsprites/mapsprite150-0.bin"
 Mapsprite150_1: incbin "data/graphics/mapsprites/mapsprite150-1.bin"
 Mapsprite150_2: incbin "data/graphics/mapsprites/mapsprite150-2.bin"
 Mapsprite151_0: incbin "data/graphics/mapsprites/mapsprite151-0.bin"
+Mapsprite151_1: incbin "data/graphics/mapsprites/mapsprite151-1.bin"
+Mapsprite151_2: incbin "data/graphics/mapsprites/mapsprite151-2.bin"
+Mapsprite152_0: incbin "data/graphics/mapsprites/mapsprite152-0.bin"
+Mapsprite152_1: incbin "data/graphics/mapsprites/mapsprite152-1.bin"
+Mapsprite152_2: incbin "data/graphics/mapsprites/mapsprite152-2.bin"
+Mapsprite153_0: incbin "data/graphics/mapsprites/mapsprite153-0.bin"
 Mapsprite153_1: incbin "data/graphics/mapsprites/mapsprite153-1.bin"
 Mapsprite153_2: incbin "data/graphics/mapsprites/mapsprite153-2.bin"
 Mapsprite154_0: incbin "data/graphics/mapsprites/mapsprite154-0.bin"
@@ -1189,6 +1255,9 @@ Mapsprite156_2: incbin "data/graphics/mapsprites/mapsprite156-2.bin"
 Mapsprite157_0: incbin "data/graphics/mapsprites/mapsprite157-0.bin"
 Mapsprite157_1: incbin "data/graphics/mapsprites/mapsprite157-1.bin"
 Mapsprite157_2: incbin "data/graphics/mapsprites/mapsprite157-2.bin"
+Mapsprite158_0: incbin "data/graphics/mapsprites/mapsprite158-0.bin"
+Mapsprite158_1: incbin "data/graphics/mapsprites/mapsprite158-1.bin"
+Mapsprite158_2: incbin "data/graphics/mapsprites/mapsprite158-2.bin"
 Mapsprite159_0: incbin "data/graphics/mapsprites/mapsprite159-0.bin"
 Mapsprite159_1: incbin "data/graphics/mapsprites/mapsprite159-1.bin"
 Mapsprite159_2: incbin "data/graphics/mapsprites/mapsprite159-2.bin"
@@ -1196,15 +1265,36 @@ Mapsprite160_0: incbin "data/graphics/mapsprites/mapsprite160-0.bin"
 Mapsprite160_1: incbin "data/graphics/mapsprites/mapsprite160-1.bin"
 Mapsprite160_2: incbin "data/graphics/mapsprites/mapsprite160-2.bin"
 Mapsprite161_0: incbin "data/graphics/mapsprites/mapsprite161-0.bin"
+Mapsprite161_1: incbin "data/graphics/mapsprites/mapsprite161-1.bin"
+Mapsprite161_2: incbin "data/graphics/mapsprites/mapsprite161-2.bin"
+Mapsprite162_0: incbin "data/graphics/mapsprites/mapsprite162-0.bin"
+Mapsprite162_1: incbin "data/graphics/mapsprites/mapsprite162-1.bin"
+Mapsprite162_2: incbin "data/graphics/mapsprites/mapsprite162-2.bin"
+Mapsprite163_0: incbin "data/graphics/mapsprites/mapsprite163-0.bin"
+Mapsprite163_1: incbin "data/graphics/mapsprites/mapsprite163-1.bin"
+Mapsprite163_2: incbin "data/graphics/mapsprites/mapsprite163-2.bin"
+Mapsprite164_0: incbin "data/graphics/mapsprites/mapsprite164-0.bin"
+Mapsprite164_1: incbin "data/graphics/mapsprites/mapsprite164-1.bin"
+Mapsprite164_2: incbin "data/graphics/mapsprites/mapsprite164-2.bin"
+Mapsprite165_0: incbin "data/graphics/mapsprites/mapsprite165-0.bin"
+Mapsprite165_1: incbin "data/graphics/mapsprites/mapsprite165-1.bin"
+Mapsprite165_2: incbin "data/graphics/mapsprites/mapsprite165-2.bin"
+Mapsprite166_0: incbin "data/graphics/mapsprites/mapsprite166-0.bin"
+Mapsprite166_1: incbin "data/graphics/mapsprites/mapsprite166-1.bin"
+Mapsprite166_2: incbin "data/graphics/mapsprites/mapsprite166-2.bin"
+Mapsprite167_0: incbin "data/graphics/mapsprites/mapsprite167-0.bin"
+Mapsprite167_1: incbin "data/graphics/mapsprites/mapsprite167-1.bin"
+Mapsprite167_2: incbin "data/graphics/mapsprites/mapsprite167-2.bin"
+Mapsprite168_0: incbin "data/graphics/mapsprites/mapsprite168-0.bin"
+Mapsprite168_1: incbin "data/graphics/mapsprites/mapsprite168-1.bin"
+Mapsprite168_2: incbin "data/graphics/mapsprites/mapsprite168-2.bin"
+Mapsprite169_0: incbin "data/graphics/mapsprites/mapsprite169-0.bin"
+Mapsprite169_1: incbin "data/graphics/mapsprites/mapsprite169-1.bin"
+Mapsprite169_2: incbin "data/graphics/mapsprites/mapsprite169-2.bin"
+Mapsprite170_0: incbin "data/graphics/mapsprites/mapsprite170-0.bin"
 Mapsprite170_1: incbin "data/graphics/mapsprites/mapsprite170-1.bin"
 Mapsprite170_2: incbin "data/graphics/mapsprites/mapsprite170-2.bin"
 Mapsprite171_0: incbin "data/graphics/mapsprites/mapsprite171-0.bin"
-Mapsprite171_1: incbin "data/graphics/mapsprites/mapsprite171-1.bin"
-Mapsprite171_2: incbin "data/graphics/mapsprites/mapsprite171-2.bin"
-Mapsprite172_0: incbin "data/graphics/mapsprites/mapsprite172-0.bin"
-Mapsprite172_1: incbin "data/graphics/mapsprites/mapsprite172-1.bin"
-Mapsprite172_2: incbin "data/graphics/mapsprites/mapsprite172-2.bin"
-Mapsprite173_0: incbin "data/graphics/mapsprites/mapsprite173-0.bin"
 Mapsprite173_1: incbin "data/graphics/mapsprites/mapsprite173-1.bin"
 Mapsprite173_2: incbin "data/graphics/mapsprites/mapsprite173-2.bin"
 Mapsprite174_0: incbin "data/graphics/mapsprites/mapsprite174-0.bin"
@@ -1219,9 +1309,6 @@ Mapsprite176_2: incbin "data/graphics/mapsprites/mapsprite176-2.bin"
 Mapsprite177_0: incbin "data/graphics/mapsprites/mapsprite177-0.bin"
 Mapsprite177_1: incbin "data/graphics/mapsprites/mapsprite177-1.bin"
 Mapsprite177_2: incbin "data/graphics/mapsprites/mapsprite177-2.bin"
-Mapsprite178_0: incbin "data/graphics/mapsprites/mapsprite178-0.bin"
-Mapsprite178_1: incbin "data/graphics/mapsprites/mapsprite178-1.bin"
-Mapsprite178_2: incbin "data/graphics/mapsprites/mapsprite178-2.bin"
 Mapsprite179_0: incbin "data/graphics/mapsprites/mapsprite179-0.bin"
 Mapsprite179_1: incbin "data/graphics/mapsprites/mapsprite179-1.bin"
 Mapsprite179_2: incbin "data/graphics/mapsprites/mapsprite179-2.bin"
@@ -1229,33 +1316,12 @@ Mapsprite180_0: incbin "data/graphics/mapsprites/mapsprite180-0.bin"
 Mapsprite180_1: incbin "data/graphics/mapsprites/mapsprite180-1.bin"
 Mapsprite180_2: incbin "data/graphics/mapsprites/mapsprite180-2.bin"
 Mapsprite181_0: incbin "data/graphics/mapsprites/mapsprite181-0.bin"
-Mapsprite181_1: incbin "data/graphics/mapsprites/mapsprite181-1.bin"
-Mapsprite181_2: incbin "data/graphics/mapsprites/mapsprite181-2.bin"
-Mapsprite182_0: incbin "data/graphics/mapsprites/mapsprite182-0.bin"
-Mapsprite182_1: incbin "data/graphics/mapsprites/mapsprite182-1.bin"
-Mapsprite182_2: incbin "data/graphics/mapsprites/mapsprite182-2.bin"
-Mapsprite183_0: incbin "data/graphics/mapsprites/mapsprite183-0.bin"
-Mapsprite183_1: incbin "data/graphics/mapsprites/mapsprite183-1.bin"
-Mapsprite183_2: incbin "data/graphics/mapsprites/mapsprite183-2.bin"
-Mapsprite184_0: incbin "data/graphics/mapsprites/mapsprite184-0.bin"
-Mapsprite184_1: incbin "data/graphics/mapsprites/mapsprite184-1.bin"
-Mapsprite184_2: incbin "data/graphics/mapsprites/mapsprite184-2.bin"
-Mapsprite185_0: incbin "data/graphics/mapsprites/mapsprite185-0.bin"
-Mapsprite185_1: incbin "data/graphics/mapsprites/mapsprite185-1.bin"
-Mapsprite185_2: incbin "data/graphics/mapsprites/mapsprite185-2.bin"
-Mapsprite186_0: incbin "data/graphics/mapsprites/mapsprite186-0.bin"
-Mapsprite186_1: incbin "data/graphics/mapsprites/mapsprite186-1.bin"
-Mapsprite186_2: incbin "data/graphics/mapsprites/mapsprite186-2.bin"
-Mapsprite187_0: incbin "data/graphics/mapsprites/mapsprite187-0.bin"
-Mapsprite187_1: incbin "data/graphics/mapsprites/mapsprite187-1.bin"
-Mapsprite187_2: incbin "data/graphics/mapsprites/mapsprite187-2.bin"
-Mapsprite189_0: incbin "data/graphics/mapsprites/mapsprite189-0.bin"
-Mapsprite189_1: incbin "data/graphics/mapsprites/mapsprite189-1.bin"
-Mapsprite189_2: incbin "data/graphics/mapsprites/mapsprite189-2.bin"
-Mapsprite190_0: incbin "data/graphics/mapsprites/mapsprite190-0.bin"
 Mapsprite190_1: incbin "data/graphics/mapsprites/mapsprite190-1.bin"
 Mapsprite190_2: incbin "data/graphics/mapsprites/mapsprite190-2.bin"
 Mapsprite191_0: incbin "data/graphics/mapsprites/mapsprite191-0.bin"
+Mapsprite191_1: incbin "data/graphics/mapsprites/mapsprite191-1.bin"
+Mapsprite191_2: incbin "data/graphics/mapsprites/mapsprite191-2.bin"
+Mapsprite192_0: incbin "data/graphics/mapsprites/mapsprite192-0.bin"
 Mapsprite192_1: incbin "data/graphics/mapsprites/mapsprite192-1.bin"
 Mapsprite192_2: incbin "data/graphics/mapsprites/mapsprite192-2.bin"
 Mapsprite193_0: incbin "data/graphics/mapsprites/mapsprite193-0.bin"
@@ -1288,9 +1354,9 @@ Mapsprite201_2: incbin "data/graphics/mapsprites/mapsprite201-2.bin"
 Mapsprite202_0: incbin "data/graphics/mapsprites/mapsprite202-0.bin"
 Mapsprite202_1: incbin "data/graphics/mapsprites/mapsprite202-1.bin"
 Mapsprite202_2: incbin "data/graphics/mapsprites/mapsprite202-2.bin"
-Mapsprite188_0: incbin "data/graphics/mapsprites/mapsprite188-0.bin"
-Mapsprite188_1: incbin "data/graphics/mapsprites/mapsprite188-1.bin"
-Mapsprite188_2: incbin "data/graphics/mapsprites/mapsprite188-2.bin"
+Mapsprite203_0: incbin "data/graphics/mapsprites/mapsprite203-0.bin"
+Mapsprite203_1: incbin "data/graphics/mapsprites/mapsprite203-1.bin"
+Mapsprite203_2: incbin "data/graphics/mapsprites/mapsprite203-2.bin"
 Mapsprite204_0: incbin "data/graphics/mapsprites/mapsprite204-0.bin"
 Mapsprite204_1: incbin "data/graphics/mapsprites/mapsprite204-1.bin"
 Mapsprite204_2: incbin "data/graphics/mapsprites/mapsprite204-2.bin"
@@ -1303,9 +1369,6 @@ Mapsprite206_2: incbin "data/graphics/mapsprites/mapsprite206-2.bin"
 Mapsprite207_0: incbin "data/graphics/mapsprites/mapsprite207-0.bin"
 Mapsprite207_1: incbin "data/graphics/mapsprites/mapsprite207-1.bin"
 Mapsprite207_2: incbin "data/graphics/mapsprites/mapsprite207-2.bin"
-Mapsprite208_0: incbin "data/graphics/mapsprites/mapsprite208-0.bin"
-Mapsprite208_1: incbin "data/graphics/mapsprites/mapsprite208-1.bin"
-Mapsprite208_2: incbin "data/graphics/mapsprites/mapsprite208-2.bin"
 Mapsprite209_0: incbin "data/graphics/mapsprites/mapsprite209-0.bin"
 Mapsprite209_1: incbin "data/graphics/mapsprites/mapsprite209-1.bin"
 Mapsprite209_2: incbin "data/graphics/mapsprites/mapsprite209-2.bin"
@@ -1313,17 +1376,14 @@ Mapsprite210_0: incbin "data/graphics/mapsprites/mapsprite210-0.bin"
 Mapsprite210_1: incbin "data/graphics/mapsprites/mapsprite210-1.bin"
 Mapsprite210_2: incbin "data/graphics/mapsprites/mapsprite210-2.bin"
 Mapsprite211_0: incbin "data/graphics/mapsprites/mapsprite211-0.bin"
-Mapsprite211_1: incbin "data/graphics/mapsprites/mapsprite211-1.bin"
-Mapsprite211_2: incbin "data/graphics/mapsprites/mapsprite211-2.bin"
-Mapsprite212_0: incbin "data/graphics/mapsprites/mapsprite212-0.bin"
 Mapsprite212_1: incbin "data/graphics/mapsprites/mapsprite212-1.bin"
 Mapsprite212_2: incbin "data/graphics/mapsprites/mapsprite212-2.bin"
 Mapsprite213_0: incbin "data/graphics/mapsprites/mapsprite213-0.bin"
 Mapsprite213_1: incbin "data/graphics/mapsprites/mapsprite213-1.bin"
 Mapsprite213_2: incbin "data/graphics/mapsprites/mapsprite213-2.bin"
-Mapsprite163_0: incbin "data/graphics/mapsprites/mapsprite163-0.bin"
-Mapsprite163_1: incbin "data/graphics/mapsprites/mapsprite163-1.bin"
-Mapsprite163_2: incbin "data/graphics/mapsprites/mapsprite163-2.bin"
+Mapsprite214_0: incbin "data/graphics/mapsprites/mapsprite214-0.bin"
+Mapsprite214_1: incbin "data/graphics/mapsprites/mapsprite214-1.bin"
+Mapsprite214_2: incbin "data/graphics/mapsprites/mapsprite214-2.bin"
 Mapsprite215_0: incbin "data/graphics/mapsprites/mapsprite215-0.bin"
 Mapsprite215_1: incbin "data/graphics/mapsprites/mapsprite215-1.bin"
 Mapsprite215_2: incbin "data/graphics/mapsprites/mapsprite215-2.bin"
@@ -1348,9 +1408,9 @@ Mapsprite221_2: incbin "data/graphics/mapsprites/mapsprite221-2.bin"
 Mapsprite222_0: incbin "data/graphics/mapsprites/mapsprite222-0.bin"
 Mapsprite222_1: incbin "data/graphics/mapsprites/mapsprite222-1.bin"
 Mapsprite222_2: incbin "data/graphics/mapsprites/mapsprite222-2.bin"
-Mapsprite223_0: incbin "data/graphics/mapsprites/mapsprite223-0.bin"
-Mapsprite223_1: incbin "data/graphics/mapsprites/mapsprite223-1.bin"
-Mapsprite223_2: incbin "data/graphics/mapsprites/mapsprite223-2.bin"
+Mapsprite208_0: incbin "data/graphics/mapsprites/mapsprite208-0.bin"
+Mapsprite208_1: incbin "data/graphics/mapsprites/mapsprite208-1.bin"
+Mapsprite208_2: incbin "data/graphics/mapsprites/mapsprite208-2.bin"
 Mapsprite224_0: incbin "data/graphics/mapsprites/mapsprite224-0.bin"
 Mapsprite224_1: incbin "data/graphics/mapsprites/mapsprite224-1.bin"
 Mapsprite224_2: incbin "data/graphics/mapsprites/mapsprite224-2.bin"
@@ -1381,9 +1441,9 @@ Mapsprite232_2: incbin "data/graphics/mapsprites/mapsprite232-2.bin"
 Mapsprite233_0: incbin "data/graphics/mapsprites/mapsprite233-0.bin"
 Mapsprite233_1: incbin "data/graphics/mapsprites/mapsprite233-1.bin"
 Mapsprite233_2: incbin "data/graphics/mapsprites/mapsprite233-2.bin"
-Mapsprite234_0: incbin "data/graphics/mapsprites/mapsprite234-0.bin"
-Mapsprite234_1: incbin "data/graphics/mapsprites/mapsprite234-1.bin"
-Mapsprite234_2: incbin "data/graphics/mapsprites/mapsprite234-2.bin"
+Mapsprite183_0: incbin "data/graphics/mapsprites/mapsprite183-0.bin"
+Mapsprite183_1: incbin "data/graphics/mapsprites/mapsprite183-1.bin"
+Mapsprite183_2: incbin "data/graphics/mapsprites/mapsprite183-2.bin"
 Mapsprite235_0: incbin "data/graphics/mapsprites/mapsprite235-0.bin"
 Mapsprite235_1: incbin "data/graphics/mapsprites/mapsprite235-1.bin"
 Mapsprite235_2: incbin "data/graphics/mapsprites/mapsprite235-2.bin"
@@ -1391,3 +1451,63 @@ Mapsprite236_0: incbin "data/graphics/mapsprites/mapsprite236-0.bin"
 Mapsprite236_1: incbin "data/graphics/mapsprites/mapsprite236-1.bin"
 Mapsprite236_2: incbin "data/graphics/mapsprites/mapsprite236-2.bin"
 Mapsprite237_0: incbin "data/graphics/mapsprites/mapsprite237-0.bin"
+Mapsprite237_1: incbin "data/graphics/mapsprites/mapsprite237-1.bin"
+Mapsprite237_2: incbin "data/graphics/mapsprites/mapsprite237-2.bin"
+Mapsprite238_0: incbin "data/graphics/mapsprites/mapsprite238-0.bin"
+Mapsprite238_1: incbin "data/graphics/mapsprites/mapsprite238-1.bin"
+Mapsprite238_2: incbin "data/graphics/mapsprites/mapsprite238-2.bin"
+Mapsprite239_0: incbin "data/graphics/mapsprites/mapsprite239-0.bin"
+Mapsprite239_1: incbin "data/graphics/mapsprites/mapsprite239-1.bin"
+Mapsprite239_2: incbin "data/graphics/mapsprites/mapsprite239-2.bin"
+Mapsprite240_0: incbin "data/graphics/mapsprites/mapsprite240-0.bin"
+Mapsprite240_1: incbin "data/graphics/mapsprites/mapsprite240-1.bin"
+Mapsprite240_2: incbin "data/graphics/mapsprites/mapsprite240-2.bin"
+Mapsprite241_0: incbin "data/graphics/mapsprites/mapsprite241-0.bin"
+Mapsprite241_1: incbin "data/graphics/mapsprites/mapsprite241-1.bin"
+Mapsprite241_2: incbin "data/graphics/mapsprites/mapsprite241-2.bin"
+Mapsprite242_0: incbin "data/graphics/mapsprites/mapsprite242-0.bin"
+Mapsprite242_1: incbin "data/graphics/mapsprites/mapsprite242-1.bin"
+Mapsprite242_2: incbin "data/graphics/mapsprites/mapsprite242-2.bin"
+Mapsprite243_0: incbin "data/graphics/mapsprites/mapsprite243-0.bin"
+Mapsprite243_1: incbin "data/graphics/mapsprites/mapsprite243-1.bin"
+Mapsprite243_2: incbin "data/graphics/mapsprites/mapsprite243-2.bin"
+Mapsprite244_0: incbin "data/graphics/mapsprites/mapsprite244-0.bin"
+Mapsprite244_1: incbin "data/graphics/mapsprites/mapsprite244-1.bin"
+Mapsprite244_2: incbin "data/graphics/mapsprites/mapsprite244-2.bin"
+Mapsprite245_0: incbin "data/graphics/mapsprites/mapsprite245-0.bin"
+Mapsprite245_1: incbin "data/graphics/mapsprites/mapsprite245-1.bin"
+Mapsprite245_2: incbin "data/graphics/mapsprites/mapsprite245-2.bin"
+Mapsprite246_0: incbin "data/graphics/mapsprites/mapsprite246-0.bin"
+Mapsprite246_1: incbin "data/graphics/mapsprites/mapsprite246-1.bin"
+Mapsprite246_2: incbin "data/graphics/mapsprites/mapsprite246-2.bin"
+Mapsprite247_0: incbin "data/graphics/mapsprites/mapsprite247-0.bin"
+Mapsprite247_1: incbin "data/graphics/mapsprites/mapsprite247-1.bin"
+Mapsprite247_2: incbin "data/graphics/mapsprites/mapsprite247-2.bin"
+Mapsprite248_0: incbin "data/graphics/mapsprites/mapsprite248-0.bin"
+Mapsprite248_1: incbin "data/graphics/mapsprites/mapsprite248-1.bin"
+Mapsprite248_2: incbin "data/graphics/mapsprites/mapsprite248-2.bin"
+Mapsprite249_0: incbin "data/graphics/mapsprites/mapsprite249-0.bin"
+Mapsprite249_1: incbin "data/graphics/mapsprites/mapsprite249-1.bin"
+Mapsprite249_2: incbin "data/graphics/mapsprites/mapsprite249-2.bin"
+Mapsprite250_0: incbin "data/graphics/mapsprites/mapsprite250-0.bin"
+Mapsprite250_1: incbin "data/graphics/mapsprites/mapsprite250-1.bin"
+Mapsprite250_2: incbin "data/graphics/mapsprites/mapsprite250-2.bin"
+Mapsprite251_0: incbin "data/graphics/mapsprites/mapsprite251-0.bin"
+Mapsprite251_1: incbin "data/graphics/mapsprites/mapsprite251-1.bin"
+Mapsprite251_2: incbin "data/graphics/mapsprites/mapsprite251-2.bin"
+Mapsprite252_0: incbin "data/graphics/mapsprites/mapsprite252-0.bin"
+Mapsprite252_1: incbin "data/graphics/mapsprites/mapsprite252-1.bin"
+Mapsprite252_2: incbin "data/graphics/mapsprites/mapsprite252-2.bin"
+Mapsprite253_0: incbin "data/graphics/mapsprites/mapsprite253-0.bin"
+Mapsprite253_1: incbin "data/graphics/mapsprites/mapsprite253-1.bin"
+Mapsprite253_2: incbin "data/graphics/mapsprites/mapsprite253-2.bin"
+Mapsprite254_0: incbin "data/graphics/mapsprites/mapsprite254-0.bin"
+Mapsprite254_1: incbin "data/graphics/mapsprites/mapsprite254-1.bin"
+Mapsprite254_2: incbin "data/graphics/mapsprites/mapsprite254-2.bin"
+Mapsprite255_0: incbin "data/graphics/mapsprites/mapsprite255-0.bin"
+Mapsprite255_1: incbin "data/graphics/mapsprites/mapsprite255-1.bin"
+Mapsprite255_2: incbin "data/graphics/mapsprites/mapsprite255-2.bin"
+Mapsprite256_0: incbin "data/graphics/mapsprites/mapsprite256-0.bin"
+Mapsprite256_1: incbin "data/graphics/mapsprites/mapsprite256-1.bin"
+Mapsprite256_2: incbin "data/graphics/mapsprites/mapsprite256-2.bin"
+Mapsprite257_0: incbin "data/graphics/mapsprites/mapsprite257-0.bin"
