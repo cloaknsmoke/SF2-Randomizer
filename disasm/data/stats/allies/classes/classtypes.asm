@@ -8,7 +8,10 @@ table_ClassTypes:
                 classType BASE          ; 0: SDMN
                 classType BASE          ; 1: KNTE
                 classType BASE          ; 2: WARR
-                classType BASE          ; 3: MAGE
+                classType BASE          ; 3: MAGE_1
+				classType BASE          ; 35: MAGE_2
+                classType BASE          ; 36: MAGE_3
+                classType BASE          ; 37: MAGE_4
                 classType BASE          ; 4: PRST
                 classType BASE          ; 5: ACHR
                 classType BASE          ; 6: BDMN
@@ -17,13 +20,16 @@ table_ClassTypes:
                 classType BASE          ; 9: PHNK
                 classType BASE          ; 10: THIF
                 classType BASE          ; 11: TORT
+				classType BASE          ; 32: RWAR
+                classType BASE          ; 33: DRD
+                classType BASE          ; 34: CNST
                 classType PROMO         ; 12: HERO
                 classType PROMO         ; 13: PLDN
                 classType SPECIAL       ; 14: PGNT
                 classType PROMO         ; 15: GLDT
                 classType SPECIAL       ; 16: BRN
                 classType PROMO         ; 17: WIZ
-                classType SPECIAL       ; 18: SORC
+                classType SPECIAL       ; 18: SORC_1
                 classType PROMO         ; 19: VICR
                 classType SPECIAL       ; 20: MMNK
                 classType PROMO         ; 21: SNIP
@@ -31,23 +37,17 @@ table_ClassTypes:
                 classType PROMO         ; 23: BDBT
                 classType PROMO         ; 24: WFBR
                 classType PROMO         ; 25: BWNT
+                
+            if (STANDARD_BUILD&EXPANDED_CLASSES=1)
                 classType PROMO         ; 26: PHNX
                 classType PROMO         ; 27: NINJ
                 classType PROMO         ; 28: MNST
                 classType PROMO         ; 29: RBT
                 classType PROMO         ; 30: GLM
                 classType REDBARON      ; 31: RDBN
-                
-            if (STANDARD_BUILD&EXPANDED_CLASSES=1)
-                classType PROMO         ; 32: 
-                classType PROMO         ; 33: 
-                classType PROMO         ; 34: 
-                classType PROMO         ; 35: 
-                classType PROMO         ; 36: 
-                classType PROMO         ; 37: 
-                classType PROMO         ; 38: 
-                classType PROMO         ; 39: 
-                classType PROMO         ; 40: 
+                classType SPECIAL       ; 38: SORC_2
+                classType SPECIAL       ; 39: SORC_3
+                classType SPECIAL       ; 40: SORC_4
                 classType PROMO         ; 41: 
                 classType PROMO         ; 42: 
                 classType PROMO         ; 43: 
