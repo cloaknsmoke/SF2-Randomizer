@@ -22,6 +22,6 @@ AllyStats24:    forClass  WARR
                 mpGrowth  0, 0, NONE
                 attGrowth 31, 54, LINEAR
                 defGrowth 32, 90, MIDDLE
-                agiGrowth 21, 47, EARLY
+                agiGrowth 21, 57, EARLY
                 spellList 
                 

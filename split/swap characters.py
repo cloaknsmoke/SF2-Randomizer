@@ -74,27 +74,25 @@ def swap_characters(char_a, char_b, char_a_name, char_b_name, orig_a_num, orig_b
 	f.close()
 	char_a_value = file.find("ALLY_"+char_a)
 	char_b_value = file.find("ALLY_"+char_b)
-	char_a_value = file[char_a_value+len(char_a)+12:file.find("\n", char_a_value)]
-	char_b_value = file[char_b_value+len(char_b)+12:file.find("\n", char_b_value)]
+	char_a_value = file[char_a_value+len(char_a)+11:file.find("\n", char_a_value)]
+	char_b_value = file[char_b_value+len(char_b)+11:file.find("\n", char_b_value)]
 	base_a = "_BASE" if ("BOWIE" in char_a or "SLADE" in char_a or "KIWI" in char_a or "PETER" in char_a or "GERHALT" in char_a) else ""
 	base_b = "_BASE" if ("BOWIE" in char_b or "SLADE" in char_b or "KIWI" in char_b or "PETER" in char_b or "GERHALT" in char_b) else ""
-	file = file.replace("ALLY_"+char_a + ": equ $" + char_a_value, "{char1a}")
-	file = file.replace("ALLY_"+char_b + ": equ $" + char_b_value, "{char2a}")
-	file = file.replace("PORTRAIT_" + char_a + base_a + ": equ $" + char_a_value, "{char1b}")
-	file = file.replace("PORTRAIT_" + char_b + base_b + ": equ $" + char_b_value, "{char2b}")
-	file = file.replace("{char1a}", "ALLY_"+char_b + ": equ $" + char_a_value)
-	file = file.replace("{char2a}", "ALLY_"+char_a + ": equ $" + char_b_value)
-	file = file.replace("{char1b}", "PORTRAIT_" + char_b + base_b + ": equ $" + char_a_value)
-	file = file.replace("{char2b}", "PORTRAIT_" + char_a + base_a + ": equ $" + char_b_value)
-	char_a_value = int(char_a_value,16)
-	char_b_value = int(char_b_value,16)
+	file = file.replace("ALLY_"+char_a + ": equ " + char_a_value, "{char1a}")
+	file = file.replace("ALLY_"+char_b + ": equ " + char_b_value, "{char2a}")
+	file = file.replace("PORTRAIT_" + char_a + base_a + ": equ " + char_a_value, "{char1b}")
+	file = file.replace("PORTRAIT_" + char_b + base_b + ": equ " + char_b_value, "{char2b}")
+	file = file.replace("{char1a}", "ALLY_"+char_b + ": equ " + char_a_value)
+	file = file.replace("{char2a}", "ALLY_"+char_a + ": equ " + char_b_value)
+	file = file.replace("{char1b}", "PORTRAIT_" + char_b + base_b + ": equ " + char_a_value)
+	file = file.replace("{char2b}", "PORTRAIT_" + char_a + base_a + ": equ " + char_b_value)
 	f = open("..\\disasm\\sf2enums.asm", 'w')
 	f.write(file)
 	f.close()
 
 
 
-	swap_ALLY_r(Path("."), "ALLY_"+char_a,"ALLY_"+char_b)
+	swap_ALLY_r(Path("..\\disasm"), "ALLY_"+char_a,"ALLY_"+char_b)
 			
 	f = open("..\\disasm\\data\\stats\\allies\\allydialogproperties-standard.asm", 'r')
 	file = f.read()
@@ -374,8 +372,6 @@ def swap_characters(char_a, char_b, char_a_name, char_b_name, orig_a_num, orig_b
 		case _:
 			wiz_flag = 0
 	new_class_b = determine_new_class(char_b, class_b, class_a, valid_promos, reverse_valid_promos, wiz_flag, depromote, rand_promo)
-	print(f"{char_a} change {class_a} to {new_class_a} original level {level_a}")
-	print(f"{char_b} change {class_b} to {new_class_b} original level {level_b}")
 	if(new_class_a in valid_promos and class_b in reverse_valid_promos):
 		level_b = str(int(level_b) + 20)
 	if(new_class_a in reverse_valid_promos and class_b in valid_promos):
@@ -384,8 +380,6 @@ def swap_characters(char_a, char_b, char_a_name, char_b_name, orig_a_num, orig_b
 		level_a = str(int(level_a) + 20)
 	if(new_class_b in reverse_valid_promos and class_a in valid_promos):
 		level_a = str(int(level_b) - 20)
-	print(f"new level {level_b}")
-	print(f"new level {level_a}")
 	items_a = [item_1a, item_2a, item_3a, item_4a]
 	new_items(items_a, new_class_a, new_class_a in reverse_valid_promos, int(level_b), valid_weapon_level_ranges, valid_equips)
 	items_b = [item_1b, item_2b, item_3b, item_4b]
@@ -528,7 +522,7 @@ def generate_text(join_num, starter_spells, char_spells, levels, spells_1, spell
 	text = text[0:-4]
 	return cur_spells, text
 	
-def randomize_spells(chars, spells_1, spells_2, levels, starter_spells, bowie_spells,sarah_spells,kazin_spells,sorc_spells,slade_spells,karna_spells,tyrin_spells,taya_spells,frayja_spells,sheela_spells,chaz_spells):
+def randomize_spells(silent_output, chars, spells_1, spells_2, levels, starter_spells, bowie_spells,sarah_spells,kazin_spells,sorc_spells,slade_spells,karna_spells,tyrin_spells,taya_spells,frayja_spells,sheela_spells,chaz_spells):
 	#make shallow copies of the lists in case we have to start over
 	spells_1c = spells_1[:]
 	spells_2c = spells_2[:]
@@ -542,7 +536,7 @@ def randomize_spells(chars, spells_1, spells_2, levels, starter_spells, bowie_sp
 	frayja_spellsc = frayja_spells[:]
 	sheela_spellsc = sheela_spells[:]
 	chaz_spellsc = chaz_spells[:]
-	args = [chars, spells_1c, spells_2c, levels, starter_spells, bowie_spellsc,sarah_spellsc,kazin_spellsc,sorc_spells,slade_spellsc,karna_spellsc,tyrin_spellsc,taya_spellsc,frayja_spellsc,sheela_spellsc,chaz_spellsc]
+	args = [silent_output, chars, spells_1c, spells_2c, levels, starter_spells, bowie_spellsc,sarah_spellsc,kazin_spellsc,sorc_spells,slade_spellsc,karna_spellsc,tyrin_spellsc,taya_spellsc,frayja_spellsc,sheela_spellsc,chaz_spellsc]
 	try:
 		output = ""
 		for x in range(len(chars)):
@@ -734,9 +728,11 @@ def randomize_spells(chars, spells_1, spells_2, levels, starter_spells, bowie_sp
 					f.close()
 					output = output + f"Chaz now learns {text_1}\n"
 					output = output + f"Sorc Chaz now learns {text_2}\n"
-		print(output)
+		if(not silent_output):
+			print(output)
 	except Exception as e:
-		print(str(e) +  " Trying again.")
+		if(not silent_output):
+			print(str(e) +  " Trying again.")
 		randomize_spells(*args)
 
 def take_inputs():
@@ -796,7 +792,14 @@ def take_inputs():
 		else:
 			rand_stats = input("Invalid response. ")
 	rand_stats = True if rand_stats == "y" or rand_stats == "Y" else False
-	return {"Characters" : rand_chars, "Depromos" : rand_depromo, "Promo" : rand_prepromo, "Magic" : rand_magic, "Magic levels" : chaos_magic, "Items" : rand_promo_items, "Growths" : rand_stat_growths, "Stats" : rand_stats}
+	silent_output = input("Print the outcome to the command line? ")
+	while(silent_output != "y" and silent_output != "Y" and silent_output != "n" and silent_output != "N"):
+		if(silent_output == "help"):
+			silent_output = input("Yes if you want to know what is getting changed to what. Otherwise, the output will be nothing to keep it a mystery. ")
+		else:
+			silent_output = input("Invalid response. ")
+	silent_output = False if silent_output == "y" or silent_output == "Y" else True
+	return {"Characters" : rand_chars, "Depromos" : rand_depromo, "Promo" : rand_prepromo, "Magic" : rand_magic, "Magic levels" : chaos_magic, "Items" : rand_promo_items, "Growths" : rand_stat_growths, "Stats" : rand_stats, "Silent" : silent_output}
 	
 config = {}
 print("Answer questions with y, Y, n, N, or help.")
@@ -804,14 +807,15 @@ if(Path("config.txt").exists()):
 	f = open("config.txt", 'r')
 	config = eval(f.read())
 	f.close()
-	resp = input("Use saved settings? ")
-	while(resp != "y" and resp != "Y" and resp != "n" and resp != "N"):
-		if(resp == "help"):
-			resp = input("Previous responses will be saved in config.txt. ")
-		else:
-			resp = input("Invalid response. ")
-	if(resp == "n" or resp == "N"):
-		config = take_inputs()
+	if("No Prompt" not in config):
+		resp = input("Use saved settings? ")
+		while(resp != "y" and resp != "Y" and resp != "n" and resp != "N"):
+			if(resp == "help"):
+				resp = input("Previous responses will be saved in config.txt. ")
+			else:
+				resp = input("Invalid response. ")
+		if(resp == "n" or resp == "N"):
+			config = take_inputs()
 else:
 	config = take_inputs()
 f = open("config.txt", 'w')
@@ -858,7 +862,6 @@ if(config["Characters"]):
 			print(f"Noone to swap {swap_char_a} with")
 			continue
 		swap_char_b = random.choice(swap_set)
-		print(f"{swap_char_a}\t swaps {swap_char_b}")
 		chars.remove(swap_char_b)
 		if(swap_char_b in chars_b):
 			chars_b.remove(swap_char_b)
@@ -965,7 +968,6 @@ if(config["Characters"]):
 			print(f"Noone to swap {swap_char_a} with")
 			continue
 		swap_char_b = random.choice(swap_set)
-		print(f"{swap_char_a}\t swaps {swap_char_b}")
 		chars.remove(swap_char_b)
 		if(swap_char_b in chars_b2):
 			chars_b2.remove(swap_char_b)
@@ -980,6 +982,8 @@ if(config["Characters"]):
 		chars_m[index_a] = swap_char_b
 		chars_m[index_b] = swap_char_a
 		swap_characters(swap_char_a, swap_char_b, name_a, name_b, orig_values[swap_char_a], orig_values[swap_char_b], config["Depromos"], config["Promo"])
+	if(not config["Silent"]):
+		print(f"New character order\n{chars_m}")
 if(config["Magic"]):
 	spells_1 = ["EGRESS", "DISPEL", "SLEEP", "ATTACK", "DISPEL"]
 	spells_2 = ["BOLT", "HEAL", "DETOX", "BLAST", "SLOW", "BLAZE", "MUDDLE", "DESOUL", "DAO", "APOLLO", "NEPTUN", "ATLAS",\
@@ -1015,7 +1019,7 @@ if(config["Magic"]):
 		sheela_spells = [1,5,36,51,7,18,38,47,11,24,32,41,13,20,28,44]
 		chaz_spells = [1,10,49,52,5,15,22,40,35,38,42,46,36]
 
-	randomize_spells(chars_m, spells_1, spells_2, levels, starter_spells, bowie_spells,sarah_spells,kazin_spells,sorc_spells,slade_spells,karna_spells,tyrin_spells,taya_spells,frayja_spells,sheela_spells,chaz_spells)
+	randomize_spells(config["Silent"],chars_m, spells_1, spells_2, levels, starter_spells, bowie_spells,sarah_spells,kazin_spells,sorc_spells,slade_spells,karna_spells,tyrin_spells,taya_spells,frayja_spells,sheela_spells,chaz_spells)
 if(config["Items"]):
 	promo_item_dict = {"VIGOR_BALL" : ["SARAH", "Karna", "FRAYJA", "SHEELA"], "WARRIORS_PRIDE" : ["JAHA", "RANDOLF", "GYAN"], \
 	"SECRET_BOOK" : ["KAZIN", "TYRIN", "TAYA", "CHAZ"], "PEGASUS_WING" : ["CHESTER", "RICK", "ERIC", "HIGINS", "JARO"], \
@@ -1049,7 +1053,8 @@ if(config["Items"]):
 	f.close()
 	f = open("..\\disasm\\data\\maps\\entries\\map07\\8-other-items.asm", 'w')
 	temp_item = random.choice(rep_list)
-	print("Swapped Warrior's Pride with", temp_item)
+	if(not config["Silent"]):
+		print("Swapped Warrior's Pride with", temp_item)
 	rep_list.remove(temp_item)
 	f.write(file.replace("WARRIORS_PRIDE", temp_item))
 	f.close()
@@ -1058,7 +1063,8 @@ if(config["Items"]):
 	f.close()
 	f = open("..\\disasm\\data\\maps\\entries\\map23\\8-other-items.asm", 'w')
 	temp_item = random.choice(rep_list)
-	print("Swapped Secret Book with", temp_item)
+	if(not config["Silent"]):
+		print("Swapped Secret Book with", temp_item)
 	rep_list.remove(temp_item)
 	f.write(file.replace("SECRET_BOOK", temp_item))
 	f.close()
@@ -1067,7 +1073,8 @@ if(config["Items"]):
 	f.close()
 	f = open("..\\disasm\\data\\maps\\entries\\map23\\7-chest-items.asm", 'w')
 	temp_item = random.choice(rep_list)
-	print("Swapped Vigor Ball 1 with", temp_item)
+	if(not config["Silent"]):
+		print("Swapped Vigor Ball 1 with", temp_item)
 	rep_list.remove(temp_item)
 	f.write(file.replace("VIGOR_BALL", temp_item))
 	f.close()
@@ -1076,7 +1083,8 @@ if(config["Items"]):
 	f.close()
 	f = open("..\\disasm\\data\\maps\\entries\\map36\\8-other-items.asm", 'w')
 	temp_item = random.choice(rep_list)
-	print("Swapped Pegasus Wing with", temp_item)
+	if(not config["Silent"]):
+		print("Swapped Pegasus Wing with", temp_item)
 	rep_list.remove(temp_item)
 	f.write(file.replace("PEGASUS_WING", temp_item))
 	f.close()
@@ -1085,7 +1093,8 @@ if(config["Items"]):
 	f.close()
 	f = open("..\\disasm\\data\\maps\\entries\\map67\\8-other-items.asm", 'w')
 	temp_item = random.choice(rep_list)
-	print("Swapped Vigor Ball 2 with", temp_item)
+	if(not config["Silent"]):
+		print("Swapped Vigor Ball 2 with", temp_item)
 	rep_list.remove(temp_item)
 	f.write(file.replace("VIGOR_BALL", temp_item))
 	f.close()
@@ -1094,7 +1103,8 @@ if(config["Items"]):
 	f.close()
 	f = open("..\\disasm\\data\\maps\\entries\\map48\\7-chest-items.asm", 'w')
 	temp_item = random.choice(rep_list)
-	print("Swapped Silver Tank with", temp_item)
+	if(not config["Silent"]):
+		print("Swapped Silver Tank with", temp_item)
 	rep_list.remove(temp_item)
 	f.write(file.replace("SILVER_TANK", temp_item))
 	f.close()

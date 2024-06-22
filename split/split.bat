@@ -12,4 +12,6 @@ echo Patched battlesprites
 echo Expanded mapsprites
 @call ./patch_mapsprites.bat
 echo Patched mapsprites
-pause
+@python "./swap characters.py"
+echo Randomized various things
+@call ../build/buildstandard.bat

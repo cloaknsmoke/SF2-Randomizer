@@ -32,10 +32,10 @@ AllyStats27:    forClass  MAGE_4
                 
                 forClass  SORC_4
                 hpGrowth  28, 83, LINEAR
-                mpGrowth  42, 81, LINEAR
+                mpGrowth  42, 96, LINEAR
                 attGrowth 15, 29, LINEAR
-                defGrowth 17, 58, MIDDLE
-                agiGrowth 27, 42, LINEAR
+                defGrowth 17, 64, MIDDLE
+                agiGrowth 27, 46, LINEAR
                 spellList &
                     21, DAO, &
                     25, ATLAS, &

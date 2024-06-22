@@ -14,7 +14,7 @@ AllyStats11:    forClass  ACHR
                 mpGrowth  0, 0, NONE
                 attGrowth 29, 40, LATE
                 defGrowth 28, 62, MIDDLE
-                agiGrowth 19, 44, EARLY
+                agiGrowth 19, 57, EARLY
                 spellList  
 				
 				forClass  BRGN

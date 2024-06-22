@@ -2,11 +2,11 @@
 ; ASM FILE data\stats\allies\stats\allystats19.asm :
 ; 0x1EE6B8..0x1EE6C9 : Ally stats 19
 AllyStats19:    forClass  KNTE
-                hpGrowth  11, 54, EARLYANDLATE
+                hpGrowth  11, 56, EARLYANDLATE
                 mpGrowth  0, 0, NONE
-                attGrowth 6, 36, EARLYANDLATE
-                defGrowth 6, 33, EARLY
-                agiGrowth 6, 31, EARLYANDLATE
+                attGrowth 6, 34, EARLYANDLATE
+                defGrowth 6, 35, EARLY
+                agiGrowth 6, 32, EARLYANDLATE
                 spellList 
                 
                 forClass  PLDN
@@ -18,10 +18,10 @@ AllyStats19:    forClass  KNTE
                 spellList 
 				
                 forClass  PGNT
-                hpGrowth  39, 90, LINEAR
+                hpGrowth  39, 95, LINEAR
                 mpGrowth  0, 0, NONE
                 attGrowth 25, 51, LATE
-                defGrowth 24, 68, LATE
-                agiGrowth 23, 56, LINEAR
+                defGrowth 24, 78, LATE
+                agiGrowth 23, 57, LINEAR
                 spellList 
                 

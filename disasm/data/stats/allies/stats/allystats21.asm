@@ -28,7 +28,7 @@ AllyStats21:    forClass  MAGE_3
                 mpGrowth  42, 78, LINEAR
                 attGrowth 14, 26, LINEAR
                 defGrowth 17, 50, LINEAR
-                agiGrowth 26, 49, LINEAR
+                agiGrowth 26, 86, LINEAR
                 useFirstSpellList
                 
                 forClass  SORC_3

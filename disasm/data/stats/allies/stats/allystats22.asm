@@ -33,8 +33,8 @@ AllyStats22:    forClass  PRST
 				forClass  MMNK
                 hpGrowth  30, 81, LINEAR
                 mpGrowth  32, 61, LINEAR
-                attGrowth 18, 49, LINEAR
-                defGrowth 18, 60, MIDDLE
+                attGrowth 18, 73, LINEAR
+                defGrowth 18, 71, MIDDLE
                 agiGrowth 22, 58, LINEAR
                 useFirstSpellList
                 

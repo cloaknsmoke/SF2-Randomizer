@@ -23,8 +23,8 @@ AllyStats25:    forClass  PRST
                 
                 forClass  VICR
                 hpGrowth  29, 79, LINEAR
-                mpGrowth  31, 74, LINEAR
-                attGrowth 19, 24, LINEAR
+                mpGrowth  31, 79, LINEAR
+                attGrowth 19, 21, LINEAR
                 defGrowth 19, 51, EARLY
                 agiGrowth 21, 61, LINEAR
                 useFirstSpellList

@@ -232,8 +232,8 @@ table_AllyStartDefinitions:
                 startClass WIZ          ; 27: CHAZ
                 startLevel 19
                 startItems &
-                    MAGE_STAFF|EQUIPPED, &
-                    NOTHING, &
+                    MAGE_STAFF, &
+                    WOODEN_ROD|EQUIPPED, &
                     NOTHING, &
                     NOTHING
                 
