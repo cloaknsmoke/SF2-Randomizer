@@ -311,6 +311,17 @@ table_ItemDefinitions:
                 equipEffects INCREASE_ATT, 15, &
                              NONE, 0, &
                              NONE, 0
+				
+				; 61: Achilles Ring
+                equipFlags   ALL
+                equipFlags2  ALL
+                range        1, 1
+                price        1350
+                itemType     RING|RARE
+                useSpell     NOTHING
+                equipEffects NONE, 0, &
+                             NONE, 0, &
+                             NONE, 0
                 
                 ; 26: Leather Glove
                 equipFlags   MMNK
@@ -694,17 +705,6 @@ table_ItemDefinitions:
                 itemType     WEAPON
                 useSpell     NOTHING
                 equipEffects INCREASE_ATT, 16, &
-                             NONE, 0, &
-                             NONE, 0
-                
-                ; 61: Achilles Sword
-                equipFlags   SDMN|HERO
-                equipFlags2  NONE
-                range        1, 1
-                price        1350
-                itemType     WEAPON|RARE
-                useSpell     NOTHING
-                equipEffects INCREASE_ATT, 19, &
                              NONE, 0, &
                              NONE, 0
                 

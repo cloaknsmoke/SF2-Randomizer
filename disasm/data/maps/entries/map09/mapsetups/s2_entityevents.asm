@@ -163,7 +163,7 @@ Map9_EntityEvent0:
                  
                 chkFlg  727             ; Set after presenting the Achilles Sword to Rohde (yes/no to the Caravan regardless)
                 bne.s   byte_5682A      
-                moveq   #ITEM_ACHILLES_SWORD,d1
+                moveq   #ITEM_ACHILLES_RING,d1
                 jsr     j_GetItemInventoryLocation
                 cmpi.w  #-1,d0
                 bne.s   byte_56804      

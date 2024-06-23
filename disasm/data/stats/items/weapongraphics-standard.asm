@@ -33,7 +33,6 @@ table_WeaponGraphics:
                 weaponGraphics MIDDLE_SWORD, SHORT_SWORD, SHORT_SWORD           ; 58: Middle Sword
                 weaponGraphics LONG_SWORD, LONG_SWORD, LONG_SWORD               ; 59: Long Sword
                 weaponGraphics STEEL_SWORD, LONG_SWORD, LONG_SWORD              ; 60: Steel Sword
-                weaponGraphics ACHILLES_SWORD, LONG_SWORD, ACHILLES_SWORD       ; 61: Achilles Sword
                 weaponGraphics BROAD_SWORD, LONG_SWORD, LONG_SWORD              ; 62: Broad Sword
                 weaponGraphics BUSTER_SWORD, GREAT_SWORD, GREAT_SWORD           ; 63: Buster Sword
                 weaponGraphics GREAT_SWORD, GREAT_SWORD, GREAT_SWORD            ; 64: Great Sword

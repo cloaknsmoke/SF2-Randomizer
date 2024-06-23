@@ -44,8 +44,8 @@ battlesceneScript_DetermineIneffectiveAttack:
                 cmpi.w  #ENEMY_TAROS,d1
                 bne.w   @CheckFlag
                 move.b  (a4),d0
-                jsr     GetEquippedWeapon
-                cmpi.w  #ITEM_ACHILLES_SWORD,d1
+                jsr     GetEquippedRing
+                cmpi.w  #ITEM_ACHILLES_RING,d1
                 bne.w   @CheckFlag
                 setFlg  112             ; Currently attacking Taros with Achilles Sword
 @CheckFlag:
