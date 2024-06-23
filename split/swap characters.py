@@ -238,8 +238,8 @@ def swap_characters(char_a, char_b, char_a_name, char_b_name, orig_a_num, orig_b
 	}
 	valid_weapon_level_ranges = {
 	"WOODEN_SWORD":(False, 1,3),
-	"SHORT_SWORD":(False, 4,4),
-	"MIDDLE_SWORD":(False, 6,9),
+	"SHORT_SWORD":(False, 4,7),
+	"MIDDLE_SWORD":(False, 8,9),
 	"LONG_SWORD":(False, 10,18),
 	"STEEL_SWORD":(False, 19,99),
 	"BROAD_SWORD":(True, 21,23),
@@ -1058,6 +1058,13 @@ if(config["Items"]):
 	rep_list.remove(temp_item)
 	f.write(file.replace("WARRIORS_PRIDE", temp_item))
 	f.close()
+	f = open("..\\disasm\\data\\maps\\entries\\map46\\8-other-items.asm", 'r')
+	file = f.read()
+	f.close()
+	f = open("..\\disasm\\data\\maps\\entries\\map46\\8-other-items.asm", 'w')
+	f.write(file.replace("WARRIORS_PRIDE", temp_item))
+	f.close()
+	
 	f = open("..\\disasm\\data\\maps\\entries\\map23\\8-other-items.asm", 'r')
 	file = f.read()
 	f.close()
@@ -1068,6 +1075,7 @@ if(config["Items"]):
 	rep_list.remove(temp_item)
 	f.write(file.replace("SECRET_BOOK", temp_item))
 	f.close()
+	
 	f = open("..\\disasm\\data\\maps\\entries\\map23\\7-chest-items.asm", 'r')
 	file = f.read()
 	f.close()
@@ -1078,6 +1086,7 @@ if(config["Items"]):
 	rep_list.remove(temp_item)
 	f.write(file.replace("VIGOR_BALL", temp_item))
 	f.close()
+	
 	f = open("..\\disasm\\data\\maps\\entries\\map36\\8-other-items.asm", 'r')
 	file = f.read()
 	f.close()
@@ -1088,6 +1097,7 @@ if(config["Items"]):
 	rep_list.remove(temp_item)
 	f.write(file.replace("PEGASUS_WING", temp_item))
 	f.close()
+	
 	f = open("..\\disasm\\data\\maps\\entries\\map67\\8-other-items.asm", 'r')
 	file = f.read()
 	f.close()
@@ -1098,6 +1108,7 @@ if(config["Items"]):
 	rep_list.remove(temp_item)
 	f.write(file.replace("VIGOR_BALL", temp_item))
 	f.close()
+	
 	f = open("..\\disasm\\data\\maps\\entries\\map48\\7-chest-items.asm", 'r')
 	file = f.read()
 	f.close()
