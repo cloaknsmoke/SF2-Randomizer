@@ -1,0 +1,22 @@
+@echo off
+CHCP 65001
+.\xdelta3_x86_64_win.exe -f -v -d -s "..\disasm\data\scripting\text\huffmantreeoffsets.bin" ".\vcdiff\huffmantreeoffsets.bin.vcdiff" "..\disasm\data\scripting\text\huffmantreeoffsets.bin"
+.\xdelta3_x86_64_win.exe -f -v -d -s "..\disasm\data\scripting\text\huffmantrees.bin" ".\vcdiff\huffmantrees.bin.vcdiff" "..\disasm\data\scripting\text\huffmantrees.bin"
+.\xdelta3_x86_64_win.exe -f -v -d -s "..\disasm\data\scripting\text\textbank00.bin" ".\vcdiff\textbank00.bin.vcdiff" "..\disasm\data\scripting\text\textbank00.bin"
+.\xdelta3_x86_64_win.exe -f -v -d -s "..\disasm\data\scripting\text\textbank01.bin" ".\vcdiff\textbank01.bin.vcdiff" "..\disasm\data\scripting\text\textbank01.bin"
+.\xdelta3_x86_64_win.exe -f -v -d -s "..\disasm\data\scripting\text\textbank02.bin" ".\vcdiff\textbank02.bin.vcdiff" "..\disasm\data\scripting\text\textbank02.bin"
+.\xdelta3_x86_64_win.exe -f -v -d -s "..\disasm\data\scripting\text\textbank03.bin" ".\vcdiff\textbank03.bin.vcdiff" "..\disasm\data\scripting\text\textbank03.bin"
+.\xdelta3_x86_64_win.exe -f -v -d -s "..\disasm\data\scripting\text\textbank04.bin" ".\vcdiff\textbank04.bin.vcdiff" "..\disasm\data\scripting\text\textbank04.bin"
+.\xdelta3_x86_64_win.exe -f -v -d -s "..\disasm\data\scripting\text\textbank05.bin" ".\vcdiff\textbank05.bin.vcdiff" "..\disasm\data\scripting\text\textbank05.bin"
+.\xdelta3_x86_64_win.exe -f -v -d -s "..\disasm\data\scripting\text\textbank06.bin" ".\vcdiff\textbank06.bin.vcdiff" "..\disasm\data\scripting\text\textbank06.bin"
+.\xdelta3_x86_64_win.exe -f -v -d -s "..\disasm\data\scripting\text\textbank07.bin" ".\vcdiff\textbank07.bin.vcdiff" "..\disasm\data\scripting\text\textbank07.bin"
+.\xdelta3_x86_64_win.exe -f -v -d -s "..\disasm\data\scripting\text\textbank08.bin" ".\vcdiff\textbank08.bin.vcdiff" "..\disasm\data\scripting\text\textbank08.bin"
+.\xdelta3_x86_64_win.exe -f -v -d -s "..\disasm\data\scripting\text\textbank09.bin" ".\vcdiff\textbank09.bin.vcdiff" "..\disasm\data\scripting\text\textbank09.bin"
+.\xdelta3_x86_64_win.exe -f -v -d -s "..\disasm\data\scripting\text\textbank10.bin" ".\vcdiff\textbank10.bin.vcdiff" "..\disasm\data\scripting\text\textbank10.bin"
+.\xdelta3_x86_64_win.exe -f -v -d -s "..\disasm\data\scripting\text\textbank11.bin" ".\vcdiff\textbank11.bin.vcdiff" "..\disasm\data\scripting\text\textbank11.bin"
+.\xdelta3_x86_64_win.exe -f -v -d -s "..\disasm\data\scripting\text\textbank12.bin" ".\vcdiff\textbank12.bin.vcdiff" "..\disasm\data\scripting\text\textbank12.bin"
+.\xdelta3_x86_64_win.exe -f -v -d -s "..\disasm\data\scripting\text\textbank13.bin" ".\vcdiff\textbank13.bin.vcdiff" "..\disasm\data\scripting\text\textbank13.bin"
+.\xdelta3_x86_64_win.exe -f -v -d -s "..\disasm\data\scripting\text\textbank14.bin" ".\vcdiff\textbank14.bin.vcdiff" "..\disasm\data\scripting\text\textbank14.bin"
+.\xdelta3_x86_64_win.exe -f -v -d -s "..\disasm\data\scripting\text\textbank15.bin" ".\vcdiff\textbank15.bin.vcdiff" "..\disasm\data\scripting\text\textbank15.bin"
+.\xdelta3_x86_64_win.exe -f -v -d -s "..\disasm\data\scripting\text\textbank16.bin" ".\vcdiff\textbank16.bin.vcdiff" "..\disasm\data\scripting\text\textbank16.bin"
+

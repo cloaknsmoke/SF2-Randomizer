@@ -1,5 +1,6 @@
 from pathlib import Path
 import random
+import re
 
 def swap_ALLY_r(p, a, b):
 	for x in p.iterdir():
@@ -18,6 +19,96 @@ def swap_ALLY_r(p, a, b):
 					f.close()
 			except UnicodeDecodeError as e:
 				continue
+
+def replace_npc_rohde_sprite():
+	f = open("..\\disasm\\sf2enums.asm", 'r')
+	file1 = f.read()
+	f.close()
+	who_is_rohde = re.search("ALLY_[A-Z]*: equ 11", file1).group()[5:-8]
+	f = open("..\\disasm\\data\\stats\\allies\\allystartdefs.asm", 'r')
+	file2 = f.read()
+	f.close()
+	new_class = re.search("startClass [A-Z]*_?\\d?         ; \\d*: " + who_is_rohde, file2).group()
+	new_class = new_class[11:new_class.find("         ")]
+	class_dict = {"BASE" : ("SDMN", "KNTE", "WARR", "MAGE_1", "MAGE_2", "MAGE_3", "MAGE_4", "PRST", "ACHR", "BDMN", "WFMN", "RNGR", "PHNK", "THIF", "TORT", "RWAR", "DRD", "CNST")}
+	class_dict["PROMO"] = ("HERO", "PLDN", "GLDT", "WIZ", "WIZ", "WIZ", "WIZ", "VICR", "SNIP", "BDBT", "WFBR", "BWNT", "PHNX", "NINJ", "MNST", "RBT", "GLM")
+	class_dict["SPECIAL"] = ("PGNT", "BRN", "SORC_1", "SORC_2", "SORC_3", "SORC_4", "MMNK", "BRGN", "RDBN")
+	r_class_dict = {}
+	for v,k in class_dict.items():
+		for x in k:
+			r_class_dict[x] = v
+	mapsprite = "MAPSPRITE_" + who_is_rohde + "_" + r_class_dict[new_class]
+	new_sprite_index = file1[file1.find(mapsprite):file1.find("\n", file1.find(mapsprite))]
+	new_sprite_index = new_sprite_index[new_sprite_index.find("equ")+5:new_sprite_index.find("equ")+7].strip()
+	npc_rohde_index = file1.find("MAPSPRITE_NPC_ROHDE: equ $")+26
+	file1 = file1[0:npc_rohde_index] + new_sprite_index + file1[file1.find("\n", npc_rohde_index):]
+	f = open("..\\disasm\\sf2enums.asm", 'w')
+	f.write(file1)
+	f.close()
+
+def replace_spinning_elric():
+	f = open("..\\disasm\\sf2enums.asm")
+	file1 = f.read()
+	f.close()
+	who_is_elric = re.search("ALLY_[A-Z]*: equ 13", file1).group()[5:-8]
+	f = open("..\\disasm\\data\\stats\\allies\\allystartdefs.asm")
+	file2 = f.read()
+	f.close()
+	new_class = re.search("startClass [A-Z]*_?\\d?         ; \\d*: " + who_is_elric, file2).group()
+	new_class = new_class[11:new_class.find("         ")]
+	class_dict = {"BASE" : ("SDMN", "KNTE", "WARR", "MAGE_1", "MAGE_2", "MAGE_3", "MAGE_4", "PRST", "ACHR", "BDMN", "WFMN", "RNGR", "PHNK", "THIF", "TORT", "RWAR", "DRD", "CNST")}
+	class_dict["PROMO"] = ("HERO", "PLDN", "GLDT", "WIZ", "WIZ", "WIZ", "WIZ", "VICR", "SNIP", "BDBT", "WFBR", "BWNT", "PHNX", "NINJ", "MNST", "RBT", "GLM")
+	class_dict["SPECIAL"] = ("PGNT", "BRN", "SORC_1", "SORC_2", "SORC_3", "SORC_4", "MMNK", "BRGN", "RDBN")
+	r_class_dict = {}
+	for v,k in class_dict.items():
+		for x in k:
+			r_class_dict[x] = v
+	f = open("..\\disasm\\data\\battles\\global\\battleneutralentities.asm", 'r')
+	file3 = f.read()
+	f.close()
+	harpie_battle = file3[file3.find("HARPIES_POND"):file3.find("TERMINATOR_WORD",file3.find("HARPIES_POND"))]
+	harpie_rep = harpie_battle.replace(re.search("mapsprite [A-Z]*_[A-Z]*\n", harpie_battle).group(), "mapsprite " + who_is_elric + "_" + r_class_dict[new_class] + "\n")
+	file3 = file3.replace(harpie_battle, harpie_rep)
+	f = open("..\\disasm\\data\\battles\\global\\battleneutralentities.asm", 'w')
+	f.write(file3)
+	f.close()
+
+def remove_redundant_classes():
+	class_dict = {"BASE" : ("SDMN", "KNTE", "WARR", "MAGE_1", "MAGE_2", "MAGE_3", "MAGE_4", "PRST", "ACHR", "BDMN", "WFMN", "RNGR", "PHNK", "THIF", "TORT", "RWAR", "DRD", "CNST")}
+	class_dict["PROMO"] = ("HERO", "PLDN", "GLDT", "WIZ", "WIZ", "WIZ", "WIZ", "VICR", "SNIP", "BDBT", "WFBR", "BWNT", "PHNX", "NINJ", "MNST", "RBT", "GLM")
+	class_dict["SPECIAL"] = ("PGNT", "BRN", "SORC_1", "SORC_2", "SORC_3", "SORC_4", "MMNK", "BRGN", "RDBN")
+	r_class_dict = {}
+	for v,k in class_dict.items():
+		for x in k:
+			r_class_dict[x] = v
+	f = open("..\\disasm\\data\\stats\\allies\\allystartdefs.asm")
+	file = f.read()
+	f.close()
+	splits = file.split("startClass")
+	for x in range(2,32):
+		cur_class = re.search(" [A-Z]*_?\\d? ", splits[x]).group()[1:-1]
+		if(r_class_dict[cur_class] == "BASE"):
+			continue
+		num = int(re.search("; [1-9]*:", splits[x]).group()[2:-1])
+		f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats" + (str(num) if num > 9 else ("0" + str(num))) +".asm", 'r')
+		file = f.read()
+		f.close()
+		splits2 = file.split("forClass")
+		base_spells = ""
+		class_data = ""
+		for y in splits2:
+			if("AllyStats" in y):
+				continue
+			if("spellList" in y and base_spells == ""):
+				base_spells = y[y.find("spellList"):].strip()
+			if(cur_class in y):
+				class_data = y
+		if("useFirstSpellList" in class_data):
+			class_data = class_data.replace("useFirstSpellList", base_spells)
+		file = file[0:file.index("forClass")+9] + class_data.strip()
+		f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats" + (str(num) if num > 9 else ("0" + str(num))) +".asm", 'w')
+		f.write(file)
+		f.close()
 
 def determine_new_class(name, class_old, with_class, promo_dict, r_promo_dict, wiz_flag, depromote, rand_promo):
 	orig_promos = orig_values = {"ROHDE" : "BRGN", "HIGINS" : "PLDN", "SKREECH" : "BDBT", "TAYA" : "SORC_3", "FRAYJA" : "VICR",\
@@ -589,6 +680,7 @@ def randomize_spells(silent_output, chars, spells_1, spells_2, levels, starter_s
 					file = f.read()
 					f.close()
 					base_spell = text_2[36:text_2.find(',', 36)]
+					# print(text_2)
 					file = file.replace("dc.b CLASS_SORC_1, SPELL_DAO", "dc.b CLASS_SORC_1, SPELL_" + base_spell)
 					f = open("..\\disasm\\data\\stats\\allies\\classes\\promotions-standard.asm", 'w')
 					f.write(file)
@@ -642,6 +734,7 @@ def randomize_spells(silent_output, chars, spells_1, spells_2, levels, starter_s
 					file = f.read()
 					f.close()
 					base_spell = text_2[36:text_2.find(',', 36)]
+					# print(text_2)
 					file = file.replace("dc.b CLASS_SORC_2, SPELL_DAO", "dc.b CLASS_SORC_2, SPELL_" + base_spell)
 					f = open("..\\disasm\\data\\stats\\allies\\classes\\promotions-standard.asm", 'w')
 					f.write(file)
@@ -669,6 +762,7 @@ def randomize_spells(silent_output, chars, spells_1, spells_2, levels, starter_s
 					file = f.read()
 					f.close()
 					base_spell = text_2[36:text_2.find(',', 36)]
+					# print(text_2)
 					file = file.replace("dc.b CLASS_SORC_3, SPELL_DAO", "dc.b CLASS_SORC_3, SPELL_" + base_spell)
 					f = open("..\\disasm\\data\\stats\\allies\\classes\\promotions-standard.asm", 'w')
 					f.write(file)
@@ -722,6 +816,7 @@ def randomize_spells(silent_output, chars, spells_1, spells_2, levels, starter_s
 					file = f.read()
 					f.close()
 					base_spell = text_2[36:text_2.find(',', 36)]
+					# print(text_2)
 					file = file.replace("dc.b CLASS_SORC_4, SPELL_DAO", "dc.b CLASS_SORC_4, SPELL_" + base_spell)
 					f = open("..\\disasm\\data\\stats\\allies\\classes\\promotions-standard.asm", 'w')
 					f.write(file)
@@ -800,7 +895,7 @@ def take_inputs():
 			silent_output = input("Invalid response. ")
 	silent_output = False if silent_output == "y" or silent_output == "Y" else True
 	return {"Characters" : rand_chars, "Depromos" : rand_depromo, "Promo" : rand_prepromo, "Magic" : rand_magic, "Magic levels" : chaos_magic, "Items" : rand_promo_items, "Growths" : rand_stat_growths, "Stats" : rand_stats, "Silent" : silent_output}
-	
+
 config = {}
 print("Answer questions with y, Y, n, N, or help.")
 if(Path("config.txt").exists()):
@@ -984,6 +1079,8 @@ if(config["Characters"]):
 		swap_characters(swap_char_a, swap_char_b, name_a, name_b, orig_values[swap_char_a], orig_values[swap_char_b], config["Depromos"], config["Promo"])
 	if(not config["Silent"]):
 		print(f"New character order\n{chars_m}")
+	replace_npc_rohde_sprite()
+	replace_spinning_elric()
 if(config["Magic"]):
 	spells_1 = ["EGRESS", "DISPEL", "SLEEP", "ATTACK", "DISPEL"]
 	spells_2 = ["BOLT", "HEAL", "DETOX", "BLAST", "SLOW", "BLAZE", "MUDDLE", "DESOUL", "DAO", "APOLLO", "NEPTUN", "ATLAS",\
@@ -1020,6 +1117,7 @@ if(config["Magic"]):
 		chaz_spells = [1,10,49,52,5,15,22,40,35,38,42,46,36]
 
 	randomize_spells(config["Silent"],chars_m, spells_1, spells_2, levels, starter_spells, bowie_spells,sarah_spells,kazin_spells,sorc_spells,slade_spells,karna_spells,tyrin_spells,taya_spells,frayja_spells,sheela_spells,chaz_spells)
+remove_redundant_classes()
 if(config["Items"]):
 	promo_item_dict = {"VIGOR_BALL" : ["SARAH", "Karna", "FRAYJA", "SHEELA"], "WARRIORS_PRIDE" : ["JAHA", "RANDOLF", "GYAN"], \
 	"SECRET_BOOK" : ["KAZIN", "TYRIN", "TAYA", "CHAZ"], "PEGASUS_WING" : ["CHESTER", "RICK", "ERIC", "HIGINS", "JARO"], \
