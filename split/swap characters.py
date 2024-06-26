@@ -73,6 +73,33 @@ def replace_spinning_elric():
 	f.write(file3)
 	f.close()
 
+def replace_knocked_out_luke():
+	f = open("..\\disasm\\sf2enums.asm")
+	file1 = f.read()
+	f.close()
+	who_is_luke = re.search("ALLY_[A-Z]*: equ 10", file1).group()[5:-8]
+	f = open("..\\disasm\\data\\stats\\allies\\allystartdefs.asm")
+	file2 = f.read()
+	f.close()
+	new_class = re.search("startClass [A-Z]*_?\\d?         ; \\d*: " + who_is_luke, file2).group()
+	new_class = new_class[11:new_class.find("         ")]
+	class_dict = {"BASE" : ("SDMN", "KNTE", "WARR", "MAGE_1", "MAGE_2", "MAGE_3", "MAGE_4", "PRST", "ACHR", "BDMN", "WFMN", "RNGR", "PHNK", "THIF", "TORT", "RWAR", "DRD", "CNST")}
+	class_dict["PROMO"] = ("HERO", "PLDN", "GLDT", "WIZ", "WIZ", "WIZ", "WIZ", "VICR", "SNIP", "BDBT", "WFBR", "BWNT", "PHNX", "NINJ", "MNST", "RBT", "GLM")
+	class_dict["SPECIAL"] = ("PGNT", "BRN", "SORC_1", "SORC_2", "SORC_3", "SORC_4", "MMNK", "BRGN", "RDBN")
+	r_class_dict = {}
+	for v,k in class_dict.items():
+		for x in k:
+			r_class_dict[x] = v
+	f = open("..\\disasm\\data\\battles\\global\\battleneutralentities.asm", 'r')
+	file3 = f.read()
+	f.close()
+	polca_battle = file3[file3.find("POLCA_VILLAGE"):file3.find("TERMINATOR_WORD",file3.find("POLCA_VILLAGE"))]
+	polca_rep = polca_battle.replace(re.search("mapsprite [A-Z]*_[A-Z]*\n", polca_battle).group(), "mapsprite " + who_is_luke + "_" + r_class_dict[new_class] + "\n")
+	file3 = file3.replace(polca_battle, polca_rep)
+	f = open("..\\disasm\\data\\battles\\global\\battleneutralentities.asm", 'w')
+	f.write(file3)
+	f.close()
+
 def remove_redundant_classes():
 	class_dict = {"BASE" : ("SDMN", "KNTE", "WARR", "MAGE_1", "MAGE_2", "MAGE_3", "MAGE_4", "PRST", "ACHR", "BDMN", "WFMN", "RNGR", "PHNK", "THIF", "TORT", "RWAR", "DRD", "CNST")}
 	class_dict["PROMO"] = ("HERO", "PLDN", "GLDT", "WIZ", "WIZ", "WIZ", "WIZ", "VICR", "SNIP", "BDBT", "WFBR", "BWNT", "PHNX", "NINJ", "MNST", "RBT", "GLM")
@@ -89,7 +116,7 @@ def remove_redundant_classes():
 		cur_class = re.search(" [A-Z]*_?\\d? ", splits[x]).group()[1:-1]
 		if(r_class_dict[cur_class] == "BASE"):
 			continue
-		num = int(re.search("; [1-9]*:", splits[x]).group()[2:-1])
+		num = int(re.search("; [0-9]*:", splits[x]).group()[2:-1])
 		f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats" + (str(num) if num > 9 else ("0" + str(num))) +".asm", 'r')
 		file = f.read()
 		f.close()
@@ -337,8 +364,8 @@ def swap_characters(char_a, char_b, char_a_name, char_b_name, orig_a_num, orig_b
 	"BUSTER_SWORD":(True, 24,26),
 	"GREAT_SWORD":(True, 27,99),
 	"WOODEN_ROD":(False, 1,4),
-	"SHORT_ROD":(False, 5,8),
-	"BRONZE_ROD":(False, 9,18),
+	"SHORT_ROD":(False, 5,10),
+	"BRONZE_ROD":(False, 11,18),
 	"IRON_ROD":(False, 99,99),
 	"POWER_STICK":(False, 19,99),
 	"FLAIL":(True, 21,23),
@@ -896,6 +923,7 @@ def take_inputs():
 	silent_output = False if silent_output == "y" or silent_output == "Y" else True
 	return {"Characters" : rand_chars, "Depromos" : rand_depromo, "Promo" : rand_prepromo, "Magic" : rand_magic, "Magic levels" : chaos_magic, "Items" : rand_promo_items, "Growths" : rand_stat_growths, "Stats" : rand_stats, "Silent" : silent_output}
 
+
 config = {}
 print("Answer questions with y, Y, n, N, or help.")
 if(Path("config.txt").exists()):
@@ -1081,6 +1109,7 @@ if(config["Characters"]):
 		print(f"New character order\n{chars_m}")
 	replace_npc_rohde_sprite()
 	replace_spinning_elric()
+	replace_knocked_out_luke()
 if(config["Magic"]):
 	spells_1 = ["EGRESS", "DISPEL", "SLEEP", "ATTACK", "DISPEL"]
 	spells_2 = ["BOLT", "HEAL", "DETOX", "BLAST", "SLOW", "BLAZE", "MUDDLE", "DESOUL", "DAO", "APOLLO", "NEPTUN", "ATLAS",\
