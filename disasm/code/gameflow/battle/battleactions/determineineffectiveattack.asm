@@ -35,8 +35,6 @@ battlesceneScript_DetermineIneffectiveAttack:
                 checkSavedByte #BATTLE_VERSUS_TAROS, CURRENT_BATTLE
                 bne.w   @Skip
                 clrFlg  112             ; Currently attacking Taros with Achilles Sword
-                tst.b   (a4)
-                bne.w   @CheckFlag
                 cmpi.w  #BATTLEACTION_ATTACK,(a3)
                 bne.w   @CheckFlag
                 move.b  (a5),d0

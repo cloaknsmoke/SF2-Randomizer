@@ -25,8 +25,6 @@ ExecuteIndividualTurn:
                 ; Check if we're currently battling Taros, and Bowie is the actor
                 checkSavedByte #BATTLE_VERSUS_TAROS, CURRENT_BATTLE  ; HARDCODED battle index
                 bne.s   @IsActorAlive
-                tst.w   combatant(a6)
-                bne.s   @IsActorAlive
                 clrFlg  112             ; Currently attacking Taros with Achilles Sword
                 
 @IsActorAlive:  jsr     GetCurrentHP
