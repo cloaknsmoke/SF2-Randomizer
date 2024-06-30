@@ -2,11 +2,11 @@
 ; ASM FILE data\stats\allies\stats\allystats21.asm :
 ; 0x1EE6DA..0x1EE6FB : Ally stats 21
 AllyStats21:    forClass  MAGE_3
-                hpGrowth  9, 32, EARLY
-                mpGrowth  6, 57, EARLY
-                attGrowth 4, 19, LINEAR
-                defGrowth 3, 24, LINEAR
-                agiGrowth 7, 37, LINEAR
+                hpGrowth  9, 29, EARLY
+                mpGrowth  6, 55, EARLY
+                attGrowth 4, 17, LINEAR
+                defGrowth 3, 22, LINEAR
+                agiGrowth 7, 36, LINEAR
                 spellList &
                     1, BLAZE, &
                     4, BLAZE|LV2, &

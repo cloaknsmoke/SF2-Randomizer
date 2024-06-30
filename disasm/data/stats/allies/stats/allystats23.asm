@@ -2,11 +2,11 @@
 ; ASM FILE data\stats\allies\stats\allystats23.asm :
 ; 0x1EE726..0x1EE737 : Ally stats 23
 AllyStats23:    forClass  KNTE
-                hpGrowth  10, 55, LINEAR
+                hpGrowth  10, 52, LINEAR
                 mpGrowth  0, 0, NONE
-                attGrowth 6, 33, LATE
-                defGrowth 6, 34, LINEAR
-                agiGrowth 7, 37, MIDDLE
+                attGrowth 6, 35, LATE
+                defGrowth 6, 30, LINEAR
+                agiGrowth 7, 34, MIDDLE
                 spellList 
                 
                 forClass  PLDN

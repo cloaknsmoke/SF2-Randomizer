@@ -2,10 +2,10 @@
 ; ASM FILE data\stats\allies\stats\allystats11.asm :
 ; 0x1EE4FE..0x1EE50F : Ally stats 11
 AllyStats11:    forClass  ACHR
-                hpGrowth  10, 39, EARLY
+                hpGrowth  10, 34, EARLY
                 mpGrowth  0, 0, NONE
                 attGrowth 9, 42, LATE
-                defGrowth 6, 42, LATE
+                defGrowth 6, 41, LATE
                 agiGrowth 5, 25, EARLYANDLATE
                 spellList 
 				

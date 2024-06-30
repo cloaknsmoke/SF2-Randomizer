@@ -1,6 +1,7 @@
 from pathlib import Path
 import random
 import re
+import sys
 
 def swap_ALLY_r(p, a, b):
 	for x in p.iterdir():
@@ -182,7 +183,7 @@ def remove_redundant_classes():
 		base_spells = ""
 		class_data = ""
 		for y in splits2:
-			if("AllyStats" in y):
+			if("AllyStats" in y or "projected" in y):
 				continue
 			if("spellList" in y and base_spells == ""):
 				base_spells = y[y.find("spellList"):].strip()
@@ -194,6 +195,95 @@ def remove_redundant_classes():
 		f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats" + (str(num) if num > 9 else ("0" + str(num))) +".asm", 'w')
 		f.write(file)
 		f.close()
+def adjust_promo_stats(ally_num, new_class, new_promo_level, growths):
+	class_dict = {"BASE" : ("SDMN", "KNTE", "WARR", "MAGE_1", "MAGE_2", "MAGE_3", "MAGE_4", "PRST", "ACHR", "BDMN", "WFMN", "RNGR", "PHNK", "THIF", "TORT", "RWAR", "DRD", "CNST")}
+	class_dict["PROMO"] = ("HERO", "PLDN", "GLDT", "WIZ", "WIZ", "WIZ", "WIZ", "VICR", "SNIP", "BDBT", "WFBR", "BWNT", "PHNX", "NINJ", "MNST", "RBT", "GLM")
+	class_dict["SPECIAL"] = ("PGNT", "BRN", "SORC_1", "SORC_2", "SORC_3", "SORC_4", "MMNK", "BRGN", "RDBN")
+	r_class_dict = {}
+	for v,k in class_dict.items():
+		for x in k:
+			r_class_dict[x] = v
+	f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats" + (str(ally_num) if ally_num > 9 else ("0" + str(ally_num))) +".asm", 'r')
+	file = f.read()
+	f.close()
+	splits = file.split("forClass")
+	base_block = ""
+	promo_block = ""
+	for x in splits:
+		if("AllyStats" in x or "projected" in x):
+			continue
+		if(new_class in x):
+			promo_block = x
+		for y in class_dict["BASE"]:
+			if(y in x):
+				base_block = x
+	baseHP = float(base_block[base_block.find("hpGrowth")+9:base_block.find(",", (base_block.find("hpGrowth")))])
+	baseHP_max = float(base_block[base_block.find(",", base_block.find("hpGrowth"))+2:base_block.rfind(",", 0, (base_block.find("mpGrowth")))])
+	baseHP_growth = base_block[base_block.rfind(",", 0 ,base_block.find("\n", base_block.find("hpGrowth")))+2:base_block.find("\n", base_block.find("hpGrowth"))]
+	baseMP = float(base_block[base_block.find("mpGrowth")+9:base_block.find(",", (base_block.find("mpGrowth")))])
+	baseMP_max = float(base_block[base_block.find(",", base_block.find("mpGrowth"))+2:base_block.rfind(",", 0, (base_block.find("attGrowth")))])
+	baseMP_growth = base_block[base_block.rfind(",", 0 ,base_block.find("\n", base_block.find("mpGrowth")))+2:base_block.find("\n", base_block.find("mpGrowth"))]
+	baseATT = float(base_block[base_block.find("attGrowth")+10:base_block.find(",", (base_block.find("attGrowth")))])
+	baseATT_max = float(base_block[base_block.find(",", base_block.find("attGrowth"))+2:base_block.rfind(",", 0, (base_block.find("defGrowth")))])
+	baseATT_growth = base_block[base_block.rfind(",", 0 ,base_block.find("\n", base_block.find("attGrowth")))+2:base_block.find("\n", base_block.find("attGrowth"))]
+	baseDEF = float(base_block[base_block.find("defGrowth")+10:base_block.find(",", (base_block.find("defGrowth")))])
+	baseDEF_max = float(base_block[base_block.find(",", base_block.find("defGrowth"))+2:base_block.rfind(",", 0, (base_block.find("agiGrowth")))])
+	baseDEF_growth = base_block[base_block.rfind(",", 0 ,base_block.find("\n", base_block.find("defGrowth")))+2:base_block.find("\n", base_block.find("defGrowth"))]
+	baseAGI = float(base_block[base_block.find("agiGrowth")+10:base_block.find(",", (base_block.find("agiGrowth")))])
+	baseAGI_max = float(base_block[base_block.find(",", base_block.find("agiGrowth"))+2:base_block.rfind(",", 0, (base_block.find("List")))])
+	baseAGI_growth = base_block[base_block.rfind(",", 0 ,base_block.find("\n", base_block.find("agiGrowth")))+2:base_block.find("\n", base_block.find("agiGrowth"))]
+	promoHP_base = float(promo_block[promo_block.find("hpGrowth")+9:promo_block.find(",", (promo_block.find("hpGrowth")))])
+	promoHP_max = float(promo_block[promo_block.find(",", promo_block.find("hpGrowth"))+2:promo_block.rfind(",", 0, (promo_block.find("mpGrowth")))])
+	promoMP_base = float(promo_block[promo_block.find("mpGrowth")+9:promo_block.find(",", (promo_block.find("mpGrowth")))])
+	promoMP_max = float(promo_block[promo_block.find(",", promo_block.find("mpGrowth"))+2:promo_block.rfind(",", 0, (promo_block.find("attGrowth")))])
+	promoATT_base = float(promo_block[promo_block.find("attGrowth")+10:promo_block.find(",", (promo_block.find("attGrowth")))])
+	promoATT_max = float(promo_block[promo_block.find(",", promo_block.find("attGrowth"))+2:promo_block.rfind(",", 0, (promo_block.find("defGrowth")))])
+	promoDEF_base = float(promo_block[promo_block.find("defGrowth")+10:promo_block.find(",", (promo_block.find("defGrowth")))])
+	promoDEF_max = float(promo_block[promo_block.find(",", promo_block.find("defGrowth"))+2:promo_block.rfind(",", 0, (promo_block.find("agiGrowth")))])
+	promoAGI_base = float(promo_block[promo_block.find("agiGrowth")+10:promo_block.find(",", (promo_block.find("agiGrowth")))])
+	promoAGI_max = float(promo_block[promo_block.find(",", promo_block.find("agiGrowth"))+2:promo_block.rfind(",", 0, (promo_block.find("List")))])
+	stat_list = [baseHP,baseMP,baseATT,baseDEF,baseAGI]
+	cur_stat_list = [baseHP,baseMP,baseATT,baseDEF,baseAGI]
+	stat_max_list = [baseHP_max,baseMP_max,baseATT_max,baseDEF_max,baseAGI_max]
+	growth_list = [baseHP_growth,baseMP_growth,baseATT_growth,baseDEF_growth,baseAGI_growth]
+	for x in range(0,int(new_promo_level-1)):
+		for y in range(len(stat_list)):
+			if(growth_list[y] == "NONE"):
+				continue
+			if(x < 29):
+				expected_gain = int(float(growths[growth_list[y]][x][1])*(stat_max_list[y]-stat_list[y])/256.0 + random.random())
+				expected_average = (stat_max_list[y]-stat_list[y])*(float(growths[growth_list[y]][x][0])/256.0)+stat_list[y]
+				cur_stat_list[y] += expected_gain
+				if(cur_stat_list[y] < expected_average):
+					cur_stat_list[y] += 1
+			else:
+				expected_gain = int(1.5*(stat_max_list[y]-stat_list[y])/29 + random.random())
+				expected_average = stat_max_list[y] + (stat_max_list[y]-stat_list[y])*1.5*(30-x)/29
+				cur_stat_list[y] = cur_stat_list[y] + expected_gain
+				if(cur_stat_list[y] < expected_average):
+					cur_stat_list[y] += 1
+	promo_new_max = [promoHP_max + (cur_stat_list[0] - promoHP_base),promoMP_max + (cur_stat_list[1] - promoMP_base),\
+	promoATT_max + (cur_stat_list[2] - promoATT_base), promoDEF_max + (cur_stat_list[3] - promoDEF_base),\
+	promoAGI_max + (cur_stat_list[4] - promoAGI_base)]
+	splits = promo_block.split("\n")
+	promo_block_rep = ""
+	for x in splits:
+		if("hpGrowth" in x):
+			promo_block_rep += x[0:x.find("hpGrowth")] + "hpGrowth  " + str(int(cur_stat_list[0])) + ", " + str(int(promo_new_max[0])) + x[x.rfind(","):] + "\n"
+		elif("mpGrowth" in x):
+			promo_block_rep += x[0:x.find("mpGrowth")] + "mpGrowth  " + str(int(cur_stat_list[1])) + ", " + str(int(promo_new_max[1])) + x[x.rfind(","):] + "\n"
+		elif("attGrowth" in x):
+			promo_block_rep += x[0:x.find("attGrowth")] + "attGrowth " + str(int(cur_stat_list[2])) + ", " + str(int(promo_new_max[2])) + x[x.rfind(","):] + "\n"
+		elif("defGrowth" in x):
+			promo_block_rep += x[0:x.find("defGrowth")] + "defGrowth " + str(int(cur_stat_list[3])) + ", " + str(int(promo_new_max[3])) + x[x.rfind(","):] + "\n"
+		elif("agiGrowth" in x):
+			promo_block_rep += x[0:x.find("agiGrowth")] + "agiGrowth " + str(int(cur_stat_list[4])) + ", " + str(int(promo_new_max[4])) + x[x.rfind(","):] + "\n"
+		else:
+			promo_block_rep += x + "\n"
+	promo_block_rep = promo_block_rep[0:-1]
+	f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats" + (str(ally_num) if ally_num > 9 else ("0" + str(ally_num))) +".asm", 'w')
+	f.write(file.replace(promo_block, promo_block_rep))
+	f.close()
 
 def determine_new_class(name, class_old, with_class, promo_dict, r_promo_dict, wiz_flag, depromote, rand_promo):
 	orig_promos = orig_values = {"ROHDE" : "BRGN", "HIGINS" : "PLDN", "SKREECH" : "BDBT", "TAYA" : "SORC_3", "FRAYJA" : "VICR",\
@@ -916,70 +1006,130 @@ def randomize_spells(silent_output, chars, spells_1, spells_2, levels, starter_s
 		randomize_spells(*args)
 
 def take_inputs():
-	rand_chars = input("Randomize characters? ")
-	while(rand_chars != "y" and rand_chars != "Y" and rand_chars != "n" and rand_chars != "N"):
+	rand_chars = input("Randomize characters? ").casefold()
+	while(rand_chars != "y" and rand_chars != "n"):
 		if(rand_chars == "help"):
-			rand_chars = input("This will change where each character in the game is recruited. Their weapon and level will be on par with what the original character recruited in that position would have gotten. ")
+			rand_chars = input("This will change where each character in the game is recruited. Their weapon and level will be on par with what the original character recruited in that position would have gotten. ").casefold()
 		else:
-			rand_chars = input("Invalid response. ")
-	rand_chars = True if rand_chars == "y" or rand_chars == "Y" else False
-	rand_depromo = input("Allow characters to depromote while randomizing? ")
-	while(rand_depromo != "y" and rand_depromo != "Y" and rand_depromo != "n" and rand_depromo != "N"):
+			rand_chars = input("Invalid response. ").casefold()
+	rand_chars = True if rand_chars == "y" else False
+	rand_depromo = input("Allow characters to depromote while randomizing? ").casefold()
+	while(rand_depromo != "y" and rand_depromo != "n"):
 		if(rand_depromo == "help"):
-			rand_depromo = input("Yes will allow characters to depromote into an approprate class that they did not have access to in the original game. Otherwise, promoted characters cannot random with anyone under level 21 in their original recruitment spot. ")
+			rand_depromo = input("Yes will allow characters to depromote into an approprate class that they did not have access to in the original game. Otherwise, promoted characters cannot random with anyone under level 21 in their original recruitment spot. ").casefold()
 		else:
-			rand_depromo = input("Invalid response. ")
-	rand_depromo = True if rand_depromo == "y" or rand_depromo == "Y" else False
-	rand_prepromo = input("Randomize promotion path for pre-promoted characters? ")
-	while(rand_prepromo != "y" and rand_prepromo != "Y" and rand_prepromo != "n" and rand_prepromo != "N"):
+			rand_depromo = input("Invalid response. ").casefold()
+	rand_depromo = True if rand_depromo == "y" else False
+	rand_prepromo = input("Randomize promotion path for pre-promoted characters? ").casefold()
+	while(rand_prepromo != "y" and rand_prepromo != "n"):
 		if(rand_prepromo == "help"):
-			rand_prepromo = input("Yes will take any character whose final recruitment would result in them being promoted to randomly select between their two promotion options assuming they had two options. ")
+			rand_prepromo = input("Yes will take any character whose final recruitment would result in them being promoted to randomly select between their two promotion options assuming they had two options. ").casefold()
 		else:
-			rand_prepromo = input("Invalid response. ")
-	rand_prepromo = True if rand_prepromo == "y" or rand_prepromo == "Y" else False
-	rand_magic = input("Randomize magic learned? ")
-	while(rand_magic != "y" and rand_magic != "Y" and rand_magic != "n" and rand_magic != "N"):
+			rand_prepromo = input("Invalid response. ").casefold()
+	rand_prepromo = True if rand_prepromo == "y" else False
+	rand_magic = input("Randomize magic learned? ").casefold()
+	while(rand_magic != "y" and rand_magic != "n"):
 		if(rand_magic == "help"):
-			rand_magic = input("Any spell in the original that had at least 2 levels can become any 2-4 level spell. The whole spell-pool remains the same though, so no having 2 people learn Raijin for instance. 1 level spells are randomized amongst themselves. Yes this includes sorcerers. ")
+			rand_magic = input("Any spell in the original that had at least 2 levels can become any 2-4 level spell. The whole spell-pool remains the same though, so no having 2 people learn Raijin for instance. 1 level spells are randomized amongst themselves. Yes this includes sorcerers. ").casefold()
 		else:
-			rand_magic = input("Invalid response. ")
-	rand_magic = True if rand_magic == "y" or rand_magic == "Y" else False
-	chaos_magic = input("Fully randomize learned levels? ")
-	while(chaos_magic != "y" and chaos_magic != "Y" and chaos_magic != "n" and chaos_magic != "N"):
-		if(chaos_magic == "help"):
-			chaos_magic = input("Normally, characters will still only learn spells when they would otherwise in the base game, but this options just picks completely random levels between 1 and 52. ")
-		else:
-			chaos_magic = input("Invalid response. ")
-	chaos_magic = True if chaos_magic == "y" or chaos_magic == "Y" else False
-	rand_promo_items = input("Randomize which promo items you get? ")
-	while(rand_promo_items != "y" and rand_promo_items != "Y" and rand_promo_items != "n" and rand_promo_items != "N"):
+			rand_magic = input("Invalid response. ").casefold()
+	rand_magic = True if rand_magic == "y" else False
+	if(rand_magic):
+		chaos_magic = input("Fully randomize learned levels? ").casefold()
+		while(chaos_magic != "y" and chaos_magic != "n"):
+			if(chaos_magic == "help"):
+				chaos_magic = input("Normally, characters will still only learn spells when they would otherwise in the base game, but this options just picks completely random levels between 1 and 52. ").casefold()
+			else:
+				chaos_magic = input("Invalid response. ").casefold()
+		chaos_magic = True if chaos_magic == "y" else False
+	else:
+		chaos_magic = False
+	rand_promo_items = input("Randomize which promo items you get? ").casefold()
+	while(rand_promo_items != "y" and rand_promo_items != "n"):
 		if(rand_promo_items == "help"):
-			rand_promo_items = input("Picks random promotion items to replace the existing ones. They have the same locations (except the second Vigor Ball which I moved). All items will be usable. If you random all centaurs promoted, then you won't get any Pegasus Wings. You will never get more of an item than potential characters that can use it either. ")
+			rand_promo_items = input("Picks random promotion items to replace the existing ones. They have the same locations (except the second Vigor Ball which I moved). All items will be usable. If you random all centaurs promoted, then you won't get any Pegasus Wings. You will never get more of an item than potential characters that can use it either. ").casefold()
 		else:
-			rand_promo_items = input("Invalid response. ")
-	rand_promo_items = True if rand_promo_items == "y" or rand_promo_items == "Y" else False
-	rand_stat_growths = input("Randomize stat progression? ")
-	while(rand_stat_growths != "y" and rand_stat_growths != "Y" and rand_stat_growths != "n" and rand_stat_growths != "N"):
+			rand_promo_items = input("Invalid response. ").casefold()
+	rand_promo_items = True if rand_promo_items == "y" else False
+	rand_stat_growths = input("Randomize stat progression? ").casefold()
+	while(rand_stat_growths != "y" and rand_stat_growths != "n"):
 		if(rand_stat_growths == "help"):
-			rand_stat_growths = input("Randomzies the growth rate of each character between the existing growth rates of early, middle, late, early + late, and linear. The max/base stats are not affected. ")
+			rand_stat_growths = input("Randomzies the growth rate of each character between the existing growth rates of early, middle, late, early + late, and linear. The max/base stats are not affected. (not currently doing anything)").casefold()
 		else:
-			rand_stat_growths = input("Invalid response. ")
-	rand_stat_growths = True if rand_stat_growths == "y" or rand_stat_growths == "Y" else False
-	rand_stats = input("Randomize stats by up to 10% in either direction? ")
-	while(rand_stats != "y" and rand_stats != "Y" and rand_stats != "n" and rand_stats != "N"):
+			rand_stat_growths = input("Invalid response. ").casefold()
+	rand_stat_growths = True if rand_stat_growths == "y" else False
+	rand_stats = input("Randomize stats by up to 10% in either direction? ").casefold()
+	while(rand_stats != "y" and rand_stats != "n"):
 		if(rand_stats == "help"):
-			rand_stats = input("Randomizes base and max stats of each character by up to 10% in either direction. ")
+			rand_stats = input("Randomizes base and max stats of each character by up to 10% in either direction. (not currently doing anything)").casefold()
 		else:
-			rand_stats = input("Invalid response. ")
-	rand_stats = True if rand_stats == "y" or rand_stats == "Y" else False
-	silent_output = input("Print the outcome to the command line? ")
-	while(silent_output != "y" and silent_output != "Y" and silent_output != "n" and silent_output != "N"):
+			rand_stats = input("Invalid response. ").casefold()
+	rand_stats = True if rand_stats == "y" else False
+	adjust_level = input("Change promo level or effective promoted level? ").casefold()
+	while(adjust_level != "y" and adjust_level != "n"):
+		if(adjust_level == "help"):
+			adjust_level = input("Yes if you want this option. You set the level in the next 2 questions.").casefold()
+		else:
+			adjust_level = input("Invalid response. ").casefold()
+	adjust_level = True if adjust_level == "y" else False
+	if(adjust_level):
+		promo_level = input("What level will you promote your characters? This should be an integer between 10 and 50. ").casefold()
+		while(True):
+			if(promo_level.casefold() == "help"):
+				promo_level = input("This will enforce that all characters must be promoted at this level and adjust pre-promoted characters base stats as if they were promoted at this level. ").casefold()
+				continue
+			if(not promo_level.isdecimal()):
+				promo_level = input("Enter a number using the decimal system. ").casefold()
+				continue
+			num = int(promo_level)
+			if(num > 50 or num < 10):
+				promo_level = input("Enter a number between 10 and 50. ").casefold()
+				continue
+			else:
+				break
+		promo_level = num
+		promo_elevel = input("What level should the game treat promoted characters as? ").casefold()
+		while(True):
+			if(promo_elevel.casefold() == "help"):
+				promo_elevel = input("The default is 21 for a level 1 promoted character. Promoting at 30 allows a new character to get 9 level ups before hitting the same cap they were at previously. Must be at most the promotion level. The lower it is, the easier things will be. ").casefold()
+				continue
+			if(not promo_elevel.isdecimal()):
+				promo_elevel = input("Enter a number using the decimal system. ").casefold()
+				continue
+			enum = int(promo_elevel)
+			if(enum > (num+1) or enum < 1):
+				promo_elevel = input(f"Enter a number between 1 and {num}+1. ").casefold()
+				continue
+			else:
+				break
+		promo_elevel = enum
+	else:
+		promo_level = 20
+		promo_elevel = 21
+	silent_output = input("Print the outcome to the command line? ").casefold()
+	while(silent_output != "y" and silent_output != "n"):
 		if(silent_output == "help"):
-			silent_output = input("Yes if you want to know what is getting changed to what. Otherwise, the output will be nothing to keep it a mystery. ")
+			silent_output = input("Yes if you want to know what is getting changed to what. Otherwise, the output will be nothing to keep it a mystery. ").casefold()
 		else:
-			silent_output = input("Invalid response. ")
-	silent_output = False if silent_output == "y" or silent_output == "Y" else True
-	return {"Characters" : rand_chars, "Depromos" : rand_depromo, "Promo" : rand_prepromo, "Magic" : rand_magic, "Magic levels" : chaos_magic, "Items" : rand_promo_items, "Growths" : rand_stat_growths, "Stats" : rand_stats, "Silent" : silent_output}
+			silent_output = input("Invalid response. ").casefold()
+	silent_output = False if silent_output == "y" else True
+	silent_output = input("Print the outcome to the command line? ").casefold()
+	while(silent_output != "y" and silent_output != "n"):
+		if(silent_output == "help"):
+			silent_output = input("Yes if you want to know what is getting changed to what. Otherwise, the output will be nothing to keep it a mystery. ").casefold()
+		else:
+			silent_output = input("Invalid response. ").casefold()
+	silent_output = False if silent_output == "y" else True
+	no_prompt = input("Save these answers and never ask again? ").casefold()
+	while(no_prompt != "y" and no_prompt != "n"):
+		if(no_prompt == "help"):
+			no_prompt = input("Yes if you want to know what is getting changed to what. Otherwise, the output will be nothing to keep it a mystery. ").casefold()
+		else:
+			no_prompt = input("Invalid response. ").casefold()
+	no_prompt = True if no_prompt == "y" else False
+	return {"Characters" : rand_chars, "Depromos" : rand_depromo, "Promo" : rand_prepromo, "Magic" : rand_magic, "Magic levels" : chaos_magic, \
+	"Items" : rand_promo_items, "Growths" : rand_stat_growths, "Stats" : rand_stats, "Silent" : silent_output, "Adjust Level" : adjust_level, \
+	"Promo Level": promo_level, "Promo Effective Level" : promo_elevel, "No Prompt" : no_prompt}
 
 
 config = {}
@@ -988,7 +1138,7 @@ if(Path("config.txt").exists()):
 	f = open("config.txt", 'r')
 	config = eval(f.read())
 	f.close()
-	if("No Prompt" not in config):
+	if(not config["No Prompt"]):
 		resp = input("Use saved settings? ")
 		while(resp != "y" and resp != "Y" and resp != "n" and resp != "N"):
 			if(resp == "help"):
@@ -1002,6 +1152,7 @@ else:
 f = open("config.txt", 'w')
 f.write(repr(config))
 f.close()
+sys.stdout = open("output.txt", 'w')
 
 chars_m = ["BOWIE","SARAH","CHESTER","JAHA","KAZIN","SLADE","KIWI","PETER","MAY","GERHALT","LUKE","ROHDE","RICK","ELRIC","ERIC","KARNA","RANDOLF","TYRIN","JANET","HIGINS","SKREECH","TAYA","FRAYJA","JARO","GYAN","SHEELA","ZYNK","CHAZ","LEMON", "CLAUDE"]
 chars_b = ["BOWIE","SARAH","CHESTER","JAHA","KAZIN","SLADE","KIWI","PETER","MAY","GERHALT","LUKE","RICK"]
@@ -1205,6 +1356,56 @@ if(config["Magic"]):
 		chaz_spells = [1,10,49,52,5,15,22,40,35,38,42,46,36]
 
 	randomize_spells(config["Silent"],chars_m, spells_1, spells_2, levels, starter_spells, bowie_spells,sarah_spells,kazin_spells,sorc_spells,slade_spells,karna_spells,tyrin_spells,taya_spells,frayja_spells,sheela_spells,chaz_spells)
+if(config["Adjust Level"]):
+	new_promo_level = config["Promo Level"]
+	treat_promo_as = int(config["Promo Effective Level"])-1
+	f = open("..\\disasm\\data\\stats\\allies\\allystartdefs.asm", 'r')
+	file = f.read()
+	f.close()
+	f = open("..\\disasm\\data\\stats\\allies\\growthcurves.asm", 'r')
+	file2 = f.read()
+	f.close()
+	split = file2.split("dc.w")
+	growth_dict = {}
+	cur_growth = ""
+	for x in split:
+		if("Linear" in x):
+			cur_growth = "LINEAR"
+			growth_dict[cur_growth] = []
+			continue
+		growth_dict[cur_growth].append((x[1:x.find(",")], x[x.find(",")+2 : x.find(";")].strip()))
+		if("Early and late" in x):
+			cur_growth = "EARLYANDLATE"
+			growth_dict[cur_growth] = []
+		elif("Early" in x):
+			cur_growth = "EARLY"
+			growth_dict[cur_growth] = []
+		elif("Middle" in x):
+			cur_growth = "MIDDLE"
+			growth_dict[cur_growth] = []
+		elif("Late" in x):
+			cur_growth = "LATE"
+			growth_dict[cur_growth] = []
+	for x in iter(orig_values):
+		new_class = re.search("startClass [A-Z]*_?\\d?\\s*; \\d*: " + x, file).group()
+		new_class = new_class[11:new_class.find("         ")]
+		class_dict = {"BASE" : ("SDMN", "KNTE", "WARR", "MAGE_1", "MAGE_2", "MAGE_3", "MAGE_4", "PRST", "ACHR", "BDMN", "WFMN", "RNGR", "PHNK", "THIF", "TORT", "RWAR", "DRD", "CNST")}
+		class_dict["PROMO"] = ("HERO", "PLDN", "GLDT", "WIZ", "WIZ", "WIZ", "WIZ", "VICR", "SNIP", "BDBT", "WFBR", "BWNT", "PHNX", "NINJ", "MNST", "RBT", "GLM")
+		class_dict["SPECIAL"] = ("PGNT", "BRN", "SORC_1", "SORC_2", "SORC_3", "SORC_4", "MMNK", "BRGN", "RDBN")
+		r_class_dict = {}
+		for v,k in class_dict.items():
+			for y in k:
+				r_class_dict[y] = v
+		if(new_class in class_dict["BASE"]):
+			continue
+		adjust_promo_stats(orig_values[x], new_class, int(new_promo_level),growth_dict)
+	f = open("..\\disasm\\sf2enums.asm", 'r')
+	file = f.read()
+	f.close()
+	f = open("..\\disasm\\sf2enums.asm", 'w')
+	file = file[0:file.find("CHAR_CLASS_EXTRALEVEL")] + "CHAR_CLASS_EXTRALEVEL: equ " + str(treat_promo_as) + file[file.find("\n", file.find("CHAR_CLASS_EXTRALEVEL")):]
+	f.write(file)
+	f.close()
 remove_redundant_classes()
 if(config["Items"]):
 	promo_item_dict = {"VIGOR_BALL" : ["SARAH", "Karna", "FRAYJA", "SHEELA"], "WARRIORS_PRIDE" : ["JAHA", "RANDOLF", "GYAN"], \

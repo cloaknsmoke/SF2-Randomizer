@@ -20,5 +20,4 @@ echo Patched text
 echo Patched icon
 @python "./swap characters.py"
 echo Randomized various things
-pause
 @call ../build/buildstandard.bat
