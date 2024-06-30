@@ -788,7 +788,7 @@ def generate_text(join_num, starter_spells, char_spells, levels, spells_1, spell
 	text = text[0:-4]
 	return cur_spells, text
 	
-def randomize_spells(silent_output, chars, spells_1, spells_2, levels, starter_spells, bowie_spells,sarah_spells,kazin_spells,sorc_spells,slade_spells,karna_spells,tyrin_spells,taya_spells,frayja_spells,sheela_spells,chaz_spells):
+def randomize_spells(chars, spells_1, spells_2, levels, starter_spells, bowie_spells,sarah_spells,kazin_spells,sorc_spells,slade_spells,karna_spells,tyrin_spells,taya_spells,frayja_spells,sheela_spells,chaz_spells):
 	#make shallow copies of the lists in case we have to start over
 	spells_1c = spells_1[:]
 	spells_2c = spells_2[:]
@@ -802,7 +802,7 @@ def randomize_spells(silent_output, chars, spells_1, spells_2, levels, starter_s
 	frayja_spellsc = frayja_spells[:]
 	sheela_spellsc = sheela_spells[:]
 	chaz_spellsc = chaz_spells[:]
-	args = [silent_output, chars, spells_1c, spells_2c, levels, starter_spells, bowie_spellsc,sarah_spellsc,kazin_spellsc,sorc_spells,slade_spellsc,karna_spellsc,tyrin_spellsc,taya_spellsc,frayja_spellsc,sheela_spellsc,chaz_spellsc]
+	args = [chars, spells_1c, spells_2c, levels, starter_spells, bowie_spellsc,sarah_spellsc,kazin_spellsc,sorc_spells,slade_spellsc,karna_spellsc,tyrin_spellsc,taya_spellsc,frayja_spellsc,sheela_spellsc,chaz_spellsc]
 	try:
 		output = ""
 		for x in range(len(chars)):
@@ -998,11 +998,9 @@ def randomize_spells(silent_output, chars, spells_1, spells_2, levels, starter_s
 					f.close()
 					output = output + f"Chaz now learns {text_1}\n"
 					output = output + f"Sorc Chaz now learns {text_2}\n"
-		if(not silent_output):
-			print(output)
+		print(output)
 	except Exception as e:
-		if(not silent_output):
-			print(str(e) +  " Trying again.")
+		print(str(e) +  " Trying again.")
 		randomize_spells(*args)
 
 def take_inputs():
@@ -1106,20 +1104,6 @@ def take_inputs():
 	else:
 		promo_level = 20
 		promo_elevel = 21
-	silent_output = input("Print the outcome to the command line? ").casefold()
-	while(silent_output != "y" and silent_output != "n"):
-		if(silent_output == "help"):
-			silent_output = input("Yes if you want to know what is getting changed to what. Otherwise, the output will be nothing to keep it a mystery. ").casefold()
-		else:
-			silent_output = input("Invalid response. ").casefold()
-	silent_output = False if silent_output == "y" else True
-	silent_output = input("Print the outcome to the command line? ").casefold()
-	while(silent_output != "y" and silent_output != "n"):
-		if(silent_output == "help"):
-			silent_output = input("Yes if you want to know what is getting changed to what. Otherwise, the output will be nothing to keep it a mystery. ").casefold()
-		else:
-			silent_output = input("Invalid response. ").casefold()
-	silent_output = False if silent_output == "y" else True
 	no_prompt = input("Save these answers and never ask again? ").casefold()
 	while(no_prompt != "y" and no_prompt != "n"):
 		if(no_prompt == "help"):
@@ -1128,7 +1112,7 @@ def take_inputs():
 			no_prompt = input("Invalid response. ").casefold()
 	no_prompt = True if no_prompt == "y" else False
 	return {"Characters" : rand_chars, "Depromos" : rand_depromo, "Promo" : rand_prepromo, "Magic" : rand_magic, "Magic levels" : chaos_magic, \
-	"Items" : rand_promo_items, "Growths" : rand_stat_growths, "Stats" : rand_stats, "Silent" : silent_output, "Adjust Level" : adjust_level, \
+	"Items" : rand_promo_items, "Growths" : rand_stat_growths, "Stats" : rand_stats, "Adjust Level" : adjust_level, \
 	"Promo Level": promo_level, "Promo Effective Level" : promo_elevel, "No Prompt" : no_prompt}
 
 
@@ -1314,8 +1298,9 @@ if(config["Characters"]):
 		chars_m[index_a] = swap_char_b
 		chars_m[index_b] = swap_char_a
 		swap_characters(swap_char_a, swap_char_b, name_a, name_b, orig_values[swap_char_a], orig_values[swap_char_b], config["Depromos"], config["Promo"])
-	if(not config["Silent"]):
-		print(f"New character order\n{chars_m}")
+	r_orig_values = {orig_values[k] : k for k in iter(orig_values)}
+	for x in range(len(chars_m)):
+		print(f"{r_orig_values[x]}\treplaced by {chars_m[x]}")
 	replace_npc_rohde_sprite()
 	replace_spinning_elric()
 	replace_knocked_out_luke()
@@ -1355,7 +1340,7 @@ if(config["Magic"]):
 		sheela_spells = [1,5,36,51,7,18,38,47,11,24,32,41,13,20,28,44]
 		chaz_spells = [1,10,49,52,5,15,22,40,35,38,42,46,36]
 
-	randomize_spells(config["Silent"],chars_m, spells_1, spells_2, levels, starter_spells, bowie_spells,sarah_spells,kazin_spells,sorc_spells,slade_spells,karna_spells,tyrin_spells,taya_spells,frayja_spells,sheela_spells,chaz_spells)
+	randomize_spells(chars_m, spells_1, spells_2, levels, starter_spells, bowie_spells,sarah_spells,kazin_spells,sorc_spells,slade_spells,karna_spells,tyrin_spells,taya_spells,frayja_spells,sheela_spells,chaz_spells)
 if(config["Adjust Level"]):
 	new_promo_level = config["Promo Level"]
 	treat_promo_as = int(config["Promo Effective Level"])-1
@@ -1404,6 +1389,7 @@ if(config["Adjust Level"]):
 	f.close()
 	f = open("..\\disasm\\sf2enums.asm", 'w')
 	file = file[0:file.find("CHAR_CLASS_EXTRALEVEL")] + "CHAR_CLASS_EXTRALEVEL: equ " + str(treat_promo_as) + file[file.find("\n", file.find("CHAR_CLASS_EXTRALEVEL")):]
+	file = file[0:file.find("CHAR_LEVELCAP_BASE")] + "CHAR_LEVELCAP_BASE: equ " + str(new_promo_level) + file[file.find("\n", file.find("CHAR_LEVELCAP_BASE")):]
 	f.write(file)
 	f.close()
 remove_redundant_classes()
@@ -1440,8 +1426,7 @@ if(config["Items"]):
 	f.close()
 	f = open("..\\disasm\\data\\maps\\entries\\map07\\8-other-items.asm", 'w')
 	temp_item = random.choice(rep_list)
-	if(not config["Silent"]):
-		print("Swapped Warrior's Pride with", temp_item)
+	print("Swapped Warrior's Pride with", temp_item)
 	rep_list.remove(temp_item)
 	f.write(file.replace("WARRIORS_PRIDE", temp_item))
 	f.close()
@@ -1457,8 +1442,7 @@ if(config["Items"]):
 	f.close()
 	f = open("..\\disasm\\data\\maps\\entries\\map23\\8-other-items.asm", 'w')
 	temp_item = random.choice(rep_list)
-	if(not config["Silent"]):
-		print("Swapped Secret Book with", temp_item)
+	print("Swapped Secret Book with", temp_item)
 	rep_list.remove(temp_item)
 	f.write(file.replace("SECRET_BOOK", temp_item))
 	f.close()
@@ -1468,8 +1452,7 @@ if(config["Items"]):
 	f.close()
 	f = open("..\\disasm\\data\\maps\\entries\\map23\\7-chest-items.asm", 'w')
 	temp_item = random.choice(rep_list)
-	if(not config["Silent"]):
-		print("Swapped Vigor Ball 1 with", temp_item)
+	print("Swapped Vigor Ball 1 with", temp_item)
 	rep_list.remove(temp_item)
 	f.write(file.replace("VIGOR_BALL", temp_item))
 	f.close()
@@ -1479,8 +1462,7 @@ if(config["Items"]):
 	f.close()
 	f = open("..\\disasm\\data\\maps\\entries\\map36\\8-other-items.asm", 'w')
 	temp_item = random.choice(rep_list)
-	if(not config["Silent"]):
-		print("Swapped Pegasus Wing with", temp_item)
+	print("Swapped Pegasus Wing with", temp_item)
 	rep_list.remove(temp_item)
 	f.write(file.replace("PEGASUS_WING", temp_item))
 	f.close()
@@ -1490,8 +1472,7 @@ if(config["Items"]):
 	f.close()
 	f = open("..\\disasm\\data\\maps\\entries\\map67\\8-other-items.asm", 'w')
 	temp_item = random.choice(rep_list)
-	if(not config["Silent"]):
-		print("Swapped Vigor Ball 2 with", temp_item)
+	print("Swapped Vigor Ball 2 with", temp_item)
 	rep_list.remove(temp_item)
 	f.write(file.replace("VIGOR_BALL", temp_item))
 	f.close()
@@ -1501,8 +1482,7 @@ if(config["Items"]):
 	f.close()
 	f = open("..\\disasm\\data\\maps\\entries\\map48\\7-chest-items.asm", 'w')
 	temp_item = random.choice(rep_list)
-	if(not config["Silent"]):
-		print("Swapped Silver Tank with", temp_item)
+	print("Swapped Silver Tank with", temp_item)
 	rep_list.remove(temp_item)
 	f.write(file.replace("SILVER_TANK", temp_item))
 	f.close()
