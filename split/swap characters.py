@@ -99,6 +99,64 @@ def replace_knocked_out_luke():
 	f = open("..\\disasm\\data\\battles\\global\\battleneutralentities.asm", 'w')
 	f.write(file3)
 	f.close()
+	
+def replace_knocked_out_higins():
+	f = open("..\\disasm\\sf2enums.asm")
+	file1 = f.read()
+	f.close()
+	who_is_higins = re.search("ALLY_[A-Z]*: equ 19", file1).group()[5:-8]
+	f = open("..\\disasm\\data\\stats\\allies\\allystartdefs.asm")
+	file2 = f.read()
+	f.close()
+	new_class = re.search("startClass [A-Z]*_?\\d?         ; \\d*: " + who_is_higins, file2).group()
+	new_class = new_class[11:new_class.find("         ")]
+	class_dict = {"BASE" : ("SDMN", "KNTE", "WARR", "MAGE_1", "MAGE_2", "MAGE_3", "MAGE_4", "PRST", "ACHR", "BDMN", "WFMN", "RNGR", "PHNK", "THIF", "TORT", "RWAR", "DRD", "CNST")}
+	class_dict["PROMO"] = ("HERO", "PLDN", "GLDT", "WIZ", "WIZ", "WIZ", "WIZ", "VICR", "SNIP", "BDBT", "WFBR", "BWNT", "PHNX", "NINJ", "MNST", "RBT", "GLM")
+	class_dict["SPECIAL"] = ("PGNT", "BRN", "SORC_1", "SORC_2", "SORC_3", "SORC_4", "MMNK", "BRGN", "RDBN")
+	r_class_dict = {}
+	for v,k in class_dict.items():
+		for x in k:
+			r_class_dict[x] = v
+	f = open("..\\disasm\\data\\battles\\global\\battleneutralentities.asm", 'r')
+	file3 = f.read()
+	f.close()
+	np_battle = file3[file3.find("OUTSIDE_KETTO"):file3.find("TERMINATOR_WORD",file3.find("OUTSIDE_KETTO"))]
+	np_rep = np_battle.replace(re.search("mapsprite [A-Z]*_[A-Z]*\n", np_battle).group(), "mapsprite " + who_is_higins + "_" + r_class_dict[new_class] + "\n")
+	file3 = file3.replace(np_battle, np_rep)
+	f = open("..\\disasm\\data\\battles\\global\\battleneutralentities.asm", 'w')
+	f.write(file3)
+	f.close()
+
+def replace_enemy_jaro():
+	f = open("..\\disasm\\sf2enums.asm")
+	file1 = f.read()
+	f.close()
+	who_is_jaro = re.search("ALLY_[A-Z]*: equ 23", file1).group()[5:-8]
+	f = open("..\\disasm\\data\\stats\\allies\\allystartdefs.asm")
+	file2 = f.read()
+	f.close()
+	new_class = re.search("startClass [A-Z]*_?\\d?         ; \\d*: " + who_is_jaro, file2).group()
+	new_class = new_class[11:new_class.find("         ")]
+	class_dict = {"BASE" : ("SDMN", "KNTE", "WARR", "MAGE_1", "MAGE_2", "MAGE_3", "MAGE_4", "PRST", "ACHR", "BDMN", "WFMN", "RNGR", "PHNK", "THIF", "TORT", "RWAR", "DRD", "CNST")}
+	class_dict["PROMO"] = ("HERO", "PLDN", "GLDT", "WIZ", "WIZ", "WIZ", "WIZ", "VICR", "SNIP", "BDBT", "WFBR", "BWNT", "PHNX", "NINJ", "MNST", "RBT", "GLM")
+	class_dict["SPECIAL"] = ("PGNT", "BRN", "SORC_1", "SORC_2", "SORC_3", "SORC_4", "MMNK", "BRGN", "RDBN")
+	r_class_dict = {}
+	for v,k in class_dict.items():
+		for x in k:
+			r_class_dict[x] = v
+	f = open("..\\disasm\\data\\stats\\enemies\\enemymapsprites.asm", 'r')
+	file3 = f.read()
+	f.close()
+	file3 = file3.replace("JARO_SPECIAL", who_is_jaro + r_class_dict[new_class])
+	f = open("..\\disasm\\data\\stats\\enemies\\enemymapsprites.asm", 'w')
+	f.write(file3)
+	f.close()
+	f = open("..\\disasm\\data\\stats\\enemies\\enemynames-capitalized.asm", 'r')
+	file3 = f.read()
+	f.close()
+	f = open("..\\disasm\\data\\stats\\enemies\\enemynames-capitalized.asm", 'w')
+	f.write(file3.replace("Jaro", who_is_jaro.capitalize()))
+	f.close()
 
 def remove_redundant_classes():
 	class_dict = {"BASE" : ("SDMN", "KNTE", "WARR", "MAGE_1", "MAGE_2", "MAGE_3", "MAGE_4", "PRST", "ACHR", "BDMN", "WFMN", "RNGR", "PHNK", "THIF", "TORT", "RWAR", "DRD", "CNST")}
@@ -194,8 +252,8 @@ def swap_characters(char_a, char_b, char_a_name, char_b_name, orig_a_num, orig_b
 	char_b_value = file.find("ALLY_"+char_b)
 	char_a_value = file[char_a_value+len(char_a)+11:file.find("\n", char_a_value)]
 	char_b_value = file[char_b_value+len(char_b)+11:file.find("\n", char_b_value)]
-	base_a = "_BASE" if ("BOWIE" in char_a or "SLADE" in char_a or "KIWI" in char_a or "PETER" in char_a or "GERHALT" in char_a) else ""
-	base_b = "_BASE" if ("BOWIE" in char_b or "SLADE" in char_b or "KIWI" in char_b or "PETER" in char_b or "GERHALT" in char_b) else ""
+	base_a = "_BASE" if ("BOWIE" in char_a or "SLADE" in char_a or "KIWI" in char_a or "PETER" in char_a or "GERHALT" in char_a or "CLAUDE" in char_a) else ""
+	base_b = "_BASE" if ("BOWIE" in char_b or "SLADE" in char_b or "KIWI" in char_b or "PETER" in char_b or "GERHALT" in char_b or "CLAUDE" in char_b) else ""
 	file = file.replace("ALLY_"+char_a + ": equ " + char_a_value, "{char1a}")
 	file = file.replace("ALLY_"+char_b + ": equ " + char_b_value, "{char2a}")
 	file = file.replace("PORTRAIT_" + char_a + base_a + ": equ " + char_a_value, "{char1b}")
@@ -1110,6 +1168,7 @@ if(config["Characters"]):
 	replace_npc_rohde_sprite()
 	replace_spinning_elric()
 	replace_knocked_out_luke()
+	replace_knocked_out_higins()
 if(config["Magic"]):
 	spells_1 = ["EGRESS", "DISPEL", "SLEEP", "ATTACK", "DISPEL"]
 	spells_2 = ["BOLT", "HEAL", "DETOX", "BLAST", "SLOW", "BLAZE", "MUDDLE", "DESOUL", "DAO", "APOLLO", "NEPTUN", "ATLAS",\
@@ -1125,7 +1184,7 @@ if(config["Magic"]):
 		sarah_spells = chaos.copy()
 		kazin_spells = chaos.copy()
 		sorc_spells = [x for x in range(21,53)]
-		slade_spells = [x for x in range(21,53)]
+		slade_spells = [x for x in range(22,53)]
 		karna_spells = chaos.copy()
 		tyrin_spells = chaos.copy()
 		taya_spells = chaos.copy()

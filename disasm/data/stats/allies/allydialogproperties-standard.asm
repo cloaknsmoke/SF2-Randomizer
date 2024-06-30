@@ -161,9 +161,9 @@ table_AllyDialogueProperties:
                 allyPortraitAndSfx LEMON, DIALOG_BLEEP_6
                 
 ; 29: Claude
-                allyPortraitAndSfx CLAUDE, DIALOG_BLEEP_7
-                allyPortraitAndSfx CLAUDE, DIALOG_BLEEP_7
-                allyPortraitAndSfx CLAUDE, DIALOG_BLEEP_7
+                allyPortraitAndSfx CLAUDE_BASE, DIALOG_BLEEP_7
+                allyPortraitAndSfx CLAUDE_PROMO, DIALOG_BLEEP_7
+                allyPortraitAndSfx CLAUDE_PROMO, DIALOG_BLEEP_7
                 
             if (EXPANDED_FORCE_MEMBERS=1)
 ; 30: 

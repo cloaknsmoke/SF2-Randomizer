@@ -38,8 +38,13 @@ GetAllyPortrait:
 @CheckMNST:
                 
                 cmpi.b  #CLASS_MNST,d1
-                bne.s   @Done
+                bne.s   @CheckGLM
                 moveq   #PORTRAIT_KIWI_PROMO,d0
+@CheckGLM:
+                
+                cmpi.b  #CLASS_GLM,d1
+                bne.s   @Done
+                moveq   #PORTRAIT_CLAUDE_PROMO,d0
 @Done:
                 
                 move.w  (sp)+,d1

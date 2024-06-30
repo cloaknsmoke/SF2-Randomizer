@@ -10,6 +10,8 @@ cd ../split
 echo Patched battlesprites
 @python ./expand_mapsprites.py
 echo Expanded mapsprites
+@python ./expand_portraits.py
+echo Reorganized portraits
 @call ./patch_mapsprites.bat
 echo Patched mapsprites
 @call ./patch_text.bat
