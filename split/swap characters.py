@@ -855,8 +855,9 @@ def randomize_spells(chars, spells_1, spells_2, levels, starter_spells, bowie_sp
 					file = f.read()
 					f.close()
 					base_spell = text_2[36:text_2.find(',', 36)]
-					# print(text_2)
-					file = file.replace("dc.b CLASS_SORC_1, SPELL_DAO", "dc.b CLASS_SORC_1, SPELL_" + base_spell)
+					index1 = file.find("dc.b CLASS_SORC_1,")
+					index2 = file.find("\n", index1)
+					file = file[0:index1] + "dc.b CLASS_SORC_1, SPELL_" + base_spell + file[index2:]
 					f = open("..\\disasm\\data\\stats\\allies\\classes\\promotions-standard.asm", 'w')
 					f.write(file)
 					f.close()
@@ -909,8 +910,9 @@ def randomize_spells(chars, spells_1, spells_2, levels, starter_spells, bowie_sp
 					file = f.read()
 					f.close()
 					base_spell = text_2[36:text_2.find(',', 36)]
-					# print(text_2)
-					file = file.replace("dc.b CLASS_SORC_2, SPELL_DAO", "dc.b CLASS_SORC_2, SPELL_" + base_spell)
+					index1 = file.find("dc.b CLASS_SORC_2,")
+					index2 = file.find("\n", index1)
+					file = file[0:index1] + "dc.b CLASS_SORC_2, SPELL_" + base_spell + file[index2:]
 					f = open("..\\disasm\\data\\stats\\allies\\classes\\promotions-standard.asm", 'w')
 					f.write(file)
 					f.close()
@@ -937,8 +939,9 @@ def randomize_spells(chars, spells_1, spells_2, levels, starter_spells, bowie_sp
 					file = f.read()
 					f.close()
 					base_spell = text_2[36:text_2.find(',', 36)]
-					# print(text_2)
-					file = file.replace("dc.b CLASS_SORC_3, SPELL_DAO", "dc.b CLASS_SORC_3, SPELL_" + base_spell)
+					index1 = file.find("dc.b CLASS_SORC_3,")
+					index2 = file.find("\n", index1)
+					file = file[0:index1] + "dc.b CLASS_SORC_3, SPELL_" + base_spell + file[index2:]
 					f = open("..\\disasm\\data\\stats\\allies\\classes\\promotions-standard.asm", 'w')
 					f.write(file)
 					f.close()
@@ -991,8 +994,9 @@ def randomize_spells(chars, spells_1, spells_2, levels, starter_spells, bowie_sp
 					file = f.read()
 					f.close()
 					base_spell = text_2[36:text_2.find(',', 36)]
-					# print(text_2)
-					file = file.replace("dc.b CLASS_SORC_4, SPELL_DAO", "dc.b CLASS_SORC_4, SPELL_" + base_spell)
+					index1 = file.find("dc.b CLASS_SORC_4,")
+					index2 = file.find("\n", index1)
+					file = file[0:index1] + "dc.b CLASS_SORC_4, SPELL_" + base_spell + file[index2:]
 					f = open("..\\disasm\\data\\stats\\allies\\classes\\promotions-standard.asm", 'w')
 					f.write(file)
 					f.close()
