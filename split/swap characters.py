@@ -183,6 +183,8 @@ def remove_redundant_classes():
 		base_spells = ""
 		class_data = ""
 		for y in splits2:
+			if("; Syntax" in y):
+				y = y.replace("; Syntax", "        ")
 			if("AllyStats" in y or "projected" in y):
 				continue
 			if("spellList" in y and base_spells == ""):
