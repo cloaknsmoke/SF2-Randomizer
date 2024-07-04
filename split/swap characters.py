@@ -183,8 +183,6 @@ def remove_redundant_classes():
 		base_spells = ""
 		class_data = ""
 		for y in splits2:
-			if("; Syntax" in y):
-				y = y.replace("; Syntax", "        ")
 			if("AllyStats" in y or "projected" in y):
 				continue
 			if("spellList" in y and base_spells == ""):
@@ -193,7 +191,7 @@ def remove_redundant_classes():
 				class_data = y
 		if("useFirstSpellList" in class_data):
 			class_data = class_data.replace("useFirstSpellList", base_spells)
-		file = file[0:file.index("forClass")+9] + class_data.strip()
+		file = file[0:file.index("forClass")+9].replace("; Syntax", "        ") + class_data.strip()
 		f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats" + (str(num) if num > 9 else ("0" + str(num))) +".asm", 'w')
 		f.write(file)
 		f.close()
@@ -1008,6 +1006,47 @@ def randomize_spells(chars, spells_1, spells_2, levels, starter_spells, bowie_sp
 	except Exception as e:
 		print(str(e) +  " Trying again.")
 		randomize_spells(*args)
+		
+def randomize_growths(ally_num):
+	f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats" + (str(ally_num) if ally_num > 9 else ("0" + str(ally_num))) +".asm", 'r')
+	file = f.read()
+	f.close()
+	splits = file.splitlines(True)
+	file = ""
+	growths = ["LINEAR", "EARLY", "MIDDLE", "LATE", "EARLYANDLATE"]
+	for x in splits:
+		if("LINEAR" in x or "EARLY" in x or "MIDDLE" in x or "LATE" in x or "EARLYANDLATE" in x):
+			cur_growth = random.choice(growths)
+			x = x[0:x.rfind(",")+2] + cur_growth + "\n"
+		file += x
+	f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats" + (str(ally_num) if ally_num > 9 else ("0" + str(ally_num))) +".asm", 'w')
+	f.write(file)
+	f.close()
+	
+def randomize_stats(ally_num):
+	f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats" + (str(ally_num) if ally_num > 9 else ("0" + str(ally_num))) +".asm", 'r')
+	file = f.read()
+	f.close()
+	splits = file.splitlines(True)
+	file = ""
+	growths = ["LINEAR", "EARLY", "MIDDLE", "LATE", "EARLYANDLATE"]
+	for x in splits:
+		if("LINEAR" in x or "EARLY" in x or "MIDDLE" in x or "LATE" in x or "EARLYANDLATE" in x):
+			cur_growth_base = random.random()*0.2+0.9
+			cur_growth_max = random.random()*0.2+0.9
+			index1 = x.find(",")
+			index2 = x.rfind(",")
+			base = int(int(x[index1-2:index1].lstrip().strip())*cur_growth_base+0.5)
+			max = int(int(x[index1+1:index2].lstrip().strip())*cur_growth_max+0.5)
+			new = x[0:index1-2]
+			if(x[index1-2] == " "):
+				new += " "
+			new += str(base) + ", " + str(max) + x[index2:]
+			x = new
+		file += x
+	f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats" + (str(ally_num) if ally_num > 9 else ("0" + str(ally_num))) +".asm", 'w')
+	f.write(file)
+	f.close()
 
 def take_inputs():
 	rand_chars = input("Randomize characters? ").casefold()
@@ -1058,14 +1097,14 @@ def take_inputs():
 	rand_stat_growths = input("Randomize stat progression? ").casefold()
 	while(rand_stat_growths != "y" and rand_stat_growths != "n"):
 		if(rand_stat_growths == "help"):
-			rand_stat_growths = input("Randomzies the growth rate of each character between the existing growth rates of early, middle, late, early + late, and linear. The max/base stats are not affected. (not currently doing anything)").casefold()
+			rand_stat_growths = input("Randomzies the growth rate of each character between the existing growth rates of early, middle, late, early + late, and linear. The max/base stats are not affected. ").casefold()
 		else:
 			rand_stat_growths = input("Invalid response. ").casefold()
 	rand_stat_growths = True if rand_stat_growths == "y" else False
 	rand_stats = input("Randomize stats by up to 10% in either direction? ").casefold()
 	while(rand_stats != "y" and rand_stats != "n"):
 		if(rand_stats == "help"):
-			rand_stats = input("Randomizes base and max stats of each character by up to 10% in either direction. (not currently doing anything)").casefold()
+			rand_stats = input("Randomizes base and max stats of each character by up to 10% in either direction. ").casefold()
 		else:
 			rand_stats = input("Invalid response. ").casefold()
 	rand_stats = True if rand_stats == "y" else False
@@ -1143,6 +1182,7 @@ f = open("config.txt", 'w')
 f.write(repr(config))
 f.close()
 sys.stdout = open("output.txt", 'w')
+sys.stderr = open("err.txt", 'w')
 
 chars_m = ["BOWIE","SARAH","CHESTER","JAHA","KAZIN","SLADE","KIWI","PETER","MAY","GERHALT","LUKE","ROHDE","RICK","ELRIC","ERIC","KARNA","RANDOLF","TYRIN","JANET","HIGINS","SKREECH","TAYA","FRAYJA","JARO","GYAN","SHEELA","ZYNK","CHAZ","LEMON", "CLAUDE"]
 chars_b = ["BOWIE","SARAH","CHESTER","JAHA","KAZIN","SLADE","KIWI","PETER","MAY","GERHALT","LUKE","RICK"]
@@ -1347,6 +1387,12 @@ if(config["Magic"]):
 		chaz_spells = [1,10,49,52,5,15,22,40,35,38,42,46,36]
 
 	randomize_spells(chars_m, spells_1, spells_2, levels, starter_spells, bowie_spells,sarah_spells,kazin_spells,sorc_spells,slade_spells,karna_spells,tyrin_spells,taya_spells,frayja_spells,sheela_spells,chaz_spells)
+if(config["Growths"]):
+	for x in range(30):
+		randomize_growths(x)
+if(config["Stats"]):
+	for x in range(30):
+		randomize_stats(x)
 if(config["Adjust Level"]):
 	new_promo_level = config["Promo Level"]
 	treat_promo_as = int(config["Promo Effective Level"])-1
