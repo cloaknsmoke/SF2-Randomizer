@@ -2,10 +2,10 @@
 ; ASM FILE data\stats\allies\stats\allystats26.asm :
 ; 0x1EE771..0x1EE782 : Ally stats 26
 AllyStats26:    forClass  DRD
-                hpGrowth  4, 40, LINEAR
+                hpGrowth  4, 42, LINEAR
                 mpGrowth  0, 0, NONE
                 attGrowth 10, 69, LINEAR
-                defGrowth 6, 43, LINEAR
+                defGrowth 6, 45, LINEAR
                 agiGrowth 3, 33, LINEAR
                 spellList 
                 

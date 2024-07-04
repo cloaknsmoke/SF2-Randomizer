@@ -4,8 +4,8 @@
 AllyStats23:    forClass  KNTE
                 hpGrowth  10, 52, LINEAR
                 mpGrowth  0, 0, NONE
-                attGrowth 6, 35, LATE
-                defGrowth 6, 30, LINEAR
+                attGrowth 6, 36, LATE
+                defGrowth 6, 32, LINEAR
                 agiGrowth 7, 34, MIDDLE
                 spellList 
                 

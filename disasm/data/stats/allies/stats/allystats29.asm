@@ -2,10 +2,10 @@
 ; ASM FILE data\stats\allies\stats\allystats29.asm :
 ; 0x1EE7BE..0x1EE7CF : Ally stats 29
 AllyStats29:    forClass  CNST
-                hpGrowth  4, 29, LINEAR
+                hpGrowth  4, 30, LINEAR
                 mpGrowth  0, 0, NONE
                 attGrowth 10, 69, LINEAR
-                defGrowth 6, 48, LINEAR
+                defGrowth 6, 50, LINEAR
                 agiGrowth 3, 29, EARLY
                 spellList 
                 

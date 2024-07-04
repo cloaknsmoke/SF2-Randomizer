@@ -2,9 +2,9 @@
 ; ASM FILE data\stats\allies\stats\allystats27.asm :
 ; 0x1EE782..0x1EE7AD : Ally stats 27
 AllyStats27:    forClass  MAGE_4
-                hpGrowth  11, 35, MIDDLE
-                mpGrowth  7, 55, EARLY
-                attGrowth 4, 19, LINEAR
+                hpGrowth  11, 36, MIDDLE
+                mpGrowth  7, 56, EARLY
+                attGrowth 4, 20, LINEAR
                 defGrowth 3, 23, MIDDLE
                 agiGrowth 7, 37, LINEAR
                 spellList &

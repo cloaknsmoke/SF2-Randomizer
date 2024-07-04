@@ -3,10 +3,10 @@
 ; 0x1EE748..0x1EE771 : Ally stats 25
 AllyStats25:    forClass  PRST
                 hpGrowth  8, 40, LINEAR
-                mpGrowth  7, 44, EARLYANDLATE
-                attGrowth 6, 24, LINEAR
-                defGrowth 5, 25, LINEAR
-                agiGrowth 5, 28, LINEAR
+                mpGrowth  7, 45, EARLYANDLATE
+                attGrowth 6, 25, LINEAR
+                defGrowth 5, 26, LINEAR
+                agiGrowth 5, 29, LINEAR
                 spellList &
                     1, HEAL, &
                     5, HEAL|LV2, &

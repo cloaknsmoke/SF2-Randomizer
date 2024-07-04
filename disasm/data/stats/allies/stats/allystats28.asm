@@ -2,10 +2,10 @@
 ; ASM FILE data\stats\allies\stats\allystats28.asm :
 ; 0x1EE7AD..0x1EE7BE : Ally stats 28
 AllyStats28:    forClass  RWAR
-                hpGrowth  10, 44, EARLYANDLATE
+                hpGrowth  10, 45, EARLYANDLATE
                 mpGrowth  0, 0, NONE
                 attGrowth 9, 41, LINEAR
-                defGrowth 7, 44, EARLYANDLATE
+                defGrowth 7, 45, EARLYANDLATE
                 agiGrowth 4, 31, LINEAR
                 spellList 
                 

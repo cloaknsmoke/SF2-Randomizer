@@ -2,11 +2,11 @@
 ; ASM FILE data\stats\allies\stats\allystats24.asm :
 ; 0x1EE737..0x1EE748 : Ally stats 24
 AllyStats24:    forClass  WARR
-                hpGrowth  11, 45, MIDDLE
+                hpGrowth  11, 46, MIDDLE
                 mpGrowth  0, 0, NONE
-                attGrowth 9, 41, LINEAR
-                defGrowth 7, 42, MIDDLE
-                agiGrowth 4, 29, LINEAR
+                attGrowth 9, 42, LINEAR
+                defGrowth 7, 43, MIDDLE
+                agiGrowth 4, 30, LINEAR
                 spellList 
                 
                 forClass  GLDT

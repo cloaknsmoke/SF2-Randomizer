@@ -3,10 +3,10 @@
 ; 0x1EE6FB..0x1EE726 : Ally stats 22
 AllyStats22:    forClass  PRST
                 hpGrowth  8, 41, LINEAR
-                mpGrowth  7, 42, MIDDLE
-                attGrowth 5, 23, LINEAR
-                defGrowth 5, 23, LINEAR
-                agiGrowth 6, 29, LINEAR
+                mpGrowth  7, 43, MIDDLE
+                attGrowth 5, 24, LINEAR
+                defGrowth 5, 24, LINEAR
+                agiGrowth 6, 30, LINEAR
                 spellList &
                     1, HEAL, &
                     4, DETOX, &
