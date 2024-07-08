@@ -40,8 +40,11 @@ def replace_npc_rohde_sprite():
 			r_class_dict[x] = v
 	mapsprite = "MAPSPRITE_" + who_is_rohde + "_" + r_class_dict[new_class]
 	new_sprite_index = file1[file1.find(mapsprite):file1.find("\n", file1.find(mapsprite))]
-	new_sprite_index = new_sprite_index[new_sprite_index.find("equ")+5:new_sprite_index.find("equ")+7].strip()
-	npc_rohde_index = file1.find("MAPSPRITE_NPC_ROHDE: equ $")+26
+	new_sprite_index = new_sprite_index[new_sprite_index.find("equ")+4:]
+	if(";" in new_sprite_index):
+		new_sprite_index = new_sprite_index[0:new_sprite_index.find(";")]
+	new_sprite_index = new_sprite_index.replace(" ", "").replace("\n", "")
+	npc_rohde_index = file1.find("MAPSPRITE_NPC_ROHDE: equ $")+25
 	file1 = file1[0:npc_rohde_index] + new_sprite_index + file1[file1.find("\n", npc_rohde_index):]
 	f = open("..\\disasm\\sf2enums.asm", 'w')
 	f.write(file1)
@@ -1023,7 +1026,10 @@ def randomize_growths(ally_num):
 	f.write(file)
 	f.close()
 	
-def randomize_stats(ally_num):
+def randomize_stats(ally_num, percent_change):
+	percent_change = percent_change/100.0
+	stat_min = 1-percent_change
+	percent_change = percent_change*2
 	f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats" + (str(ally_num) if ally_num > 9 else ("0" + str(ally_num))) +".asm", 'r')
 	file = f.read()
 	f.close()
@@ -1032,12 +1038,14 @@ def randomize_stats(ally_num):
 	growths = ["LINEAR", "EARLY", "MIDDLE", "LATE", "EARLYANDLATE"]
 	for x in splits:
 		if("LINEAR" in x or "EARLY" in x or "MIDDLE" in x or "LATE" in x or "EARLYANDLATE" in x):
-			cur_growth_base = random.random()*0.2+0.9
-			cur_growth_max = random.random()*0.2+0.9
+			cur_growth_base = random.random()*percent_change+stat_min
+			cur_growth_max = random.random()*percent_change+stat_min
 			index1 = x.find(",")
 			index2 = x.rfind(",")
 			base = int(int(x[index1-2:index1].lstrip().strip())*cur_growth_base+0.5)
 			max = int(int(x[index1+1:index2].lstrip().strip())*cur_growth_max+0.5)
+			if(base > max):
+				max = base
 			new = x[0:index1-2]
 			if(x[index1-2] == " "):
 				new += " "
@@ -1104,10 +1112,28 @@ def take_inputs():
 	rand_stats = input("Randomize stats by up to 10% in either direction? ").casefold()
 	while(rand_stats != "y" and rand_stats != "n"):
 		if(rand_stats == "help"):
-			rand_stats = input("Randomizes base and max stats of each character by up to 10% in either direction. ").casefold()
+			rand_stats = input("Randomizes base and max stats of each character. Next question chooses the percentage. Keep in mind this can also subtract that amount, ").casefold()
 		else:
 			rand_stats = input("Invalid response. ").casefold()
 	rand_stats = True if rand_stats == "y" else False
+	if(rand_stats):
+		percent_change = input("How much should character stats vary by? This should be an integer between 0 and 100. ").casefold()
+		while(True):
+			if(percent_change.casefold() == "help"):
+				percent_change = input("This is the amount that every character's base stats and max stats for unpromoted and all promoted classes can vary by as a percentage of 100. ").casefold()
+				continue
+			if(not percent_change.isdecimal()):
+				percent_change = input("Enter a number using the decimal system. ").casefold()
+				continue
+			num = int(percent_change)
+			if(num > 100 or num < 0):
+				percent_change = input("Enter a number between 0 and 100. ").casefold()
+				continue
+			else:
+				break
+		percent_change = num
+	else:
+		percent_change = 0
 	adjust_level = input("Change promo level or effective promoted level? ").casefold()
 	while(adjust_level != "y" and adjust_level != "n"):
 		if(adjust_level == "help"):
@@ -1119,7 +1145,7 @@ def take_inputs():
 		promo_level = input("What level will you promote your characters? This should be an integer between 10 and 50. ").casefold()
 		while(True):
 			if(promo_level.casefold() == "help"):
-				promo_level = input("This will enforce that all characters must be promoted at this level and adjust pre-promoted characters base stats as if they were promoted at this level. ").casefold()
+				promo_level = input("This will enforce that all characters must be promoted at this level or less and adjust pre-promoted characters base stats as if they were promoted at this level. ").casefold()
 				continue
 			if(not promo_level.isdecimal()):
 				promo_level = input("Enter a number using the decimal system. ").casefold()
@@ -1147,7 +1173,7 @@ def take_inputs():
 				break
 		promo_elevel = enum
 	else:
-		promo_level = 20
+		promo_level = 40
 		promo_elevel = 21
 	no_prompt = input("Save these answers and never ask again? ").casefold()
 	while(no_prompt != "y" and no_prompt != "n"):
@@ -1157,8 +1183,8 @@ def take_inputs():
 			no_prompt = input("Invalid response. ").casefold()
 	no_prompt = True if no_prompt == "y" else False
 	return {"Characters" : rand_chars, "Depromos" : rand_depromo, "Promo" : rand_prepromo, "Magic" : rand_magic, "Magic levels" : chaos_magic, \
-	"Items" : rand_promo_items, "Growths" : rand_stat_growths, "Stats" : rand_stats, "Adjust Level" : adjust_level, \
-	"Promo Level": promo_level, "Promo Effective Level" : promo_elevel, "No Prompt" : no_prompt}
+	"Items" : rand_promo_items, "Growths" : rand_stat_growths, "Stats" : rand_stats, "Percent Change" : percent_change, \
+	"Adjust Level" : adjust_level, "Promo Level": promo_level, "Promo Effective Level" : promo_elevel, "No Prompt" : no_prompt}
 
 
 config = {}
@@ -1392,7 +1418,7 @@ if(config["Growths"]):
 		randomize_growths(x)
 if(config["Stats"]):
 	for x in range(30):
-		randomize_stats(x)
+		randomize_stats(x, config["Percentage Change"])
 if(config["Adjust Level"]):
 	new_promo_level = config["Promo Level"]
 	treat_promo_as = int(config["Promo Effective Level"])-1
