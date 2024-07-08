@@ -133,9 +133,7 @@ Map33_EntityEvent3:
                 
                  
                 chkFlg  22              ; Frayja joined
-                bne.s   byte_5A85C
-                chkFlg  787             ; Set after one of Creed's Mansion Force Members joins
-                bne.s   byte_5A856      
+                bne.s   byte_5A85C 
                 script  cs_5A8CA
                 dc.w $6004
 byte_5A856:
@@ -160,8 +158,6 @@ Map33_EntityEvent4:
                  
                 chkFlg  22              ; Frayja joined
                 bne.s   byte_5A87E
-                chkFlg  787             ; Set after one of Creed's Mansion Force Members joins
-                bne.s   byte_5A878      
                 script  cs_5A93A
                 dc.w $6004
 byte_5A878:
@@ -186,8 +182,6 @@ Map33_EntityEvent5:
                  
                 chkFlg  22              ; Frayja joined
                 bne.s   byte_5A8A0
-                chkFlg  787             ; Set after one of Creed's Mansion Force Members joins
-                bne.s   byte_5A89A      
                 script  cs_5A9AA
                 bra.s   loc_5A89E
 byte_5A89A:
@@ -214,8 +208,6 @@ Map33_EntityEvent6:
                  
                 chkFlg  22              ; Frayja joined
                 bne.s   byte_5A8C2
-                chkFlg  787             ; Set after one of Creed's Mansion Force Members joins
-                bne.s   byte_5A8BC      
                 script  cs_5AA1A
                 bra.s   loc_5A8C0
 byte_5A8BC:
