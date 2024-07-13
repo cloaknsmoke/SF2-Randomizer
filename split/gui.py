@@ -1,0 +1,514 @@
+from tkinter import *
+from tkinter import ttk
+import swap_characters
+
+def toggle_chars(a, b):
+	for x in range(len(a)):
+		if(a[x].get() == "???"):
+			a[x].set(b[x])
+		else:
+			a[x].set("???")
+
+def display_info(char, orig, frame, frame_vars, class_frames, notebook1, notebook2):
+	if(0 in frame_vars):
+		#why is this backwards!?
+		frame.grid_slaves(0,2)[0].configure(text=frame.grid_slaves(0,0)[0]["text"])
+		frame.grid_slaves(0,3)[0].configure(text=frame.grid_slaves(0,1)[0]["text"])
+		frames2 = notebook2.tabs()
+		for x in frames2:
+			notebook2.hide(x)
+		frames1 = notebook1.tabs()
+		for x in range(len(frames1)):
+			notebook2.add(frames2[x])
+			notebook2.tab(frames2[x], text=notebook1.tab(frames1[x], option="text"))
+			copy_frame = notebook2.nametowidget(frames2[x])
+			for y in copy_frame.winfo_children():
+				y.destroy()
+			cur_frame = notebook1.nametowidget(frames1[x])
+			for c in range(cur_frame.grid_size()[0]):
+				for r in range(cur_frame.grid_size()[1]):
+					slave = cur_frame.grid_slaves(r,c)
+					if(len(slave) == 0):
+						continue
+					slave = slave[0].cget("text")
+					ttk.Label(copy_frame, text=slave).grid(column=c, row=r, padx=5, sticky=W)
+		notebook2.select(0)
+	# set the class frames as invisible unless needed later
+	for x in notebook1.tabs():
+		notebook1.forget(x)
+	# clear all of the text in every frame in case we need to use it later
+	for k,v in frame_vars.items():
+		for k2,v2 in v.items():
+			for x in v2:
+				v2[x].set("")
+	# First index is the class, but 0 is special since it will just have the name
+	# Second and third indicies are the col and row within the specified frame (class)
+	if(0 not in frame_vars):
+		frame_vars[0] = {}
+		frame_vars[0][0] = {}
+		frame_vars[0][0][0] = StringVar()
+		ttk.Label(frame, textvariable=frame_vars[0][0][0]).grid(column=0, row=0, padx=5 ,sticky=W)
+		ttk.Label(frame, text="").grid(column=2, row=0, padx=5 ,sticky=W)
+		frame_vars[0][0][1] = StringVar()
+		ttk.Label(frame, textvariable=frame_vars[0][0][1]).grid(column=1, row=0, padx=5 ,sticky=W)
+		ttk.Label(frame, text="").grid(column=3, row=0, padx=5 ,sticky=W)
+	frame_vars[0][0][0].set("Name")
+	frame_vars[0][0][1].set(char)
+	char = orig_values[char]
+	char = "0" + str(char) if char < 10 else str(char)
+	if(orig):
+		f = open(r"..\disasm\data\stats\allies\stats\orig_stats\allystats" + char + ".asm", 'r')
+	else:
+		f = open(r"..\disasm\data\stats\allies\stats\allystats" + char + ".asm", 'r')
+	file = f.read()
+	f.close()
+	classes = file.split("forClass")
+	cur_row = 0
+	cur_column = 0
+	cur_class = 1
+	for x in classes:
+		if("AllyStats" in x or "projected" in x):
+			continue
+		if(len(class_frames) < cur_class):
+			class_frames.append(ttk.Frame(notebook1, padding=10, relief=GROOVE, borderwidth=5))
+			temp_frame = ttk.Frame(notebook2, padding=10, relief=GROOVE, borderwidth=5)
+			notebook2.add(temp_frame)
+		cur_frame = class_frames[cur_class-1]
+		cur_frame.grid(column=cur_class+1, row=1 ,sticky=N)
+		notebook1.add(cur_frame)
+		if(cur_class not in frame_vars):
+			frame_vars[cur_class] = {}
+		vars_view = frame_vars[cur_class]
+		cur_row = 0
+		cur_column = 0
+		if("spellList" in x):
+			stats = x[0:x.find("spellList")].splitlines()
+			for y in stats:
+				if(y.strip() == ""):
+					continue
+				cur_column = 0
+				if("Growth" in y):
+					if(cur_column not in vars_view):
+						vars_view[cur_column] = {}
+					if(cur_row not in vars_view[cur_column]):
+						vars_view[cur_column][cur_row] = StringVar()
+						ttk.Label(cur_frame, textvariable=vars_view[cur_column][cur_row]).grid(column=cur_column,row=cur_row, padx=5, sticky=W)
+					vars_view[cur_column][cur_row].set(y[y.find("Growth")-3:y.find("Growth")].strip().upper())
+					cur_column += 1
+					
+					if(cur_column not in vars_view):
+						vars_view[cur_column] = {}
+					if(cur_row not in vars_view[cur_column]):
+						vars_view[cur_column][cur_row] = StringVar()
+						ttk.Label(cur_frame, textvariable=vars_view[cur_column][cur_row]).grid(column=cur_column,row=cur_row, padx=5)
+					vars_view[cur_column][cur_row].set("Base")
+					cur_column += 1
+					
+					if(cur_column not in vars_view):
+						vars_view[cur_column] = {}
+					if(cur_row not in vars_view[cur_column]):
+						vars_view[cur_column][cur_row] = StringVar()
+						ttk.Label(cur_frame, textvariable=vars_view[cur_column][cur_row]).grid(column=cur_column,row=cur_row, padx=5)
+					vars_view[cur_column][cur_row].set("Projected")
+					cur_column += 1
+					
+					if(cur_column not in vars_view):
+						vars_view[cur_column] = {}
+					if(cur_row not in vars_view[cur_column]):
+						vars_view[cur_column][cur_row] = StringVar()
+						ttk.Label(cur_frame, textvariable=vars_view[cur_column][cur_row]).grid(column=cur_column,row=cur_row, padx=5)
+					vars_view[cur_column][cur_row].set("Average")
+					cur_column += 1
+					
+					if(cur_column not in vars_view):
+						vars_view[cur_column] = {}
+					if(cur_row not in vars_view[cur_column]):
+						vars_view[cur_column][cur_row] = StringVar()
+						ttk.Label(cur_frame, textvariable=vars_view[cur_column][cur_row]).grid(column=cur_column,row=cur_row, padx=5)
+					vars_view[cur_column][cur_row].set("Type")
+					
+					cur_row += 1
+					cur_column = 1
+					base = y[y.find("Growth")+6:y.find(",")].strip()
+					if(cur_row not in vars_view[cur_column]):
+						vars_view[cur_column][cur_row] = StringVar()
+						ttk.Label(cur_frame, textvariable=vars_view[cur_column][cur_row]).grid(column=cur_column,row=cur_row, padx=5)
+					vars_view[cur_column][cur_row].set(base)
+					cur_column += 1
+					
+					proj = y.find(",")+1
+					proj = y[proj:y.find(",",proj)].strip()
+					if(cur_row not in vars_view[cur_column]):
+						vars_view[cur_column][cur_row] = StringVar()
+						ttk.Label(cur_frame, textvariable=vars_view[cur_column][cur_row]).grid(column=cur_column,row=cur_row, padx=5)
+					vars_view[cur_column][cur_row].set(proj)
+					cur_column += 1
+					
+					base = int(base)
+					proj = int(proj)
+					avg = f"{(proj-base)/29.0:1.2}"
+					if(cur_row not in vars_view[cur_column]):
+						vars_view[cur_column][cur_row] = StringVar()
+						ttk.Label(cur_frame, textvariable=vars_view[cur_column][cur_row]).grid(column=cur_column,row=cur_row, padx=5)
+					vars_view[cur_column][cur_row].set(avg)
+					cur_column += 1
+					
+					if(cur_row not in vars_view[cur_column]):
+						vars_view[cur_column][cur_row] = StringVar()
+						ttk.Label(cur_frame, textvariable=vars_view[cur_column][cur_row]).grid(column=cur_column,row=cur_row, padx=5)
+					vars_view[cur_column][cur_row].set(y[y.rfind(",")+1:].strip())
+					cur_row += 1
+				else:
+					cur_row = 1
+					notebook1.tab(cur_frame, text=y.strip())
+					cur_row += 1
+			spells = x[x.find("spellList"):].split("&")
+			cur_column = 0
+			if(len(spells) == 1):
+				cur_class += 1
+				continue
+			if(cur_column not in vars_view):
+				vars_view[cur_column] = {}
+			if(cur_row not in vars_view[cur_column]):
+				vars_view[cur_column][cur_row] = StringVar()
+				ttk.Label(cur_frame, textvariable=vars_view[cur_column][cur_row]).grid(column=cur_column,row=cur_row, padx=5, sticky=W)
+			vars_view[cur_column][cur_row].set("Spell")
+			cur_column += 1
+			if(cur_row not in vars_view[cur_column]):
+				vars_view[cur_column][cur_row] = StringVar()
+				ttk.Label(cur_frame, textvariable=vars_view[cur_column][cur_row]).grid(column=cur_column,row=cur_row, padx=5)
+			vars_view[cur_column][cur_row].set("Level")
+			cur_column += 1
+			if(cur_row not in vars_view[cur_column]):
+				vars_view[cur_column][cur_row] = StringVar()
+				ttk.Label(cur_frame, textvariable=vars_view[cur_column][cur_row]).grid(column=cur_column,row=cur_row, padx=5)
+			vars_view[cur_column][cur_row].set("Learned")
+			cur_row += 1
+			for y in spells:
+				if("," not in y):
+					continue
+				cur_column = 0
+				index1 = y.find(",")
+				index2 = y.find(",", index1+1)
+				if(index2 == -1):
+					index2 = len(y)
+				if(cur_row not in vars_view[cur_column]):
+					vars_view[cur_column][cur_row] = StringVar()
+					ttk.Label(cur_frame, textvariable=vars_view[cur_column][cur_row]).grid(column=cur_column,row=cur_row, padx=5, sticky=W)
+				vars_view[cur_column][cur_row].set(y[index1+1:index2].strip() if "LV" not in y else y[index1+1:y.find("|LV")].strip())
+				cur_column += 1
+				if(cur_row not in vars_view[cur_column]):
+					vars_view[cur_column][cur_row] = StringVar()
+					ttk.Label(cur_frame, textvariable=vars_view[cur_column][cur_row]).grid(column=cur_column,row=cur_row, padx=5)
+				vars_view[cur_column][cur_row].set("1" if "LV" not in y else y[y.find("LV")+2:y.find("LV")+3])
+				cur_column += 1
+				if(cur_row not in vars_view[cur_column]):
+					vars_view[cur_column][cur_row] = StringVar()
+					ttk.Label(cur_frame, textvariable=vars_view[cur_column][cur_row]).grid(column=cur_column,row=cur_row, padx=5)
+				vars_view[cur_column][cur_row].set(y[index1-2:index1].strip())
+				cur_row += 1
+		else:
+			stats = x[0:x.find("useFirstSpellList")].splitlines()
+			for y in stats:
+				if(y.strip() == ""):
+					continue
+				cur_column = 0
+				if("Growth" in y):
+					if(cur_column not in vars_view):
+						vars_view[cur_column] = {}
+					if(cur_row not in vars_view[cur_column]):
+						vars_view[cur_column][cur_row] = StringVar()
+						ttk.Label(cur_frame, textvariable=vars_view[cur_column][cur_row]).grid(column=cur_column,row=cur_row, padx=5, sticky=W)
+					vars_view[cur_column][cur_row].set(y[y.find("Growth")-3:y.find("Growth")].strip().upper())
+					cur_column += 1
+					
+					if(cur_column not in vars_view):
+						vars_view[cur_column] = {}
+					if(cur_row not in vars_view[cur_column]):
+						vars_view[cur_column][cur_row] = StringVar()
+						ttk.Label(cur_frame, textvariable=vars_view[cur_column][cur_row]).grid(column=cur_column,row=cur_row, padx=5)
+					vars_view[cur_column][cur_row].set("Base")
+					cur_column += 1
+					
+					if(cur_column not in vars_view):
+						vars_view[cur_column] = {}
+					if(cur_row not in vars_view[cur_column]):
+						vars_view[cur_column][cur_row] = StringVar()
+						ttk.Label(cur_frame, textvariable=vars_view[cur_column][cur_row]).grid(column=cur_column,row=cur_row, padx=5)
+					vars_view[cur_column][cur_row].set("Projected")
+					cur_column += 1
+					
+					if(cur_column not in vars_view):
+						vars_view[cur_column] = {}
+					if(cur_row not in vars_view[cur_column]):
+						vars_view[cur_column][cur_row] = StringVar()
+						ttk.Label(cur_frame, textvariable=vars_view[cur_column][cur_row]).grid(column=cur_column,row=cur_row, padx=5)
+					vars_view[cur_column][cur_row].set("Average")
+					cur_column += 1
+					
+					if(cur_column not in vars_view):
+						vars_view[cur_column] = {}
+					if(cur_row not in vars_view[cur_column]):
+						vars_view[cur_column][cur_row] = StringVar()
+						ttk.Label(cur_frame, textvariable=vars_view[cur_column][cur_row]).grid(column=cur_column,row=cur_row, padx=5)
+					vars_view[cur_column][cur_row].set("Type")
+					
+					cur_row += 1
+					cur_column = 1
+					base = y[y.find("Growth")+6:y.find(",")].strip()
+					if(cur_row not in vars_view[cur_column]):
+						vars_view[cur_column][cur_row] = StringVar()
+						ttk.Label(cur_frame, textvariable=vars_view[cur_column][cur_row]).grid(column=cur_column,row=cur_row, padx=5)
+					vars_view[cur_column][cur_row].set(base)
+					cur_column += 1
+					
+					proj = y.find(",")+1
+					proj = y[proj:y.find(",",proj)].strip()
+					if(cur_row not in vars_view[cur_column]):
+						vars_view[cur_column][cur_row] = StringVar()
+						ttk.Label(cur_frame, textvariable=vars_view[cur_column][cur_row]).grid(column=cur_column,row=cur_row, padx=5)
+					vars_view[cur_column][cur_row].set(proj)
+					cur_column += 1
+					
+					base = int(base)
+					proj = int(proj)
+					avg = f"{(proj-base)/29.0:1.2}"
+					if(cur_row not in vars_view[cur_column]):
+						vars_view[cur_column][cur_row] = StringVar()
+						ttk.Label(cur_frame, textvariable=vars_view[cur_column][cur_row]).grid(column=cur_column,row=cur_row, padx=5)
+					vars_view[cur_column][cur_row].set(avg)
+					cur_column += 1
+					
+					if(cur_row not in vars_view[cur_column]):
+						vars_view[cur_column][cur_row] = StringVar()
+						ttk.Label(cur_frame, textvariable=vars_view[cur_column][cur_row]).grid(column=cur_column,row=cur_row, padx=5)
+					vars_view[cur_column][cur_row].set(y[y.rfind(",")+1:].strip())
+					cur_row += 1
+				else:
+					cur_row = 1
+					notebook1.tab(cur_frame, text=y.strip())
+					cur_row += 1
+		cur_class += 1
+
+def randomize(	rand_depromo, rand_prepromo, rand_magic, chaos_magic, rand_promo_items, rand_stat_growths, rand_stats, \
+				percent_change, adjust_level, promo_level, promo_elevel):
+	rand_depromo = True if rand_depromo.get() == 1 else False
+	rand_prepromo = True if rand_prepromo.get() == 1 else False
+	rand_magic = True if rand_magic.get() == 1 else False
+	chaos_magic = True if chaos_magic.get() == 1 else False
+	rand_promo_items = True if rand_promo_items.get() == 1 else False
+	rand_stat_growths = True if rand_stat_growths.get() == 1 else False
+	rand_stats = True if rand_stats.get() == 1 else False
+	adjust_level = True if adjust_level.get() == 1 else False
+	percent_change[0] = percent_change[0].get()
+	percent_change[1] = percent_change[1].get()
+	promo_level = promo_level.get()
+	promo_elevel = promo_elevel.get()
+
+orig_values = {\
+"BOWIE" : 0,"SARAH" : 1,"CHESTER" : 2,"JAHA" : 3,"KAZIN" : 4,"SLADE" : 5,"KIWI" : 6,"PETER" : 7,"MAY" : 8,"GERHALT" : 9,"LUKE" : 10,\
+"ROHDE" : 11,"RICK" : 12,"ELRIC" : 13,"ERIC" : 14,"KARNA" : 15,"RANDOLF" : 16,"TYRIN" : 17,"JANET" : 18,"HIGINS" : 19,"SKREECH" : 20,\
+"TAYA" : 21,"FRAYJA" : 22,"JARO" : 23,"GYAN" : 24,"SHEELA" : 25,"ZYNK" : 26,"CHAZ" : 27,"LEMON" : 28, "CLAUDE" : 29}
+cur_values = {}
+f = open(r"..\disasm\sf2enums.asm", 'r')
+file = f.read()
+f.close()
+index1 = file.find("; enum Allies")
+index1 = file.find("\n", index1)+1
+index2 = file.find("; ---------------------------------------------------------------------------", index1)
+splits = file[index1:index2].splitlines()
+for x in splits:
+	if("equ" not in x):
+		continue
+	ally = x.split(": equ ")[0][5:]
+	num = int(x.split(": equ ")[1])
+	cur_values[num] = ally
+root = Tk()
+frm = ttk.Frame(root, padding=10)
+frm.grid()
+char_frm = ttk.Frame(frm, padding=10)
+char_frm.grid(column=0, row=0, padx=5)
+name_list = [x for x in range(30)]
+show_chars_con = IntVar()
+ttk.Checkbutton(char_frm, variable = show_chars_con, text="Show Characters", command=lambda a=name_list, b=cur_values : toggle_chars(a, b)).grid(column=0,row=3, padx=5)
+show_chars_con.set(0)
+for k,v in orig_values.items():
+	name_list[v] = k
+offset = 1
+max_char_length = 0
+for x in orig_values:
+	if(len(x) > max_char_length):
+		max_char_length = len(x)
+max_char_length = int(max_char_length*1.5)
+info_frm = ttk.Frame(frm, padding=10)
+info_frm.grid(column=0, row = 2, columnspan=32 ,sticky=W)
+info_note1 = ttk.Notebook(info_frm, padding=10)
+info_note1.grid(column=0, row = 1, columnspan=2)
+info_note2 = ttk.Notebook(info_frm, padding=10)
+info_note2.grid(column=2, row = 1, columnspan=2, sticky=W+N)
+c_frms = []
+frame_vars = {}
+cur_row_offset = 0
+char_row_offset = 6
+char_mod = 12
+for x in range(len(name_list)):
+	cur_row_offset_t = int(x/12)*5
+	if(cur_row_offset_t > cur_row_offset):
+		offset =1
+		char_row_offset += 6
+	cur_row_offset = cur_row_offset_t
+	ttk.Separator(char_frm, orient=HORIZONTAL).grid(column=x%char_mod+1+offset, row=cur_row_offset+0,sticky=E+W)
+	ttk.Button(char_frm, text=name_list[x], width = max_char_length, command=lambda a=name_list[x], b=info_frm, c=frame_vars, d=c_frms, e=info_note1, f=info_note2 : display_info(a, True, b, c, d, e, f)).grid(column=x%char_mod+1+offset, row=cur_row_offset+1, padx=5)
+	name_list[x] = StringVar()
+	ttk.Separator(char_frm, orient=HORIZONTAL).grid(column=x%char_mod+1+offset, row=cur_row_offset+2,sticky=E+W)
+	ttk.Button(char_frm, textvariable=name_list[x], width = max_char_length, command=lambda a=cur_values[x], b=info_frm, c=frame_vars, d=c_frms, e=info_note1, f=info_note2 : display_info(a, False, b, c, d, e, f)).grid(column=x%char_mod+1+offset, row=cur_row_offset+3, padx=5)
+	ttk.Separator(char_frm, orient=HORIZONTAL).grid(column=x%char_mod+1+offset, row=cur_row_offset+4,sticky=E+W)
+	name_list[x].set("???")
+	offset += 1
+	ttk.Separator(char_frm, orient=VERTICAL).grid(column=x%char_mod+1+offset, row=cur_row_offset+0,sticky=N+S)
+	ttk.Separator(char_frm, orient=VERTICAL).grid(column=x%char_mod+1+offset, row=cur_row_offset+1,sticky=N+S)
+	ttk.Separator(char_frm, orient=VERTICAL).grid(column=x%char_mod+1+offset, row=cur_row_offset+2,sticky=N+S)
+	ttk.Separator(char_frm, orient=VERTICAL).grid(column=x%char_mod+1+offset, row=cur_row_offset+3,sticky=N+S)
+	ttk.Separator(char_frm, orient=VERTICAL).grid(column=x%char_mod+1+offset, row=cur_row_offset+4,sticky=N+S)
+for x in range(char_row_offset+4):
+	ttk.Separator(char_frm, orient=VERTICAL).grid(column=1, row=x,sticky=N+S)
+rand_frm = ttk.Frame(frm, padding=10)
+rand_frm.grid(column=0, row=1, columnspan=40, sticky=W)
+rand_depromo = IntVar()
+ttk.Checkbutton(rand_frm, variable = rand_depromo, text="Allow Depromotion").grid(column=1,row=0, padx=5, sticky=W)
+rand_prepromo = IntVar()
+ttk.Checkbutton(rand_frm, variable = rand_prepromo, text="Allow Random Promotion Path").grid(column=2,row=0, padx=5, sticky=W)
+chaos_magic = IntVar()
+chaos_magic_button = ttk.Checkbutton(rand_frm, variable = chaos_magic, text="Randomize Spell Learn Levels")
+chaos_magic_button.grid(column=4, row=0, padx=5, sticky=W)
+chaos_magic_button.state(["disabled"])
+rand_magic = IntVar()
+def toggle_state(button, button_var, state, off_state):
+	for x in range(len(button)):
+		if(state.get() == 0):
+			button_var[x].set(off_state)
+			button[x].state(["disabled"])
+		else:
+			button[x].state(["!disabled"])
+ttk.Checkbutton(rand_frm, variable = rand_magic, text="Randomize Learned Spells", command= lambda a=rand_magic, b=chaos_magic_button, c=chaos_magic : toggle_state(b, c, a, 0)).grid(column=3,row=0, padx=5, sticky=W)
+rand_promo_items = IntVar()
+ttk.Checkbutton(rand_frm, variable = rand_promo_items, text="Randomize Promotion Items").grid(column=0,row=1, padx=5, sticky=W)
+rand_stat_growths = IntVar()
+ttk.Checkbutton(rand_frm, variable = rand_stat_growths, text="Randomize Stat Growth Rates").grid(column=1,row=1, padx=5, sticky=W)
+
+percent_change_pos = StringVar()
+pos = ttk.Entry(rand_frm, width=30, textvariable = percent_change_pos, invalidcommand = lambda a=percent_change_pos : a.set("Integer between 0 and 100 only"),\
+validate="focusout", validatecommand=lambda a = percent_change_pos: (a.get().isdecimal() and int(a.get()) >= 0 and int(a.get()) <= 100))
+pos.grid(column=2,row=2, padx=5, sticky=W)
+ttk.Label(rand_frm, text="Positive Change %").grid(column=1,row=2, padx=5, sticky=W)
+percent_change_pos.set("0")
+pos.state(["disabled"])
+percent_change_neg = StringVar()
+neg = ttk.Entry(rand_frm, width=30, textvariable = percent_change_neg, invalidcommand = lambda a=percent_change_neg : a.set("Integer between 0 and 100 only"),\
+validate="focusout", validatecommand=lambda a = percent_change_neg: (a.get().isdecimal() and int(a.get()) >= 0 and int(a.get()) <= 100))
+neg.grid(column=4,row=2, padx=5, sticky=W)
+ttk.Label(rand_frm, text="Negative Change %").grid(column=3,row=2, padx=5, sticky=W)
+percent_change_neg.set("0")
+neg.state(["disabled"])
+rand_stats = IntVar()
+ttk.Checkbutton(rand_frm, variable = rand_stats, text="Randomize Stats", command=\
+lambda a=rand_stats, b=[pos, neg], c=[percent_change_pos, percent_change_neg] : toggle_state(b, c, a, 0)).grid(column=0,row=2, padx=5, sticky=W)
+
+promo_level = StringVar()
+lvl1 = ttk.Entry(rand_frm, width=30, textvariable = promo_level, invalidcommand = lambda a=promo_level : a.set("Integer between 1 and 40 only"),\
+validate="focusout", validatecommand=lambda a = promo_level: (a.get().isdecimal() and int(a.get()) > 0 and int(a.get()) <= 40))
+lvl1.grid(column=2,row=3, padx=5, sticky=W)
+ttk.Label(rand_frm, text="Level Pre-promoted Characters to This Level Effectively").grid(column=1,row=3, padx=5, sticky=W)
+promo_level.set("20")
+lvl1.state(["disabled"])
+promo_elevel = StringVar()
+lvl2 = ttk.Entry(rand_frm, width=30, textvariable = promo_elevel, invalidcommand = lambda a=promo_elevel : a.set("Integer between 1 and 40 only"),\
+validate="focusout", validatecommand=lambda a = promo_elevel: (a.get().isdecimal() and int(a.get()) > 0 and int(a.get()) <= 40))
+lvl2.grid(column=4,row=3, padx=5, sticky=W)
+ttk.Label(rand_frm, text="Game Treats Promoted Characters as This Plus 1").grid(column=3,row=3, padx=5, sticky=W)
+promo_elevel.set("20")
+lvl2.state(["disabled"])
+adjust_level = IntVar()
+ttk.Checkbutton(rand_frm, variable = adjust_level, text="Adjust Levels", command=\
+lambda a=adjust_level, b=[lvl2, lvl1], c=[promo_elevel, promo_level] : toggle_state(b, c, a, 20)).grid(column=0,row=3, padx=5, sticky=W)
+
+ttk.Button(rand_frm, text="Randomize", command=\
+lambda a=rand_depromo, b=rand_prepromo, c=rand_magic, d=chaos_magic, e=rand_promo_items, f=rand_stat_growths, g=rand_stats,\
+h=[percent_change_pos, percent_change_neg], i=adjust_level, j=promo_level, k=promo_elevel : randomize(a,b,c,d,e,f,g,h,i,j,k)).grid(column=0, row=0, sticky=W)
+
+orig_items = ["WARRIOR_PRIDE", "SILVER_TANK", "SECRET_BOOK", "VIGOR_BALL", "VIGOR_BALL", "PEGASUS_WING"]
+cur_items = []
+f = open("..\\disasm\\data\\maps\\entries\\map07\\8-other-items.asm", 'r')
+file = f.read()
+f.close()
+index1 = file.find("143")+5
+index2 = file.find("\n", index1)
+temp = file[index1:index2]
+if(";" in temp):
+	temp = temp[0:temp.find(";")-1]
+cur_items.append(temp)
+f = open("..\\disasm\\data\\maps\\entries\\map48\\7-chest-items.asm", 'r')
+file = f.read()
+f.close()
+index1 = file.find("146")+5
+index2 = file.find("\n", index1)
+temp = file[index1:index2]
+if(";" in temp):
+	temp = temp[0:temp.find(";")-1]
+cur_items.append(temp)
+f = open("..\\disasm\\data\\maps\\entries\\map23\\8-other-items.asm", 'r')
+file = f.read()
+f.close()
+index1 = file.find("158")+5
+index2 = file.find("\n", index1)
+temp = file[index1:index2]
+if(";" in temp):
+	temp = temp[0:temp.find(";")-1]
+cur_items.append(temp)
+f = open("..\\disasm\\data\\maps\\entries\\map23\\7-chest-items.asm", 'r')
+file = f.read()
+f.close()
+index1 = file.find("221")+5
+index2 = file.find("\n", index1)
+temp = file[index1:index2]
+if(";" in temp):
+	temp = temp[0:temp.find(";")-1]
+cur_items.append(temp)
+f = open("..\\disasm\\data\\maps\\entries\\map67\\8-other-items.asm", 'r')
+file = f.read()
+f.close()
+index1 = file.find("214")+5
+index2 = file.find("\n", index1)
+temp = file[index1:index2]
+if(";" in temp):
+	temp = temp[0:temp.find(";")-1]
+cur_items.append(temp)
+f = open("..\\disasm\\data\\maps\\entries\\map36\\8-other-items.asm", 'r')
+file = f.read()
+f.close()
+index1 = file.find("175")+5
+index2 = file.find("\n", index1)
+temp = file[index1:index2]
+if(";" in temp):
+	temp = temp[0:temp.find(";")-1]
+cur_items.append(temp)
+offset = 2
+show_items_con = IntVar()
+
+ttk.Checkbutton(char_frm, variable = show_items_con, text="Show Promo Items", command=lambda a=orig_items, b=cur_items : toggle_chars(a, b)).grid(column=0,row=char_row_offset+3, padx=5)
+show_items_con.set(0)
+for x in range(len(orig_items)):
+	ttk.Separator(char_frm, orient=HORIZONTAL).grid(column=x+offset, row=char_row_offset+0,sticky=E+W, columnspan=4)
+	ttk.Label(char_frm, text=orig_items[x]).grid(column=x+offset, row=char_row_offset+1, padx=5, columnspan=4)
+	orig_items[x] = StringVar()
+	ttk.Separator(char_frm, orient=HORIZONTAL).grid(column=x+offset, row=char_row_offset+2,sticky=E+W, columnspan=4)
+	ttk.Label(char_frm, textvariable=orig_items[x]).grid(column=x+offset, row=char_row_offset+3, padx=5, columnspan=4)
+	ttk.Separator(char_frm, orient=HORIZONTAL).grid(column=x+offset, row=char_row_offset+4,sticky=E+W, columnspan=4)
+	orig_items[x].set("???")
+	offset += 3
+	ttk.Separator(char_frm, orient=VERTICAL).grid(column=x+offset, row=char_row_offset+0,sticky=N+S)
+	ttk.Separator(char_frm, orient=VERTICAL).grid(column=x+offset, row=char_row_offset+1,sticky=N+S)
+	ttk.Separator(char_frm, orient=VERTICAL).grid(column=x+offset, row=char_row_offset+2,sticky=N+S)
+	ttk.Separator(char_frm, orient=VERTICAL).grid(column=x+offset, row=char_row_offset+3,sticky=N+S)
+	ttk.Separator(char_frm, orient=VERTICAL).grid(column=x+offset, row=char_row_offset+4,sticky=N+S)
+root.mainloop()

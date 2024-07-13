@@ -4,6 +4,8 @@ import re
 import sys
 
 def swap_ALLY_r(p, a, b):
+	if(len(a) != len(b)):
+		raise Exception("Only swap lists of equal length.")
 	for x in p.iterdir():
 		if(x.is_dir()):
 			swap_ALLY_r(x,a,b)
@@ -12,12 +14,12 @@ def swap_ALLY_r(p, a, b):
 				f = open(x, 'r')
 				file = f.read()
 				f.close()
-				if(a in file or b in file):
-					file = file.replace(a, "{char1}").replace(b,"{char2}")
-					file = file.replace("{char1}", b).replace("{char2}", a)
-					f = open(x, 'w')
-					f.write(file)
-					f.close()
+				for x in range(len(a)):
+					if(a[x] in file):
+						file = file.replace(a[x], "{char" + str(x) + "}")
+				for x in range(len(b)):
+					if(("{char" + str(x) + "}") in file):
+						file = file.replace("{char" + str(x) + "}", b[x])
 			except UnicodeDecodeError as e:
 				continue
 
@@ -336,55 +338,66 @@ def new_items(items, with_class, is_promo, level, weapon_ranges, equips):
 				if(level >= weapon_ranges[y][1]):
 					items[x] = y
 
-def swap_characters(char_a, char_b, char_a_name, char_b_name, orig_a_num, orig_b_num, depromote, rand_promo):
+'''
+char_a_list : The original characters to be replaced
+char_b_list : The characters to be put in
+'''
+def swap_characters(char_a_list, char_b_list, orig_nums, depromote, rand_promo):
+	if(len(char_a_list) != len(char_b_list)):
+		raise Exception("Only swap character lists of equal length")
+	if(len(char_a_list) != len(set(char_a_list))):
+		raise Exception("Only unique characters in each list")
+	if(len(char_b_list) != len(set(char_b_list))):
+		raise Exception("Only unique characters in each list")
+	for x in char_a_list:
+		if(x not in char_b_list):
+			raise Exception("All characters must be matched to somewherre in the opposite list.")
+	char_a_name_list = [x.capitalize() for x in char_a_list]
+	char_b_name_list = [x.capitalize() for x in char_b_list]
 	p = Path("..\\disasm")
 	f = open("..\\disasm\\sf2enums.asm", 'r')
 	file = f.read()
 	f.close()
-	char_a_value = file.find("ALLY_"+char_a)
-	char_b_value = file.find("ALLY_"+char_b)
-	char_a_value = file[char_a_value+len(char_a)+11:file.find("\n", char_a_value)]
-	char_b_value = file[char_b_value+len(char_b)+11:file.find("\n", char_b_value)]
-	base_a = "_BASE" if ("BOWIE" in char_a or "SLADE" in char_a or "KIWI" in char_a or "PETER" in char_a or "GERHALT" in char_a or "CLAUDE" in char_a) else ""
-	base_b = "_BASE" if ("BOWIE" in char_b or "SLADE" in char_b or "KIWI" in char_b or "PETER" in char_b or "GERHALT" in char_b or "CLAUDE" in char_b) else ""
-	file = file.replace("ALLY_"+char_a + ": equ " + char_a_value, "{char1a}")
-	file = file.replace("ALLY_"+char_b + ": equ " + char_b_value, "{char2a}")
-	file = file.replace("PORTRAIT_" + char_a + base_a + ": equ " + char_a_value, "{char1b}")
-	file = file.replace("PORTRAIT_" + char_b + base_b + ": equ " + char_b_value, "{char2b}")
-	file = file.replace("{char1a}", "ALLY_"+char_b + ": equ " + char_a_value)
-	file = file.replace("{char2a}", "ALLY_"+char_a + ": equ " + char_b_value)
-	file = file.replace("{char1b}", "PORTRAIT_" + char_b + base_b + ": equ " + char_a_value)
-	file = file.replace("{char2b}", "PORTRAIT_" + char_a + base_a + ": equ " + char_b_value)
+	char_a_value = [file.find("ALLY_"+x) for x in char_a_list]
+	char_a_value = [file[char_a_value[x]+len(char_a_list[x])+11:file.find("\n", char_a_value[x])] for x in range(len(char_a_value))]
+	for x in range(len(char_a_list)):
+		cur_char = char_a_list[x]
+		base = "_BASE" if ("BOWIE" in cur_char or "SLADE" in cur_char or "KIWI" in cur_char or "PETER" in cur_char or "GERHALT" in cur_char or "CLAUDE" in cur_char) else ""
+		file = file.replace("ALLY_"+cur_char + ": equ " + char_a_value[x], "{ally" + str(x) + "}")
+		file = file.replace("PORTRAIT_" + cur_char + base + ": equ " + char_a_value[x], "{portrait" + str(x) + "}")
+	for x in range(len(char_b_list)):
+		cur_char = char_b_list[x]
+		base = "_BASE" if ("BOWIE" in cur_char or "SLADE" in cur_char or "KIWI" in cur_char or "PETER" in cur_char or "GERHALT" in cur_char or "CLAUDE" in cur_char) else ""
+		file = file.replace("{ally" + str(x) + "}", "ALLY_"+cur_char + ": equ " + char_a_value[x])
+		file = file.replace("{portrait" + str(x) + "}", "PORTRAIT_" + cur_char + base + ": equ " + char_a_value[x])
 	f = open("..\\disasm\\sf2enums.asm", 'w')
 	f.write(file)
 	f.close()
 
-
-
-	swap_ALLY_r(Path("..\\disasm"), "ALLY_"+char_a,"ALLY_"+char_b)
-			
+	swap_ALLY_r(Path("..\\disasm"), ["ALLY_"+x for x in char_a_list],["ALLY_"+x for x in char_b_list])
+	
 	f = open("..\\disasm\\data\\stats\\allies\\allydialogproperties-standard.asm", 'r')
 	file = f.read()
 	f.close()
-	loc_a = file.find("; " + str(orig_a_num) + ": ")
-	line_e = file.find("\n", loc_a)
-	line_e = file.find("\n", line_e+1)
-	line_e = file.find("\n", line_e+1)
-	line_e = file.find("\n", line_e+1)
-	text_a = file[loc_a:line_e]
-	file = file.replace(text_a, "{char1}")
-	loc_b = file.find("; " + str(orig_b_num) + ": ")
-	line_e = file.find("\n", loc_b)
-	line_e = file.find("\n", line_e+1)
-	line_e = file.find("\n", line_e+1)
-	line_e = file.find("\n", line_e+1)
-	text_b = file[loc_b:line_e]
-	file = file.replace(text_b, "{char2}")
-	file = file.replace("{char1}", text_b).replace("{char2}", text_a)
+	temp = {}
+	for x in range(len(char_a_list)):
+		cur_char = char_a_list[x]
+		loc_a = file.find("; " + str(orig_nums[cur_char]) + ": ")
+		line_e = file.find("\n", loc_a)
+		line_e = file.find("\n", line_e+1)
+		line_e = file.find("\n", line_e+1)
+		line_e = file.find("\n", line_e+1)
+		text = file[loc_a:line_e]
+		file = file.replace(text, "{char" + str(x) + "}")
+		temp[cur_char] = text
+	for x in range(len(char_b_list)):
+		cur_char = char_b_list[x]
+		text = temp[cur_char]
+		file = file.replace("{char" + str(x) + "}", text)
 	f = open("..\\disasm\\data\\stats\\allies\\allydialogproperties-standard.asm", 'w')
 	f.write(file)
 	f.close()
-
+	'''
 	f = open("..\\disasm\\data\\stats\\allies\\stats\\entries.asm", 'r')
 	file = f.read()
 	f.close()
@@ -701,7 +714,7 @@ def swap_characters(char_a, char_b, char_a_name, char_b_name, orig_a_num, orig_b
 	file = file.replace("{char2}", "dc.l Portrait" + ("0" if orig_a_num < 10 else "")+str(orig_a_num))
 	f = open("..\\disasm\\data\\graphics\\portraits\\entries.asm", 'w')
 	f.write(file)
-	f.close()
+	f.close()'''
 	
 '''
 Generate the text for the relevant allyStatsXX.asm file.
@@ -1186,8 +1199,20 @@ def take_inputs():
 	"Items" : rand_promo_items, "Growths" : rand_stat_growths, "Stats" : rand_stats, "Percent Change" : percent_change, \
 	"Adjust Level" : adjust_level, "Promo Level": promo_level, "Promo Effective Level" : promo_elevel, "No Prompt" : no_prompt}
 
+orig_values = {\
+"BOWIE" : 0,"SARAH" : 1,"CHESTER" : 2,"JAHA" : 3,"KAZIN" : 4,"SLADE" : 5,"KIWI" : 6,"PETER" : 7,"MAY" : 8,"GERHALT" : 9,"LUKE" : 10,\
+"ROHDE" : 11,"RICK" : 12,"ELRIC" : 13,"ERIC" : 14,"KARNA" : 15,"RANDOLF" : 16,"TYRIN" : 17,"JANET" : 18,"HIGINS" : 19,"SKREECH" : 20,\
+"TAYA" : 21,"FRAYJA" : 22,"JARO" : 23,"GYAN" : 24,"SHEELA" : 25,"ZYNK" : 26,"CHAZ" : 27,"LEMON" : 28, "CLAUDE" : 29}
+r_orig_values = {v:k for k,v in orig_values.items()}
 
-config = {}
+test1_num = sorted(orig_values.values())
+test1 = [r_orig_values[x] for x in test1_num]
+test2_num = list(orig_values.values())
+random.shuffle(test2_num)
+test2 = [r_orig_values[x] for x in test2_num]
+swap_characters(test1, test2, orig_values, True, True)
+
+'''config = {}
 print("Answer questions with y, Y, n, N, or help.")
 if(Path("config.txt").exists()):
 	f = open("config.txt", 'r')
@@ -1563,4 +1588,4 @@ if(config["Items"]):
 	print("Swapped Silver Tank with", temp_item)
 	rep_list.remove(temp_item)
 	f.write(file.replace("SILVER_TANK", temp_item))
-	f.close()
+	f.close()'''
