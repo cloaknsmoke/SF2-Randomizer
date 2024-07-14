@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import ttk
-import swap_characters
+from swap_characters import *
 
 def toggle_chars(a, b):
 	for x in range(len(a)):
@@ -9,7 +9,9 @@ def toggle_chars(a, b):
 		else:
 			a[x].set("???")
 
-def display_info(char, orig, frame, frame_vars, class_frames, notebook1, notebook2):
+def display_info(char, orig, frame, frame_vars, class_frames, notebook1, notebook2, char_index=None):
+	if(char_index != None):
+		char = char[char_index]
 	if(0 in frame_vars):
 		#why is this backwards!?
 		frame.grid_slaves(0,2)[0].configure(text=frame.grid_slaves(0,0)[0]["text"])
@@ -291,19 +293,91 @@ def display_info(char, orig, frame, frame_vars, class_frames, notebook1, noteboo
 		cur_class += 1
 
 def randomize(	rand_depromo, rand_prepromo, rand_magic, chaos_magic, rand_promo_items, rand_stat_growths, rand_stats, \
-				percent_change, adjust_level, promo_level, promo_elevel):
-	rand_depromo = True if rand_depromo.get() == 1 else False
-	rand_prepromo = True if rand_prepromo.get() == 1 else False
-	rand_magic = True if rand_magic.get() == 1 else False
-	chaos_magic = True if chaos_magic.get() == 1 else False
-	rand_promo_items = True if rand_promo_items.get() == 1 else False
-	rand_stat_growths = True if rand_stat_growths.get() == 1 else False
-	rand_stats = True if rand_stats.get() == 1 else False
+				percent_change, adjust_level, promo_level, promo_elevel, orig_values, cur_values, cur_items):
 	adjust_level = True if adjust_level.get() == 1 else False
-	percent_change[0] = percent_change[0].get()
-	percent_change[1] = percent_change[1].get()
 	promo_level = promo_level.get()
 	promo_elevel = promo_elevel.get()
+	if(adjust_level):
+		if(promo_level < promo_elevel):
+			frm.bell()
+			return
+	rand_depromo = True if rand_depromo.get() == 1 else False
+	rand_prepromo = True if rand_prepromo.get() == 1 else False
+	orig_list, swap_dict = determine_swap_list(rand_depromo, rand_prepromo, promo_elevel, promo_level)
+	r_swap_dict = {k : v for v, k in swap_dict.items()}
+	temp = [x for x in range(30)]
+	for x in temp:
+		temp[x] = r_swap_dict[x]
+	swap_characters(orig_list, temp, orig_values, rand_depromo, rand_prepromo)
+	for x in range(30):
+		f = open("..\\disasm\\data\\stats\\allies\\stats\\orig_stats\\allystats" + ("0" if x < 10 else "") + str(x) + ".asm", 'r')
+		g = open("..\\disasm\\data\\stats\\allies\\stats\\allystats" + ("0" if x < 10 else "") + str(x) + ".asm", 'w')
+		g.write(f.read())
+		f.close()
+		g.close()
+	replace_npc_rohde_sprite()
+	replace_spinning_elric()
+	replace_knocked_out_luke()
+	replace_knocked_out_higins()
+	rand_promo_items = True if rand_promo_items.get() == 1 else False
+	rand_items = randomize_promo_items(r_swap_dict)
+	for x in range(len(rand_items)):
+		cur_items[x] = rand_items[x]
+	rand_stat_growths = True if rand_stat_growths.get() == 1 else False
+	if(rand_stat_growths):
+		for x in range(30):
+			randomize_growths(x)
+	rand_stats = True if rand_stats.get() == 1 else False
+	pos_change = int(percent_change[0].get())
+	neg_change = int(percent_change[1].get())
+	if(rand_stats):
+		for x in range(30):
+			randomize_stats(x, pos_change, neg_change)
+	rand_magic = True if rand_magic.get() == 1 else False
+	chaos_magic = True if chaos_magic.get() == 1 else False
+	if(rand_magic):
+		spells_1 = ["EGRESS", "DISPEL", "SLEEP", "ATTACK", "DISPEL"]
+		spells_2 = ["BOLT", "HEAL", "DETOX", "BLAST", "SLOW", "BLAZE", "MUDDLE", "DESOUL", "DAO", "APOLLO", "NEPTUN", "ATLAS",\
+		"KATON", "RAIJIN", "HEAL", "BLAST", "BOOST", "AURA", "BLAZE", "FREEZE", "BOLT", "DAO", "APOLLO", "NEPTUN", "ATLAS",\
+		"BLAZE", "FREEZE", "BOLT", "DESOUL", "DAO", "APOLLO", "NEPTUN", "ATLAS", "HEAL", "DETOX", "AURA", "HEAL", "BLAST", "MUDDLE", "BOOST",\
+		"BLAZE", "FREEZE", "BOLT", "DAO", "APOLLO", "NEPTUN", "ATLAS"]
+		levels = {"EGRESS" : 1, "BOLT" : 4, "HEAL" : 4, "DETOX" : 4, "BLAST" : 4, "SLOW" : 2, "BLAZE" : 4, "FREEZE" : 4, "MUDDLE" : 2, "DISPEL" : 1,\
+		"DESOUL" : 2, "DAO" : 2, "APOLLO" : 2, "NEPTUN" : 2, "ATLAS" : 2, "KATON" : 3, "RAIJIN" : 3, "BOOST" : 2, "AURA" : 4, "SLEEP" : 1, "ATTACK" : 1}
+		starter_spells = ["BLAZE", "FREEZE", "HEAL", "BLAST"]
+		if(chaos_magic):
+			chaos = [x for x in range(1,53)]
+			bowie_spells = chaos.copy()
+			sarah_spells = chaos.copy()
+			kazin_spells = chaos.copy()
+			sorc_spells = [x for x in range(21,53)]
+			slade_spells = [x for x in range(22,53)]
+			karna_spells = chaos.copy()
+			tyrin_spells = chaos.copy()
+			taya_spells = chaos.copy()
+			frayja_spells = chaos.copy()
+			sheela_spells = chaos.copy()
+			chaz_spells = chaos.copy()
+		else:
+			bowie_spells = [1,22,31,42,51]
+			sarah_spells = [1,7,22,40,4,13,33,44,10,16,25,36,19,29,48,52]
+			kazin_spells = [1,5,21,32,9,24,37,47,13,17,28,42,52]
+			sorc_spells = [21,32,34,50,23,30,36,38,26,40,42,46,28,44,48,52]
+			slade_spells = [24,29,35,45,34,39,43,52]
+			karna_spells = [1,4,19,40,7,14,23,32,10,17,26,44,29,36,48,52]
+			tyrin_spells = [1,10,44,49,4,19,27,33,22,24,30,47,52]
+			taya_spells = [1,4,48,52,9,12,39,43,17,22,30,35,14,26,27,45]
+			frayja_spells = [1,11,49,52,4,15,32,37,29,36,40,45,42]
+			sheela_spells = [1,5,36,51,7,18,38,47,11,24,32,41,13,20,28,44]
+			chaz_spells = [1,10,49,52,5,15,22,40,35,38,42,46,36]
+		randomize_spells(temp, spells_1, spells_2, levels, starter_spells, bowie_spells,sarah_spells,kazin_spells,sorc_spells,slade_spells,karna_spells,tyrin_spells,taya_spells,frayja_spells,sheela_spells,chaz_spells)
+	
+	if(adjust_level):
+		adjust_levels(promo_elevel, promo_level, orig_values)
+	remove_redundant_classes()
+	for x in r_swap_dict:
+		cur_values[x] = r_swap_dict[x]
+	
+	
 
 orig_values = {\
 "BOWIE" : 0,"SARAH" : 1,"CHESTER" : 2,"JAHA" : 3,"KAZIN" : 4,"SLADE" : 5,"KIWI" : 6,"PETER" : 7,"MAY" : 8,"GERHALT" : 9,"LUKE" : 10,\
@@ -341,7 +415,7 @@ for x in orig_values:
 		max_char_length = len(x)
 max_char_length = int(max_char_length*1.5)
 info_frm = ttk.Frame(frm, padding=10)
-info_frm.grid(column=0, row = 2, columnspan=32 ,sticky=W)
+info_frm.grid(column=0, row = 2, columnspan=32 ,sticky=W+N)
 info_note1 = ttk.Notebook(info_frm, padding=10)
 info_note1.grid(column=0, row = 1, columnspan=2)
 info_note2 = ttk.Notebook(info_frm, padding=10)
@@ -361,7 +435,7 @@ for x in range(len(name_list)):
 	ttk.Button(char_frm, text=name_list[x], width = max_char_length, command=lambda a=name_list[x], b=info_frm, c=frame_vars, d=c_frms, e=info_note1, f=info_note2 : display_info(a, True, b, c, d, e, f)).grid(column=x%char_mod+1+offset, row=cur_row_offset+1, padx=5)
 	name_list[x] = StringVar()
 	ttk.Separator(char_frm, orient=HORIZONTAL).grid(column=x%char_mod+1+offset, row=cur_row_offset+2,sticky=E+W)
-	ttk.Button(char_frm, textvariable=name_list[x], width = max_char_length, command=lambda a=cur_values[x], b=info_frm, c=frame_vars, d=c_frms, e=info_note1, f=info_note2 : display_info(a, False, b, c, d, e, f)).grid(column=x%char_mod+1+offset, row=cur_row_offset+3, padx=5)
+	ttk.Button(char_frm, textvariable=name_list[x], width = max_char_length, command=lambda a=cur_values, b=info_frm, c=frame_vars, d=c_frms, e=info_note1, f=info_note2, g=x : display_info(a, False, b, c, d, e, f, g)).grid(column=x%char_mod+1+offset, row=cur_row_offset+3, padx=5)
 	ttk.Separator(char_frm, orient=HORIZONTAL).grid(column=x%char_mod+1+offset, row=cur_row_offset+4,sticky=E+W)
 	name_list[x].set("???")
 	offset += 1
@@ -390,7 +464,7 @@ def toggle_state(button, button_var, state, off_state):
 			button[x].state(["disabled"])
 		else:
 			button[x].state(["!disabled"])
-ttk.Checkbutton(rand_frm, variable = rand_magic, text="Randomize Learned Spells", command= lambda a=rand_magic, b=chaos_magic_button, c=chaos_magic : toggle_state(b, c, a, 0)).grid(column=3,row=0, padx=5, sticky=W)
+ttk.Checkbutton(rand_frm, variable = rand_magic, text="Randomize Learned Spells", command= lambda a=rand_magic, b=chaos_magic_button, c=chaos_magic : toggle_state([b], c, a, 0)).grid(column=3,row=0, padx=5, sticky=W)
 rand_promo_items = IntVar()
 ttk.Checkbutton(rand_frm, variable = rand_promo_items, text="Randomize Promotion Items").grid(column=0,row=1, padx=5, sticky=W)
 rand_stat_growths = IntVar()
@@ -418,7 +492,7 @@ promo_level = StringVar()
 lvl1 = ttk.Entry(rand_frm, width=30, textvariable = promo_level, invalidcommand = lambda a=promo_level : a.set("Integer between 1 and 40 only"),\
 validate="focusout", validatecommand=lambda a = promo_level: (a.get().isdecimal() and int(a.get()) > 0 and int(a.get()) <= 40))
 lvl1.grid(column=2,row=3, padx=5, sticky=W)
-ttk.Label(rand_frm, text="Level Pre-promoted Characters to This Level Effectively").grid(column=1,row=3, padx=5, sticky=W)
+ttk.Label(rand_frm, text="Pre-promoted effective level also level cap").grid(column=1,row=3, padx=5, sticky=W)
 promo_level.set("20")
 lvl1.state(["disabled"])
 promo_elevel = StringVar()
@@ -431,13 +505,12 @@ lvl2.state(["disabled"])
 adjust_level = IntVar()
 ttk.Checkbutton(rand_frm, variable = adjust_level, text="Adjust Levels", command=\
 lambda a=adjust_level, b=[lvl2, lvl1], c=[promo_elevel, promo_level] : toggle_state(b, c, a, 20)).grid(column=0,row=3, padx=5, sticky=W)
-
+cur_items = []
 ttk.Button(rand_frm, text="Randomize", command=\
 lambda a=rand_depromo, b=rand_prepromo, c=rand_magic, d=chaos_magic, e=rand_promo_items, f=rand_stat_growths, g=rand_stats,\
-h=[percent_change_pos, percent_change_neg], i=adjust_level, j=promo_level, k=promo_elevel : randomize(a,b,c,d,e,f,g,h,i,j,k)).grid(column=0, row=0, sticky=W)
+h=[percent_change_pos, percent_change_neg], i=adjust_level, j=promo_level, k=promo_elevel, l=cur_values, m=cur_items : randomize(a,b,c,d,e,f,g,h,i,j,k, orig_values, l, m)).grid(column=0, row=0, sticky=W)
 
 orig_items = ["WARRIOR_PRIDE", "SILVER_TANK", "SECRET_BOOK", "VIGOR_BALL", "VIGOR_BALL", "PEGASUS_WING"]
-cur_items = []
 f = open("..\\disasm\\data\\maps\\entries\\map07\\8-other-items.asm", 'r')
 file = f.read()
 f.close()

@@ -18,6 +18,4 @@ echo Patched mapsprites
 echo Patched text
 @call ./patch_icon.bat
 echo Patched icon
-@python "./swap characters.py"
-echo Randomized various things
 @call ../build/buildstandard.bat
