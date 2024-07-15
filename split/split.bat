@@ -18,4 +18,3 @@ echo Patched mapsprites
 echo Patched text
 @call ./patch_icon.bat
 echo Patched icon
-@call ../build/buildstandard.bat

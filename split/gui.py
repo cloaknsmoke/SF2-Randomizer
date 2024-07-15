@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 from swap_characters import *
+import subprocess
 
 def toggle_chars(a, b):
 	for x in range(len(a)):
@@ -377,7 +378,12 @@ def randomize(	rand_depromo, rand_prepromo, rand_magic, chaos_magic, rand_promo_
 	for x in r_swap_dict:
 		cur_values[x] = r_swap_dict[x]
 	
-	
+def write_config(args):
+	f = open("config.txt", 'w')
+	for x in iter(args):
+		args[x] = args[x].get()
+	f.write(repr(args))
+	f.close()
 
 orig_values = {\
 "BOWIE" : 0,"SARAH" : 1,"CHESTER" : 2,"JAHA" : 3,"KAZIN" : 4,"SLADE" : 5,"KIWI" : 6,"PETER" : 7,"MAY" : 8,"GERHALT" : 9,"LUKE" : 10,\
@@ -397,9 +403,17 @@ for x in splits:
 	ally = x.split(": equ ")[0][5:]
 	num = int(x.split(": equ ")[1])
 	cur_values[num] = ally
-root = Tk()
+try:
+	f = open("config.txt", 'r')
+	config = eval(f.read())
+	f.close()
+except Exception:
+	print("Either no config or it was corrupted.")
+	config = {}
+root = Tk(screenName = "Shining Force 2 Randomizer")
 frm = ttk.Frame(root, padding=10)
 frm.grid()
+frm.bind("<Destroy>", func=lambda a, b=config: write_config(b))
 char_frm = ttk.Frame(frm, padding=10)
 char_frm.grid(column=0, row=0, padx=5)
 name_list = [x for x in range(30)]
@@ -449,14 +463,28 @@ for x in range(char_row_offset+4):
 rand_frm = ttk.Frame(frm, padding=10)
 rand_frm.grid(column=0, row=1, columnspan=40, sticky=W)
 rand_depromo = IntVar()
+if("rand_depromo" in  config):
+	rand_depromo.set(config["rand_depromo"])
+config["rand_depromo"] = rand_depromo
 ttk.Checkbutton(rand_frm, variable = rand_depromo, text="Allow Depromotion").grid(column=1,row=0, padx=5, sticky=W)
 rand_prepromo = IntVar()
+if("rand_prepromo" in  config):
+	rand_prepromo.set(config["rand_prepromo"])
+config["rand_prepromo"] = rand_prepromo
 ttk.Checkbutton(rand_frm, variable = rand_prepromo, text="Allow Random Promotion Path").grid(column=2,row=0, padx=5, sticky=W)
 chaos_magic = IntVar()
+if("chaos_magic" in  config):
+	chaos_magic.set(config["chaos_magic"])
+config["chaos_magic"] = chaos_magic
 chaos_magic_button = ttk.Checkbutton(rand_frm, variable = chaos_magic, text="Randomize Spell Learn Levels")
 chaos_magic_button.grid(column=4, row=0, padx=5, sticky=W)
 chaos_magic_button.state(["disabled"])
 rand_magic = IntVar()
+if("rand_magic" in  config):
+	rand_magic.set(config["rand_magic"])
+config["rand_magic"] = rand_magic
+if(rand_magic.get() == 1):
+	chaos_magic_button.state(["!disabled"])
 def toggle_state(button, button_var, state, off_state):
 	for x in range(len(button)):
 		if(state.get() == 0):
@@ -466,8 +494,14 @@ def toggle_state(button, button_var, state, off_state):
 			button[x].state(["!disabled"])
 ttk.Checkbutton(rand_frm, variable = rand_magic, text="Randomize Learned Spells", command= lambda a=rand_magic, b=chaos_magic_button, c=chaos_magic : toggle_state([b], c, a, 0)).grid(column=3,row=0, padx=5, sticky=W)
 rand_promo_items = IntVar()
+if("rand_promo_items" in  config):
+	rand_promo_items.set(config["rand_promo_items"])
+config["rand_promo_items"] = rand_promo_items
 ttk.Checkbutton(rand_frm, variable = rand_promo_items, text="Randomize Promotion Items").grid(column=0,row=1, padx=5, sticky=W)
 rand_stat_growths = IntVar()
+if("rand_stat_growths" in  config):
+	rand_stat_growths.set(config["rand_stat_growths"])
+config["rand_stat_growths"] = rand_stat_growths
 ttk.Checkbutton(rand_frm, variable = rand_stat_growths, text="Randomize Stat Growth Rates").grid(column=1,row=1, padx=5, sticky=W)
 
 percent_change_pos = StringVar()
@@ -475,16 +509,30 @@ pos = ttk.Entry(rand_frm, width=30, textvariable = percent_change_pos, invalidco
 validate="focusout", validatecommand=lambda a = percent_change_pos: (a.get().isdecimal() and int(a.get()) >= 0 and int(a.get()) <= 100))
 pos.grid(column=2,row=2, padx=5, sticky=W)
 ttk.Label(rand_frm, text="Positive Change %").grid(column=1,row=2, padx=5, sticky=W)
-percent_change_pos.set("0")
+if("percent_change_pos" in  config):
+	percent_change_pos.set(config["percent_change_pos"])
+else:
+	percent_change_pos.set("0")
+config["percent_change_pos"] = percent_change_pos
 pos.state(["disabled"])
 percent_change_neg = StringVar()
 neg = ttk.Entry(rand_frm, width=30, textvariable = percent_change_neg, invalidcommand = lambda a=percent_change_neg : a.set("Integer between 0 and 100 only"),\
 validate="focusout", validatecommand=lambda a = percent_change_neg: (a.get().isdecimal() and int(a.get()) >= 0 and int(a.get()) <= 100))
 neg.grid(column=4,row=2, padx=5, sticky=W)
 ttk.Label(rand_frm, text="Negative Change %").grid(column=3,row=2, padx=5, sticky=W)
-percent_change_neg.set("0")
+if("percent_change_neg" in  config):
+	percent_change_neg.set(config["percent_change_neg"])
+else:
+	percent_change_neg.set("0")
+config["percent_change_neg"] = percent_change_neg
 neg.state(["disabled"])
 rand_stats = IntVar()
+if("rand_stats" in  config):
+	rand_stats.set(config["rand_stats"])
+config["rand_stats"] = rand_stats
+if(rand_stats.get() == 1):
+	pos.state(["!disabled"])
+	neg.state(["!disabled"])
 ttk.Checkbutton(rand_frm, variable = rand_stats, text="Randomize Stats", command=\
 lambda a=rand_stats, b=[pos, neg], c=[percent_change_pos, percent_change_neg] : toggle_state(b, c, a, 0)).grid(column=0,row=2, padx=5, sticky=W)
 
@@ -493,16 +541,30 @@ lvl1 = ttk.Entry(rand_frm, width=30, textvariable = promo_level, invalidcommand 
 validate="focusout", validatecommand=lambda a = promo_level: (a.get().isdecimal() and int(a.get()) > 0 and int(a.get()) <= 40))
 lvl1.grid(column=2,row=3, padx=5, sticky=W)
 ttk.Label(rand_frm, text="Pre-promoted effective level also level cap").grid(column=1,row=3, padx=5, sticky=W)
-promo_level.set("20")
+if("promo_level" in  config):
+	promo_level.set(config["promo_level"])
+else:
+	promo_level.set("20")
+config["promo_level"] = promo_level
 lvl1.state(["disabled"])
 promo_elevel = StringVar()
 lvl2 = ttk.Entry(rand_frm, width=30, textvariable = promo_elevel, invalidcommand = lambda a=promo_elevel : a.set("Integer between 1 and 40 only"),\
 validate="focusout", validatecommand=lambda a = promo_elevel: (a.get().isdecimal() and int(a.get()) > 0 and int(a.get()) <= 40))
 lvl2.grid(column=4,row=3, padx=5, sticky=W)
 ttk.Label(rand_frm, text="Game Treats Promoted Characters as This Plus 1").grid(column=3,row=3, padx=5, sticky=W)
-promo_elevel.set("20")
+if("promo_elevel" in  config):
+	promo_elevel.set(config["promo_elevel"])
+else:
+	promo_elevel.set("20")
+config["promo_elevel"] = promo_elevel
 lvl2.state(["disabled"])
 adjust_level = IntVar()
+if("adjust_level" in  config):
+	adjust_level.set(config["adjust_level"])
+config["adjust_level"] = adjust_level
+if(adjust_level.get() == 1):
+	lvl1.state(["!disabled"])
+	lvl2.state(["!disabled"])
 ttk.Checkbutton(rand_frm, variable = adjust_level, text="Adjust Levels", command=\
 lambda a=adjust_level, b=[lvl2, lvl1], c=[promo_elevel, promo_level] : toggle_state(b, c, a, 20)).grid(column=0,row=3, padx=5, sticky=W)
 cur_items = []
@@ -584,4 +646,7 @@ for x in range(len(orig_items)):
 	ttk.Separator(char_frm, orient=VERTICAL).grid(column=x+offset, row=char_row_offset+2,sticky=N+S)
 	ttk.Separator(char_frm, orient=VERTICAL).grid(column=x+offset, row=char_row_offset+3,sticky=N+S)
 	ttk.Separator(char_frm, orient=VERTICAL).grid(column=x+offset, row=char_row_offset+4,sticky=N+S)
+if("split" not in config):
+	subprocess.run(["split.bat"])
+	config["split"] = "done"
 root.mainloop()

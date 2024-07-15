@@ -14,12 +14,15 @@ def swap_ALLY_r(p, a, b):
 				f = open(x, 'r')
 				file = f.read()
 				f.close()
-				for x in range(len(a)):
-					if(a[x] in file):
-						file = file.replace(a[x], "{char" + str(x) + "}")
-				for x in range(len(b)):
-					if(("{char" + str(x) + "}") in file):
-						file = file.replace("{char" + str(x) + "}", b[x])
+				for y in range(len(a)):
+					if(a[y] in file):
+						file = file.replace(a[y], "{char" + str(y) + "}")
+				for y in range(len(b)):
+					if(("{char" + str(y) + "}") in file):
+						file = file.replace("{char" + str(y) + "}", b[y])
+				f = open(x, 'w')
+				f.write(file)
+				f.close()
 			except UnicodeDecodeError as e:
 				continue
 
@@ -695,7 +698,7 @@ def swap_characters(char_a_list, char_b_list, orig_nums, depromote, rand_promo):
 		"                    "+items_b[0]+("|EQUIPPED" if items_b[0] in valid_weapon_level_ranges else "")+", &\n"+\
 		"                    "+items_b[1]+("|EQUIPPED" if items_b[1] in valid_weapon_level_ranges else "")+", &\n"+\
 		"                    "+items_b[2]+("|EQUIPPED" if items_b[2] in valid_weapon_level_ranges else "")+", &\n"+\
-		"                    "+items_b[3]+("|EQUIPPED" if items_b[3] in valid_weapon_level_ranges else "")+"\n"
+		"                    "+items_b[3]+("|EQUIPPED" if items_b[3] in valid_weapon_level_ranges else "")
 		temp_rep[cur_char_b] = text_b
 	for x in range(len(char_b_list)):
 		file = file.replace("{char" + str(x) + "}", temp_rep[char_b_list[x]])
