@@ -3,6 +3,8 @@ import random
 import re
 import sys
 
+loc = r"..\disasm"
+
 def swap_ALLY_r(p, a, b):
 	if(len(a) != len(b)):
 		raise Exception("Only swap lists of equal length.")
@@ -27,11 +29,11 @@ def swap_ALLY_r(p, a, b):
 				continue
 
 def replace_npc_rohde_sprite():
-	f = open("..\\disasm\\sf2enums.asm", 'r')
+	f = open(loc + "\\sf2enums.asm", 'r')
 	file1 = f.read()
 	f.close()
 	who_is_rohde = re.search("ALLY_[A-Z]*: equ 11", file1).group()[5:-8]
-	f = open("..\\disasm\\data\\stats\\allies\\allystartdefs.asm", 'r')
+	f = open(loc + "\\data\\stats\\allies\\allystartdefs.asm", 'r')
 	file2 = f.read()
 	f.close()
 	new_class = re.search("startClass [A-Z]*_?\\d?         ; \\d*: " + who_is_rohde, file2).group()
@@ -44,23 +46,43 @@ def replace_npc_rohde_sprite():
 		for x in k:
 			r_class_dict[x] = v
 	mapsprite = "MAPSPRITE_" + who_is_rohde + "_" + r_class_dict[new_class]
-	new_sprite_index = file1[file1.find(mapsprite):file1.find("\n", file1.find(mapsprite))]
+	new_sprite_index = file1[file1.find(mapsprite+": equ"):file1.find("\n", file1.find(mapsprite+": equ"))]
 	new_sprite_index = new_sprite_index[new_sprite_index.find("equ")+4:]
 	if(";" in new_sprite_index):
 		new_sprite_index = new_sprite_index[0:new_sprite_index.find(";")]
 	new_sprite_index = new_sprite_index.replace(" ", "").replace("\n", "")
-	npc_rohde_index = file1.find("MAPSPRITE_NPC_ROHDE: equ $")+25
+	npc_rohde_index = file1.find("MAPSPRITE_NPC_ROHDE: equ ")+25 
 	file1 = file1[0:npc_rohde_index] + new_sprite_index + file1[file1.find("\n", npc_rohde_index):]
-	f = open("..\\disasm\\sf2enums.asm", 'w')
+	f = open(loc + "\\sf2enums.asm", 'w')
 	f.write(file1)
+	f.close()
+	f = open(loc + r"\code\common\menus\caravan\caravanactions_1.asm", 'r')
+	file = f.read()
+	f.close()
+	index1 = file.find("PORTRAIT_")
+	index2 = file.find(",d0", index1)
+	base = "_PROMO" if ("BOWIE" in who_is_rohde or "SLADE" in who_is_rohde or "KIWI" in who_is_rohde or "PETER" in who_is_rohde or "GERHALT" in who_is_rohde or "CLAUDE" in who_is_rohde) else ""
+	file = file[0:index1] + "PORTRAIT_" + who_is_rohde + base + file[index2:]
+	f = open(loc + r"\code\common\menus\caravan\caravanactions_1.asm", 'w')
+	f.write(file)
+	f.close()
+	f = open(loc + r"\code\common\menus\caravan\displaycaravanmessagewithportrait.asm.asm", 'r')
+	file = f.read()
+	f.close()
+	index1 = file.find("PORTRAIT_")
+	index2 = file.find(",d0", index1)
+	base = "_PROMO" if ("BOWIE" in who_is_rohde or "SLADE" in who_is_rohde or "KIWI" in who_is_rohde or "PETER" in who_is_rohde or "GERHALT" in who_is_rohde or "CLAUDE" in who_is_rohde) else ""
+	file = file[0:index1] + "PORTRAIT_" + who_is_rohde + base + file[index2:]
+	f = open(loc + r"\code\common\menus\caravan\displaycaravanmessagewithportrait.asm.asm", 'w')
+	f.write(file)
 	f.close()
 
 def replace_spinning_elric():
-	f = open("..\\disasm\\sf2enums.asm")
+	f = open(loc + "\\sf2enums.asm")
 	file1 = f.read()
 	f.close()
 	who_is_elric = re.search("ALLY_[A-Z]*: equ 13", file1).group()[5:-8]
-	f = open("..\\disasm\\data\\stats\\allies\\allystartdefs.asm")
+	f = open(loc + "\\data\\stats\\allies\\allystartdefs.asm")
 	file2 = f.read()
 	f.close()
 	new_class = re.search("startClass [A-Z]*_?\\d?         ; \\d*: " + who_is_elric, file2).group()
@@ -72,22 +94,22 @@ def replace_spinning_elric():
 	for v,k in class_dict.items():
 		for x in k:
 			r_class_dict[x] = v
-	f = open("..\\disasm\\data\\battles\\global\\battleneutralentities.asm", 'r')
+	f = open(loc + "\\data\\battles\\global\\battleneutralentities.asm", 'r')
 	file3 = f.read()
 	f.close()
 	harpie_battle = file3[file3.find("HARPIES_POND"):file3.find("TERMINATOR_WORD",file3.find("HARPIES_POND"))]
 	harpie_rep = harpie_battle.replace(re.search("mapsprite [A-Z]*_[A-Z]*\n", harpie_battle).group(), "mapsprite " + who_is_elric + "_" + r_class_dict[new_class] + "\n")
 	file3 = file3.replace(harpie_battle, harpie_rep)
-	f = open("..\\disasm\\data\\battles\\global\\battleneutralentities.asm", 'w')
+	f = open(loc + "\\data\\battles\\global\\battleneutralentities.asm", 'w')
 	f.write(file3)
 	f.close()
 
 def replace_knocked_out_luke():
-	f = open("..\\disasm\\sf2enums.asm")
+	f = open(loc + "\\sf2enums.asm")
 	file1 = f.read()
 	f.close()
 	who_is_luke = re.search("ALLY_[A-Z]*: equ 10", file1).group()[5:-8]
-	f = open("..\\disasm\\data\\stats\\allies\\allystartdefs.asm")
+	f = open(loc + "\\data\\stats\\allies\\allystartdefs.asm")
 	file2 = f.read()
 	f.close()
 	new_class = re.search("startClass [A-Z]*_?\\d?         ; \\d*: " + who_is_luke, file2).group()
@@ -99,22 +121,22 @@ def replace_knocked_out_luke():
 	for v,k in class_dict.items():
 		for x in k:
 			r_class_dict[x] = v
-	f = open("..\\disasm\\data\\battles\\global\\battleneutralentities.asm", 'r')
+	f = open(loc + "\\data\\battles\\global\\battleneutralentities.asm", 'r')
 	file3 = f.read()
 	f.close()
 	polca_battle = file3[file3.find("POLCA_VILLAGE"):file3.find("TERMINATOR_WORD",file3.find("POLCA_VILLAGE"))]
 	polca_rep = polca_battle.replace(re.search("mapsprite [A-Z]*_[A-Z]*\n", polca_battle).group(), "mapsprite " + who_is_luke + "_" + r_class_dict[new_class] + "\n")
 	file3 = file3.replace(polca_battle, polca_rep)
-	f = open("..\\disasm\\data\\battles\\global\\battleneutralentities.asm", 'w')
+	f = open(loc + "\\data\\battles\\global\\battleneutralentities.asm", 'w')
 	f.write(file3)
 	f.close()
 	
 def replace_knocked_out_higins():
-	f = open("..\\disasm\\sf2enums.asm")
+	f = open(loc + "\\sf2enums.asm")
 	file1 = f.read()
 	f.close()
 	who_is_higins = re.search("ALLY_[A-Z]*: equ 19", file1).group()[5:-8]
-	f = open("..\\disasm\\data\\stats\\allies\\allystartdefs.asm")
+	f = open(loc + "\\data\\stats\\allies\\allystartdefs.asm")
 	file2 = f.read()
 	f.close()
 	new_class = re.search("startClass [A-Z]*_?\\d?         ; \\d*: " + who_is_higins, file2).group()
@@ -126,22 +148,22 @@ def replace_knocked_out_higins():
 	for v,k in class_dict.items():
 		for x in k:
 			r_class_dict[x] = v
-	f = open("..\\disasm\\data\\battles\\global\\battleneutralentities.asm", 'r')
+	f = open(loc + "\\data\\battles\\global\\battleneutralentities.asm", 'r')
 	file3 = f.read()
 	f.close()
 	np_battle = file3[file3.find("OUTSIDE_KETTO"):file3.find("TERMINATOR_WORD",file3.find("OUTSIDE_KETTO"))]
 	np_rep = np_battle.replace(re.search("mapsprite [A-Z]*_[A-Z]*\n", np_battle).group(), "mapsprite " + who_is_higins + "_" + r_class_dict[new_class] + "\n")
 	file3 = file3.replace(np_battle, np_rep)
-	f = open("..\\disasm\\data\\battles\\global\\battleneutralentities.asm", 'w')
+	f = open(loc + "\\data\\battles\\global\\battleneutralentities.asm", 'w')
 	f.write(file3)
 	f.close()
 
 def replace_enemy_jaro():
-	f = open("..\\disasm\\sf2enums.asm")
+	f = open(loc + "\\sf2enums.asm")
 	file1 = f.read()
 	f.close()
 	who_is_jaro = re.search("ALLY_[A-Z]*: equ 23", file1).group()[5:-8]
-	f = open("..\\disasm\\data\\stats\\allies\\allystartdefs.asm")
+	f = open(loc + "\\data\\stats\\allies\\allystartdefs.asm")
 	file2 = f.read()
 	f.close()
 	new_class = re.search("startClass [A-Z]*_?\\d?         ; \\d*: " + who_is_jaro, file2).group()
@@ -153,19 +175,100 @@ def replace_enemy_jaro():
 	for v,k in class_dict.items():
 		for x in k:
 			r_class_dict[x] = v
-	f = open("..\\disasm\\data\\stats\\enemies\\enemymapsprites.asm", 'r')
+	f = open(loc + "\\data\\stats\\enemies\\enemymapsprites.asm", 'r')
 	file3 = f.read()
 	f.close()
-	file3 = file3.replace("JARO_SPECIAL", who_is_jaro + r_class_dict[new_class])
-	f = open("..\\disasm\\data\\stats\\enemies\\enemymapsprites.asm", 'w')
+	index1 = file3.find("mapsprite", file3.find("; 98: ZEON"))
+	index2 = file3.find("; 99: JAR")
+	file3 = file3[0:index1] + "mapsprite " + who_is_jaro + r_class_dict[new_class] + " " + file[index2:]  
+	f = open(loc + "\\data\\stats\\enemies\\enemymapsprites.asm", 'w')
 	f.write(file3)
 	f.close()
-	f = open("..\\disasm\\data\\stats\\enemies\\enemynames-capitalized.asm", 'r')
+	f = open(loc + "\\data\\stats\\enemies\\enemynames-capitalized.asm", 'r')
 	file3 = f.read()
 	f.close()
-	f = open("..\\disasm\\data\\stats\\enemies\\enemynames-capitalized.asm", 'w')
-	f.write(file3.replace("Jaro", who_is_jaro.capitalize()))
+	index1 = file3.find("enemyName", file3.find("\"Zeon\""))
+	index2 = file3.find("\n", index1)
+	file3 = file3[0:index1] + "enemyName \"" + who_is_jaro.capitalize() + "\"" + file3[index2:]
+	f = open(loc + "\\data\\stats\\enemies\\enemynames-capitalized.asm", 'w')
+	f.write(file3)
 	f.close()
+
+def replace_stone_taya():
+	f = open(loc + "\\sf2enums.asm")
+	file1 = f.read()
+	f.close()
+	who_is_taya = re.search("ALLY_[A-Z]*: equ 21", file1).group()[5:-8]
+	f = open(loc + "\\data\\stats\\allies\\allystartdefs.asm")
+	file2 = f.read()
+	f.close()
+	new_class = re.search("startClass [A-Z]*_?\\d?         ; \\d*: " + who_is_taya, file2).group()
+	new_class = new_class[11:new_class.find("         ")]
+	class_dict = {"BASE" : ("SDMN", "KNTE", "WARR", "MAGE_1", "MAGE_2", "MAGE_3", "MAGE_4", "PRST", "ACHR", "BDMN", "WFMN", "RNGR", "PHNK", "THIF", "TORT", "RWAR", "DRD", "CNST")}
+	class_dict["PROMO"] = ("HERO", "PLDN", "GLDT", "WIZ", "WIZ", "WIZ", "WIZ", "VICR", "SNIP", "BDBT", "WFBR", "BWNT", "PHNX", "NINJ", "MNST", "RBT", "GLM")
+	class_dict["SPECIAL"] = ("PGNT", "BRN", "SORC_1", "SORC_2", "SORC_3", "SORC_4", "MMNK", "BRGN", "RDBN")
+	r_class_dict = {}
+	for v,k in class_dict.items():
+		for x in k:
+			r_class_dict[x] = v
+	f = open(loc + r"\data\maps\entries\map01\mapsetups\s1_entities.asm", 'r')
+	file2 = f.read()
+	f.close()
+	index1 = file2.find("msFixedEntity 44, 26, DOWN,")
+	index2 = file2.find(", eas_InitFixedSprite")
+	#special case for if taya is still in her original spot since she gets a special sprite
+	if(who_is_taya == "TAYA"):
+		file2 = file2[0:index1] + "msFixedEntity 44, 26, DOWN, MAPSPRITE_OBJECT4" + file2[index2:]
+	else:
+		file2 = file2[0:index1] + "msFixedEntity 44, 26, DOWN, MAPSPRITE_" + who_is_taya + r_class_dict[new_class] + file2[index2:]
+	f = open(loc + r"\data\maps\entries\map01\mapsetups\s1_entities.asm", 'w')
+	f.write(file2)
+	f.close()
+	
+def replace_frozen_claude():
+	f = open(loc + "\\sf2enums.asm")
+	file1 = f.read()
+	f.close()
+	who_is_claude = re.search("ALLY_[A-Z]*: equ 29", file1).group()[5:-8]
+	f = open(loc + "\\data\\stats\\allies\\allystartdefs.asm")
+	file2 = f.read()
+	f.close()
+	new_class = re.search("startClass [A-Z]*_?\\d?         ; \\d*: " + who_is_claude, file2).group()
+	new_class = new_class[11:new_class.find("         ")]
+	class_dict = {"BASE" : ("SDMN", "KNTE", "WARR", "MAGE_1", "MAGE_2", "MAGE_3", "MAGE_4", "PRST", "ACHR", "BDMN", "WFMN", "RNGR", "PHNK", "THIF", "TORT", "RWAR", "DRD", "CNST")}
+	class_dict["PROMO"] = ("HERO", "PLDN", "GLDT", "WIZ", "WIZ", "WIZ", "WIZ", "VICR", "SNIP", "BDBT", "WFBR", "BWNT", "PHNX", "NINJ", "MNST", "RBT", "GLM")
+	class_dict["SPECIAL"] = ("PGNT", "BRN", "SORC_1", "SORC_2", "SORC_3", "SORC_4", "MMNK", "BRGN", "RDBN")
+	r_class_dict = {}
+	for v,k in class_dict.items():
+		for x in k:
+			r_class_dict[x] = v
+	f = open(loc + r"\data\maps\entries\map63\mapsetups\s6_initfunction.asm", 'r')
+	file2 = f.read()
+	f.close()
+	index1 = file2.find(",", file2.find("setSprite"))+1
+	index2 = file2.find("\n", index1)
+	#special case if claude is still in his original spot since he has a unique sprite
+	if(who_is_claude == "CLAUDE"):
+		file2 = file2[0:index1] + "MAPSPRITE_POSE3" + file2[index2:]
+	else:
+		file2 = file2[0:index1] + "MAPSPRITE_" + who_is_claude + r_class_dict[new_class] + file2[index2:]
+	f = open(loc + r"\data\maps\entries\map63\mapsetups\s6_initfunction.asm", 'w')
+	f.write(file2)
+	f.close()
+	f = open(loc + r"\data\maps\entries\map63\mapsetups\scripts.asm", 'r')
+	file2 = f.read()
+	f.close()
+	index1 = file2.find(",", file2.find("setSprite"))+1
+	index2 = file2.find("\n", index1)
+	#special case if claude is still in his original spot since he has a unique sprite
+	if(who_is_claude == "CLAUDE"):
+		file2 = file2[0:index1] + "MAPSPRITE_POSE3" + file2[index2:]
+	else:
+		file2 = file2[0:index1] + "MAPSPRITE_" + who_is_claude + r_class_dict[new_class] + file2[index2:]
+	f = open(loc + r"\data\maps\entries\map63\mapsetups\scripts.asm", 'w')
+	f.write(file2)
+	f.close()
+
 
 def remove_redundant_classes():
 	class_dict = {"BASE" : ("SDMN", "KNTE", "WARR", "MAGE_1", "MAGE_2", "MAGE_3", "MAGE_4", "PRST", "ACHR", "BDMN", "WFMN", "RNGR", "PHNK", "THIF", "TORT", "RWAR", "DRD", "CNST")}
@@ -175,7 +278,7 @@ def remove_redundant_classes():
 	for v,k in class_dict.items():
 		for x in k:
 			r_class_dict[x] = v
-	f = open("..\\disasm\\data\\stats\\allies\\allystartdefs.asm")
+	f = open(loc + "\\data\\stats\\allies\\allystartdefs.asm")
 	file = f.read()
 	f.close()
 	splits = file.split("startClass")
@@ -184,7 +287,7 @@ def remove_redundant_classes():
 		if(r_class_dict[cur_class] == "BASE"):
 			continue
 		num = int(re.search("; [0-9]*:", splits[x]).group()[2:-1])
-		f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats" + (str(num) if num > 9 else ("0" + str(num))) +".asm", 'r')
+		f = open(loc + "\\data\\stats\\allies\\stats\\allystats" + (str(num) if num > 9 else ("0" + str(num))) +".asm", 'r')
 		file = f.read()
 		f.close()
 		splits2 = file.split("forClass")
@@ -200,7 +303,7 @@ def remove_redundant_classes():
 		if("useFirstSpellList" in class_data):
 			class_data = class_data.replace("useFirstSpellList", base_spells)
 		file = file[0:file.index("forClass")+9].replace("; Syntax", "        ") + class_data.strip()
-		f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats" + (str(num) if num > 9 else ("0" + str(num))) +".asm", 'w')
+		f = open(loc + "\\data\\stats\\allies\\stats\\allystats" + (str(num) if num > 9 else ("0" + str(num))) +".asm", 'w')
 		f.write(file)
 		f.close()
 def adjust_promo_stats(ally_num, new_class, new_promo_level, growths):
@@ -211,7 +314,7 @@ def adjust_promo_stats(ally_num, new_class, new_promo_level, growths):
 	for v,k in class_dict.items():
 		for x in k:
 			r_class_dict[x] = v
-	f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats" + (str(ally_num) if ally_num > 9 else ("0" + str(ally_num))) +".asm", 'r')
+	f = open(loc + "\\data\\stats\\allies\\stats\\allystats" + (str(ally_num) if ally_num > 9 else ("0" + str(ally_num))) +".asm", 'r')
 	file = f.read()
 	f.close()
 	splits = file.split("forClass")
@@ -289,7 +392,7 @@ def adjust_promo_stats(ally_num, new_class, new_promo_level, growths):
 		else:
 			promo_block_rep += x + "\n"
 	promo_block_rep = promo_block_rep[0:-1]
-	f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats" + (str(ally_num) if ally_num > 9 else ("0" + str(ally_num))) +".asm", 'w')
+	f = open(loc + "\\data\\stats\\allies\\stats\\allystats" + (str(ally_num) if ally_num > 9 else ("0" + str(ally_num))) +".asm", 'w')
 	f.write(file.replace(promo_block, promo_block_rep))
 	f.close()
 
@@ -357,8 +460,8 @@ def swap_characters(char_a_list, char_b_list, orig_nums, depromote, rand_promo):
 			raise Exception("All characters must be matched to somewherre in the opposite list.")
 	char_a_name_list = [x.capitalize() for x in char_a_list]
 	char_b_name_list = [x.capitalize() for x in char_b_list]
-	p = Path("..\\disasm")
-	f = open("..\\disasm\\sf2enums.asm", 'r')
+	p = Path(loc + "")
+	f = open(loc + "\\sf2enums.asm", 'r')
 	file = f.read()
 	f.close()
 	char_a_value = [file.find("ALLY_"+x) for x in char_a_list]
@@ -373,13 +476,13 @@ def swap_characters(char_a_list, char_b_list, orig_nums, depromote, rand_promo):
 		base = "_BASE" if ("BOWIE" in cur_char or "SLADE" in cur_char or "KIWI" in cur_char or "PETER" in cur_char or "GERHALT" in cur_char or "CLAUDE" in cur_char) else ""
 		file = file.replace("{ally" + str(x) + "}", "ALLY_"+cur_char + ": equ " + char_a_value[x])
 		file = file.replace("{portrait" + str(x) + "}", "PORTRAIT_" + cur_char + base + ": equ " + char_a_value[x])
-	f = open("..\\disasm\\sf2enums.asm", 'w')
+	f = open(loc + "\\sf2enums.asm", 'w')
 	f.write(file)
 	f.close()
 
-	swap_ALLY_r(Path("..\\disasm"), ["ALLY_"+x for x in char_a_list],["ALLY_"+x for x in char_b_list])
+	swap_ALLY_r(Path(loc + ""), ["ALLY_"+x for x in char_a_list],["ALLY_"+x for x in char_b_list])
 	
-	f = open("..\\disasm\\data\\stats\\allies\\allydialogproperties-standard.asm", 'r')
+	f = open(loc + "\\data\\stats\\allies\\allydialogproperties-standard.asm", 'r')
 	file = f.read()
 	f.close()
 	temp = {}
@@ -397,11 +500,11 @@ def swap_characters(char_a_list, char_b_list, orig_nums, depromote, rand_promo):
 		cur_char = char_b_list[x]
 		text = temp[cur_char]
 		file = file.replace("{char" + str(x) + "}", text)
-	f = open("..\\disasm\\data\\stats\\allies\\allydialogproperties-standard.asm", 'w')
+	f = open(loc + "\\data\\stats\\allies\\allydialogproperties-standard.asm", 'w')
 	f.write(file)
 	f.close()
 	
-	f = open("..\\disasm\\data\\stats\\allies\\stats\\entries.asm", 'r')
+	f = open(loc + "\\data\\stats\\allies\\stats\\entries.asm", 'r')
 	file = f.read()
 	f.close()
 	temp = {}
@@ -416,11 +519,11 @@ def swap_characters(char_a_list, char_b_list, orig_nums, depromote, rand_promo):
 		cur_char = char_b_list[x]
 		text = temp[cur_char]
 		file = file.replace("{char" + str(x) + "}", text)
-	f = open("..\\disasm\\data\\stats\\allies\\stats\\entries.asm", 'w')
+	f = open(loc + "\\data\\stats\\allies\\stats\\entries.asm", 'w')
 	f.write(file)
 	f.close()
 	
-	f = open("..\\disasm\\data\\stats\\allies\\allybattlesprites.asm", 'r')
+	f = open(loc + "\\data\\stats\\allies\\allybattlesprites.asm", 'r')
 	file = f.read()
 	f.close()
 	temp = {}
@@ -438,11 +541,11 @@ def swap_characters(char_a_list, char_b_list, orig_nums, depromote, rand_promo):
 		cur_char = char_b_list[x]
 		text = temp[cur_char]
 		file = file.replace("{char" + str(x) + "}", text)
-	f = open("..\\disasm\\data\\stats\\allies\\allybattlesprites.asm", 'w')
+	f = open(loc + "\\data\\stats\\allies\\allybattlesprites.asm", 'w')
 	f.write(file)
 	f.close()
 	
-	f = open("..\\disasm\\data\\stats\\allies\\allymapsprites-standard.asm", 'r')
+	f = open(loc + "\\data\\stats\\allies\\allymapsprites-standard.asm", 'r')
 	file = f.read()
 	f.close()
 	temp = {}
@@ -460,11 +563,11 @@ def swap_characters(char_a_list, char_b_list, orig_nums, depromote, rand_promo):
 		cur_char = char_b_list[x]
 		text = temp[cur_char]
 		file = file.replace("{char" + str(x) + "}", text)
-	f = open("..\\disasm\\data\\stats\\allies\\allymapsprites-standard.asm", 'w')
+	f = open(loc + "\\data\\stats\\allies\\allymapsprites-standard.asm", 'w')
 	f.write(file)
 	f.close()
 	
-	f = open("..\\disasm\\data\\stats\\allies\\allynames-capitalized.asm", 'r')
+	f = open(loc + "\\data\\stats\\allies\\allynames-capitalized.asm", 'r')
 	file = f.read()
 	f.close()
 	for x in range(len(char_a_name_list)):
@@ -473,11 +576,11 @@ def swap_characters(char_a_list, char_b_list, orig_nums, depromote, rand_promo):
 	for x in range(len(char_b_name_list)):
 		cur_char = char_b_name_list[x]
 		file = file.replace("{char" + str(x) + "}", cur_char)
-	f = open("..\\disasm\\data\\stats\\allies\\allynames-capitalized.asm", 'w')
+	f = open(loc + "\\data\\stats\\allies\\allynames-capitalized.asm", 'w')
 	f.write(file)
 	f.close()
 	
-	f = open("..\\disasm\\data\\stats\\allies\\allystartdefs.asm", 'r')
+	f = open(loc + "\\data\\stats\\allies\\allystartdefs.asm", 'r')
 	file = f.read()
 	f.close()
 	valid_promos = {"SDMN" : ("HERO"), "KNTE" : ("PLDN", "PGNT"), "PRST" : ("VICR", "MMNK"), "WARR" : ("GLDT", "BRN"), "MAGE_1" : ("WIZ", "SORC_1"), \
@@ -702,11 +805,11 @@ def swap_characters(char_a_list, char_b_list, orig_nums, depromote, rand_promo):
 		temp_rep[cur_char_b] = text_b
 	for x in range(len(char_b_list)):
 		file = file.replace("{char" + str(x) + "}", temp_rep[char_b_list[x]])
-	f = open("..\\disasm\\data\\stats\\allies\\allystartdefs.asm", 'w')
+	f = open(loc + "\\data\\stats\\allies\\allystartdefs.asm", 'w')
 	f.write(file)
 	f.close()
 	
-	f = open("..\\disasm\\data\\graphics\\portraits\\entries.asm", 'r')
+	f = open(loc + "\\data\\graphics\\portraits\\entries.asm", 'r')
 	file = f.read()
 	f.close()
 	temp = {}
@@ -716,7 +819,7 @@ def swap_characters(char_a_list, char_b_list, orig_nums, depromote, rand_promo):
 	for x in range(len(char_b_list)):
 		cur_char = char_b_list[x]
 		file = file.replace("{char" + str(x) + "}", "dc.l Portrait" + ("0" if orig_values[cur_char] < 10 else "") + str(orig_values[cur_char]))
-	f = open("..\\disasm\\data\\graphics\\portraits\\entries.asm", 'w')
+	f = open(loc + "\\data\\graphics\\portraits\\entries.asm", 'w')
 	f.write(file)
 	f.close()
 	
@@ -830,27 +933,27 @@ def randomize_spells(chars, spells_1, spells_2, levels, starter_spells, bowie_sp
 			match cur_char:
 				case "BOWIE":
 					spells,text = generate_text(x, starter_spells, bowie_spells, levels, spells_1, spells_2, 1, 1, False)
-					f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats00.asm", 'r')
+					f = open(loc + "\\data\\stats\\allies\\stats\\allystats00.asm", 'r')
 					file = f.read()
 					f.close()
 					spell_start = file.find("spellList &")
 					spell_end = file.rfind("&")
 					spell_end = file.find("\n", spell_end+2)
 					file = file[0:spell_start] + text + file[spell_end:]
-					f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats00.asm", 'w')
+					f = open(loc + "\\data\\stats\\allies\\stats\\allystats00.asm", 'w')
 					f.write(file)
 					f.close()
 					# output = output + f"Bowie now learns {text}\n"
 				case "SARAH":
 					spells,text = generate_text(x, starter_spells, sarah_spells, levels, spells_1, spells_2, 0, 4, True)
-					f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats01.asm", 'r')
+					f = open(loc + "\\data\\stats\\allies\\stats\\allystats01.asm", 'r')
 					file = f.read()
 					f.close()
 					spell_start = file.find("spellList &")
 					spell_end = file.rfind("&")
 					spell_end = file.find("\n", spell_end+2)
 					file = file[0:spell_start] + text + file[spell_end:]
-					f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats01.asm", 'w')
+					f = open(loc + "\\data\\stats\\allies\\stats\\allystats01.asm", 'w')
 					f.write(file)
 					f.close()
 					# output = output + f"Sarah now learns {text}\n"
@@ -858,7 +961,7 @@ def randomize_spells(chars, spells_1, spells_2, levels, starter_spells, bowie_sp
 					spells1,text_1 = generate_text(x, starter_spells, kazin_spells, levels, spells_1, spells_2, 1, 3, True)
 					spells2,text_2 = generate_text(x, starter_spells, sorc_spells[:], levels, spells_1, spells_2, 0, 4, False)
 					text_2 = "spellList &\n                    21" + text_2[34:]
-					f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats04.asm", 'r')
+					f = open(loc + "\\data\\stats\\allies\\stats\\allystats04.asm", 'r')
 					file = f.read()
 					f.close()
 					spell_start1 = file.find("spellList &")
@@ -868,44 +971,44 @@ def randomize_spells(chars, spells_1, spells_2, levels, starter_spells, bowie_sp
 					spell_end1 = file.rfind("&",0, spell_start2)
 					spell_end1 = file.find("\n", spell_end1+2)
 					file = file[0:spell_start1] + text_1 + file[spell_end1:spell_start2] + text_2 + file[spell_end2:]
-					f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats04.asm", 'w')
+					f = open(loc + "\\data\\stats\\allies\\stats\\allystats04.asm", 'w')
 					f.write(file)
 					f.close()
-					f = open("..\\disasm\\data\\stats\\allies\\classes\\promotions-standard.asm", 'r')
+					f = open(loc + "\\data\\stats\\allies\\classes\\promotions-standard.asm", 'r')
 					file = f.read()
 					f.close()
 					base_spell = text_2[36:text_2.find(',', 36)]
 					index1 = file.find("dc.b CLASS_SORC_1,")
 					index2 = file.find("\n", index1)
 					file = file[0:index1] + "dc.b CLASS_SORC_1, SPELL_" + base_spell + file[index2:]
-					f = open("..\\disasm\\data\\stats\\allies\\classes\\promotions-standard.asm", 'w')
+					f = open(loc + "\\data\\stats\\allies\\classes\\promotions-standard.asm", 'w')
 					f.write(file)
 					f.close()
 					# output = output + f"Kazin now learns {text_1}\n"
 					# output = output + f"Sorc Kazin now learns {text_2}\n"
 				case "SLADE":
 					spells,text = generate_text(x, starter_spells, slade_spells, levels, spells_1, spells_2, 0, 2, False)
-					f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats05.asm", 'r')
+					f = open(loc + "\\data\\stats\\allies\\stats\\allystats05.asm", 'r')
 					file = f.read()
 					f.close()
 					spell_start = file.find("spellList &")
 					spell_end = file.rfind("&")
 					spell_end = file.find("\n", spell_end+2)
 					file = file[0:spell_start] + text + file[spell_end:]
-					f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats05.asm", 'w')
+					f = open(loc + "\\data\\stats\\allies\\stats\\allystats05.asm", 'w')
 					f.write(file)
 					f.close()
 					# output = output + f"Slade now learns {text}\n"
 				case "KARNA":
 					spells,text = generate_text(x, starter_spells, karna_spells, levels, spells_1, spells_2, 0, 4, True)
-					f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats15.asm", 'r')
+					f = open(loc + "\\data\\stats\\allies\\stats\\allystats15.asm", 'r')
 					file = f.read()
 					f.close()
 					spell_start = file.find("spellList &")
 					spell_end = file.rfind("&")
 					spell_end = file.find("\n", spell_end+2)
 					file = file[0:spell_start] + text + file[spell_end:]
-					f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats15.asm", 'w')
+					f = open(loc + "\\data\\stats\\allies\\stats\\allystats15.asm", 'w')
 					f.write(file)
 					f.close()
 					# output = output + f"Karna now learns {text}\n"
@@ -913,7 +1016,7 @@ def randomize_spells(chars, spells_1, spells_2, levels, starter_spells, bowie_sp
 					spells1,text_1 = generate_text(x, starter_spells, tyrin_spells, levels, spells_1, spells_2, 1, 3, True)
 					spells2,text_2 = generate_text(x, starter_spells, sorc_spells[:], levels, spells_1, spells_2, 0, 4, False)
 					text_2 = "spellList &\n                    21" + text_2[34:]
-					f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats17.asm", 'r')
+					f = open(loc + "\\data\\stats\\allies\\stats\\allystats17.asm", 'r')
 					file = f.read()
 					f.close()
 					spell_start1 = file.find("spellList &")
@@ -923,17 +1026,17 @@ def randomize_spells(chars, spells_1, spells_2, levels, starter_spells, bowie_sp
 					spell_end1 = file.rfind("&",0, spell_start2)
 					spell_end1 = file.find("\n", spell_end1+2)
 					file = file[0:spell_start1] + text_1 + file[spell_end1:spell_start2] + text_2 + file[spell_end2:]
-					f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats17.asm", 'w')
+					f = open(loc + "\\data\\stats\\allies\\stats\\allystats17.asm", 'w')
 					f.write(file)
 					f.close()
-					f = open("..\\disasm\\data\\stats\\allies\\classes\\promotions-standard.asm", 'r')
+					f = open(loc + "\\data\\stats\\allies\\classes\\promotions-standard.asm", 'r')
 					file = f.read()
 					f.close()
 					base_spell = text_2[36:text_2.find(',', 36)]
 					index1 = file.find("dc.b CLASS_SORC_2,")
 					index2 = file.find("\n", index1)
 					file = file[0:index1] + "dc.b CLASS_SORC_2, SPELL_" + base_spell + file[index2:]
-					f = open("..\\disasm\\data\\stats\\allies\\classes\\promotions-standard.asm", 'w')
+					f = open(loc + "\\data\\stats\\allies\\classes\\promotions-standard.asm", 'w')
 					f.write(file)
 					f.close()
 					# output = output + f"Tyrin now learns {text_1}\n"
@@ -942,7 +1045,7 @@ def randomize_spells(chars, spells_1, spells_2, levels, starter_spells, bowie_sp
 					spells1,text_1 = generate_text(x, starter_spells, taya_spells, levels, spells_1, spells_2, 0, 4, True)
 					spells2,text_2 = generate_text(x, starter_spells, sorc_spells[:], levels, spells_1, spells_2, 0, 4, False)
 					text_2 = "spellList &\n                    21" + text_2[34:]
-					f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats21.asm", 'r')
+					f = open(loc + "\\data\\stats\\allies\\stats\\allystats21.asm", 'r')
 					file = f.read()
 					f.close()
 					spell_start1 = file.find("spellList &")
@@ -952,44 +1055,44 @@ def randomize_spells(chars, spells_1, spells_2, levels, starter_spells, bowie_sp
 					spell_end1 = file.rfind("&",0, spell_start2)
 					spell_end1 = file.find("\n", spell_end1+2)
 					file = file[0:spell_start1] + text_1 + file[spell_end1:spell_start2] + text_2 + file[spell_end2:]
-					f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats21.asm", 'w')
+					f = open(loc + "\\data\\stats\\allies\\stats\\allystats21.asm", 'w')
 					f.write(file)
 					f.close()
-					f = open("..\\disasm\\data\\stats\\allies\\classes\\promotions-standard.asm", 'r')
+					f = open(loc + "\\data\\stats\\allies\\classes\\promotions-standard.asm", 'r')
 					file = f.read()
 					f.close()
 					base_spell = text_2[36:text_2.find(',', 36)]
 					index1 = file.find("dc.b CLASS_SORC_3,")
 					index2 = file.find("\n", index1)
 					file = file[0:index1] + "dc.b CLASS_SORC_3, SPELL_" + base_spell + file[index2:]
-					f = open("..\\disasm\\data\\stats\\allies\\classes\\promotions-standard.asm", 'w')
+					f = open(loc + "\\data\\stats\\allies\\classes\\promotions-standard.asm", 'w')
 					f.write(file)
 					f.close()
 					# output = output + f"Taya now learns {text_1}\n"
 					# output = output + f"Sorc Taya now learns {text_2}\n"
 				case "FRAYJA":
 					spells,text = generate_text(x, starter_spells, frayja_spells, levels, spells_1, spells_2, 1, 3, True)
-					f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats22.asm", 'r')
+					f = open(loc + "\\data\\stats\\allies\\stats\\allystats22.asm", 'r')
 					file = f.read()
 					f.close()
 					spell_start = file.find("spellList &")
 					spell_end = file.rfind("&")
 					spell_end = file.find("\n", spell_end+2)
 					file = file[0:spell_start] + text + file[spell_end:]
-					f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats22.asm", 'w')
+					f = open(loc + "\\data\\stats\\allies\\stats\\allystats22.asm", 'w')
 					f.write(file)
 					f.close()
 					# output = output + f"Frayja now learns {text}\n"
 				case "SHEELA":
 					spells,text = generate_text(x, starter_spells, sheela_spells, levels, spells_1, spells_2, 0, 4, True)
-					f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats25.asm", 'r')
+					f = open(loc + "\\data\\stats\\allies\\stats\\allystats25.asm", 'r')
 					file = f.read()
 					f.close()
 					spell_start = file.find("spellList &")
 					spell_end = file.rfind("&")
 					spell_end = file.find("\n", spell_end+2)
 					file = file[0:spell_start] + text + file[spell_end:]
-					f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats25.asm", 'w')
+					f = open(loc + "\\data\\stats\\allies\\stats\\allystats25.asm", 'w')
 					f.write(file)
 					f.close()
 					# output = output + f"Sheela now learns {text}\n"
@@ -997,7 +1100,7 @@ def randomize_spells(chars, spells_1, spells_2, levels, starter_spells, bowie_sp
 					spells1,text_1 = generate_text(x, starter_spells, chaz_spells, levels, spells_1, spells_2, 1, 3, True)
 					spells2,text_2 = generate_text(x, starter_spells, sorc_spells[:], levels, spells_1, spells_2, 0, 4, False)
 					text_2 = "spellList &\n                    21" + text_2[34:]
-					f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats27.asm", 'r')
+					f = open(loc + "\\data\\stats\\allies\\stats\\allystats27.asm", 'r')
 					file = f.read()
 					f.close()
 					spell_start1 = file.find("spellList &")
@@ -1007,17 +1110,17 @@ def randomize_spells(chars, spells_1, spells_2, levels, starter_spells, bowie_sp
 					spell_end1 = file.rfind("&",0, spell_start2)
 					spell_end1 = file.find("\n", spell_end1+2)
 					file = file[0:spell_start1] + text_1 + file[spell_end1:spell_start2] + text_2 + file[spell_end2:]
-					f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats27.asm", 'w')
+					f = open(loc + "\\data\\stats\\allies\\stats\\allystats27.asm", 'w')
 					f.write(file)
 					f.close()
-					f = open("..\\disasm\\data\\stats\\allies\\classes\\promotions-standard.asm", 'r')
+					f = open(loc + "\\data\\stats\\allies\\classes\\promotions-standard.asm", 'r')
 					file = f.read()
 					f.close()
 					base_spell = text_2[36:text_2.find(',', 36)]
 					index1 = file.find("dc.b CLASS_SORC_4,")
 					index2 = file.find("\n", index1)
 					file = file[0:index1] + "dc.b CLASS_SORC_4, SPELL_" + base_spell + file[index2:]
-					f = open("..\\disasm\\data\\stats\\allies\\classes\\promotions-standard.asm", 'w')
+					f = open(loc + "\\data\\stats\\allies\\classes\\promotions-standard.asm", 'w')
 					f.write(file)
 					f.close()
 					# output = output + f"Chaz now learns {text_1}\n"
@@ -1028,7 +1131,7 @@ def randomize_spells(chars, spells_1, spells_2, levels, starter_spells, bowie_sp
 		randomize_spells(*args)
 		
 def randomize_growths(ally_num):
-	f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats" + (str(ally_num) if ally_num > 9 else ("0" + str(ally_num))) +".asm", 'r')
+	f = open(loc + "\\data\\stats\\allies\\stats\\allystats" + (str(ally_num) if ally_num > 9 else ("0" + str(ally_num))) +".asm", 'r')
 	file = f.read()
 	f.close()
 	splits = file.splitlines(True)
@@ -1039,14 +1142,14 @@ def randomize_growths(ally_num):
 			cur_growth = random.choice(growths)
 			x = x[0:x.rfind(",")+2] + cur_growth + "\n"
 		file += x
-	f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats" + (str(ally_num) if ally_num > 9 else ("0" + str(ally_num))) +".asm", 'w')
+	f = open(loc + "\\data\\stats\\allies\\stats\\allystats" + (str(ally_num) if ally_num > 9 else ("0" + str(ally_num))) +".asm", 'w')
 	f.write(file)
 	f.close()
 	
 def randomize_stats(ally_num, pos_change, neg_change):
 	pos_change = (pos_change+100)/100.0
 	neg_change = neg_change/100.0
-	f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats" + (str(ally_num) if ally_num > 9 else ("0" + str(ally_num))) +".asm", 'r')
+	f = open(loc + "\\data\\stats\\allies\\stats\\allystats" + (str(ally_num) if ally_num > 9 else ("0" + str(ally_num))) +".asm", 'r')
 	file = f.read()
 	f.close()
 	splits = file.splitlines(True)
@@ -1070,7 +1173,7 @@ def randomize_stats(ally_num, pos_change, neg_change):
 			new += str(base) + ", " + str(max) + x[index2:]
 			x = new
 		file += x
-	f = open("..\\disasm\\data\\stats\\allies\\stats\\allystats" + (str(ally_num) if ally_num > 9 else ("0" + str(ally_num))) +".asm", 'w')
+	f = open(loc + "\\data\\stats\\allies\\stats\\allystats" + (str(ally_num) if ally_num > 9 else ("0" + str(ally_num))) +".asm", 'w')
 	f.write(file)
 	f.close()
 
@@ -1213,10 +1316,10 @@ r_orig_values = {v:k for k,v in orig_values.items()}
 def determine_swap_list(allow_depromo, allow_rand_promo, promo_level, max_level):
 	promo_level = int(promo_level)
 	max_level = int(max_level)
-	f = open("..\\disasm\\sf2enums.asm", 'r')
+	f = open(loc + "\\sf2enums.asm", 'r')
 	file1 = f.read()
 	f.close()
-	f = open("..\\disasm\\data\\stats\\allies\\allystartdefs.asm", 'r')
+	f = open(loc + "\\data\\stats\\allies\\allystartdefs.asm", 'r')
 	file2 = f.read()
 	f.close()
 	valid_promos = {"SDMN" : ("HERO"), "KNTE" : ("PLDN", "PGNT"), "PRST" : ("VICR", "MMNK"), "WARR" : ("GLDT", "BRN"), "MAGE_1" : ("WIZ", "SORC_1"), \
@@ -1342,10 +1445,10 @@ def determine_swap_list(allow_depromo, allow_rand_promo, promo_level, max_level)
 	return chars_m, chars_swap
 
 def adjust_levels(treat_promo_as, new_promo_level, orig_values):
-	f = open("..\\disasm\\data\\stats\\allies\\allystartdefs.asm", 'r')
+	f = open(loc + "\\data\\stats\\allies\\allystartdefs.asm", 'r')
 	file = f.read()
 	f.close()
-	f = open("..\\disasm\\data\\stats\\allies\\growthcurves.asm", 'r')
+	f = open(loc + "\\data\\stats\\allies\\growthcurves.asm", 'r')
 	file2 = f.read()
 	f.close()
 	split = file2.split("dc.w")
@@ -1382,16 +1485,16 @@ def adjust_levels(treat_promo_as, new_promo_level, orig_values):
 		if(new_class in class_dict["BASE"]):
 			continue
 		adjust_promo_stats(orig_values[x], new_class, int(new_promo_level),growth_dict)
-	f = open("..\\disasm\\sf2enums.asm", 'r')
+	f = open(loc + "\\sf2enums.asm", 'r')
 	file = f.read()
 	f.close()
-	f = open("..\\disasm\\sf2enums.asm", 'w')
+	f = open(loc + "\\sf2enums.asm", 'w')
 	file = file[0:file.find("CHAR_CLASS_EXTRALEVEL")] + "CHAR_CLASS_EXTRALEVEL: equ " + str(treat_promo_as) + file[file.find("\n", file.find("CHAR_CLASS_EXTRALEVEL")):]
 	file = file[0:file.find("CHAR_LEVELCAP_BASE")] + "CHAR_LEVELCAP_BASE: equ " + str(new_promo_level) + file[file.find("\n", file.find("CHAR_LEVELCAP_BASE")):]
 	f.write(file)
 	f.close()
 
-def randomize_promo_items(char_list):
+def randomize_promo_items(char_list, cur_items):
 	promo_item_dict = {"VIGOR_BALL" : ["SARAH", "Karna", "FRAYJA", "SHEELA"], "WARRIORS_PRIDE" : ["JAHA", "RANDOLF", "GYAN"], \
 	"SECRET_BOOK" : ["KAZIN", "TYRIN", "TAYA", "CHAZ"], "PEGASUS_WING" : ["CHESTER", "RICK", "ERIC", "HIGINS", "JARO"], \
 	"SILVER_TANK" : ["ROHDE", "ELRIC", "JANET"]}
@@ -1419,76 +1522,75 @@ def randomize_promo_items(char_list):
 	rep_list = rep_list + ["SECRET_BOOK" for x in range(item_nums[2])]
 	rep_list = rep_list + ["PEGASUS_WING" for x in range(item_nums[3])]
 	rep_list = rep_list + ["SILVER_TANK" for x in range(item_nums[4])]
-	return_list = []
-	f = open("..\\disasm\\data\\maps\\entries\\map07\\8-other-items.asm", 'r')
+
+	f = open(loc + "\\data\\maps\\entries\\map07\\8-other-items.asm", 'r')
 	file = f.read()
 	f.close()
-	f = open("..\\disasm\\data\\maps\\entries\\map07\\8-other-items.asm", 'w')
+	f = open(loc + "\\data\\maps\\entries\\map07\\8-other-items.asm", 'w')
 	temp_item = random.choice(rep_list)
 	# print("Swapped Warrior's Pride with", temp_item)
 	rep_list.remove(temp_item)
-	return_list.append(temp_item)
-	f.write(file.replace("WARRIORS_PRIDE", temp_item))
+	f.write(file.replace(cur_items[0], temp_item))
 	f.close()
-	f = open("..\\disasm\\data\\maps\\entries\\map46\\8-other-items.asm", 'r')
+	f = open(loc + "\\data\\maps\\entries\\map46\\8-other-items.asm", 'r')
 	file = f.read()
 	f.close()
-	f = open("..\\disasm\\data\\maps\\entries\\map46\\8-other-items.asm", 'w')
-	f.write(file.replace("WARRIORS_PRIDE", temp_item))
+	f = open(loc + "\\data\\maps\\entries\\map46\\8-other-items.asm", 'w')
+	f.write(file.replace(cur_items[0], temp_item))
+	cur_items[0] = temp_item
 	f.close()
 	
-	f = open("..\\disasm\\data\\maps\\entries\\map23\\8-other-items.asm", 'r')
+	f = open(loc + "\\data\\maps\\entries\\map23\\8-other-items.asm", 'r')
 	file = f.read()
 	f.close()
-	f = open("..\\disasm\\data\\maps\\entries\\map23\\8-other-items.asm", 'w')
+	f = open(loc + "\\data\\maps\\entries\\map23\\8-other-items.asm", 'w')
 	temp_item = random.choice(rep_list)
 	# print("Swapped Secret Book with", temp_item)
 	rep_list.remove(temp_item)
-	return_list.append(temp_item)
-	f.write(file.replace("SECRET_BOOK", temp_item))
+	f.write(file.replace(cur_items[2], temp_item))
+	cur_items[2] = temp_item
 	f.close()
 	
-	f = open("..\\disasm\\data\\maps\\entries\\map23\\7-chest-items.asm", 'r')
+	f = open(loc + "\\data\\maps\\entries\\map23\\7-chest-items.asm", 'r')
 	file = f.read()
 	f.close()
-	f = open("..\\disasm\\data\\maps\\entries\\map23\\7-chest-items.asm", 'w')
+	f = open(loc + "\\data\\maps\\entries\\map23\\7-chest-items.asm", 'w')
 	temp_item = random.choice(rep_list)
 	# print("Swapped Vigor Ball 1 with", temp_item)
 	rep_list.remove(temp_item)
-	return_list.append(temp_item)
-	f.write(file.replace("VIGOR_BALL", temp_item))
+	f.write(file.replace(cur_items[3], temp_item))
+	cur_items[3] = temp_item
 	f.close()
 	
-	f = open("..\\disasm\\data\\maps\\entries\\map36\\8-other-items.asm", 'r')
+	f = open(loc + "\\data\\maps\\entries\\map36\\8-other-items.asm", 'r')
 	file = f.read()
 	f.close()
-	f = open("..\\disasm\\data\\maps\\entries\\map36\\8-other-items.asm", 'w')
+	f = open(loc + "\\data\\maps\\entries\\map36\\8-other-items.asm", 'w')
 	temp_item = random.choice(rep_list)
 	# print("Swapped Pegasus Wing with", temp_item)
 	rep_list.remove(temp_item)
-	return_list.append(temp_item)
-	f.write(file.replace("PEGASUS_WING", temp_item))
+	f.write(file.replace(cur_items[5], temp_item))
+	cur_items[5] = temp_item
 	f.close()
 	
-	f = open("..\\disasm\\data\\maps\\entries\\map67\\8-other-items.asm", 'r')
+	f = open(loc + "\\data\\maps\\entries\\map67\\8-other-items.asm", 'r')
 	file = f.read()
 	f.close()
-	f = open("..\\disasm\\data\\maps\\entries\\map67\\8-other-items.asm", 'w')
+	f = open(loc + "\\data\\maps\\entries\\map67\\8-other-items.asm", 'w')
 	temp_item = random.choice(rep_list)
 	# print("Swapped Vigor Ball 2 with", temp_item)
 	rep_list.remove(temp_item)
-	return_list.append(temp_item)
-	f.write(file.replace("VIGOR_BALL", temp_item))
+	f.write(file.replace(cur_items[4], temp_item))
+	cur_items[4] = temp_item
 	f.close()
 	
-	f = open("..\\disasm\\data\\maps\\entries\\map48\\7-chest-items.asm", 'r')
+	f = open(loc + "\\data\\maps\\entries\\map48\\7-chest-items.asm", 'r')
 	file = f.read()
 	f.close()
-	f = open("..\\disasm\\data\\maps\\entries\\map48\\7-chest-items.asm", 'w')
+	f = open(loc + "\\data\\maps\\entries\\map48\\7-chest-items.asm", 'w')
 	temp_item = random.choice(rep_list)
 	# print("Swapped Silver Tank with", temp_item)
 	rep_list.remove(temp_item)
-	return_list.append(temp_item)
-	f.write(file.replace("SILVER_TANK", temp_item))
+	f.write(file.replace(cur_items[1], temp_item))
+	cur_items[1] = temp_item
 	f.close()
-	return return_list

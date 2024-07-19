@@ -320,10 +320,10 @@ def randomize(	rand_depromo, rand_prepromo, rand_magic, chaos_magic, rand_promo_
 	replace_spinning_elric()
 	replace_knocked_out_luke()
 	replace_knocked_out_higins()
+	replace_enemy_jaro()
+	replace_stone_taya()
 	rand_promo_items = True if rand_promo_items.get() == 1 else False
-	rand_items = randomize_promo_items(r_swap_dict)
-	for x in range(len(rand_items)):
-		cur_items[x] = rand_items[x]
+	randomize_promo_items(r_swap_dict, cur_items)
 	rand_stat_growths = True if rand_stat_growths.get() == 1 else False
 	if(rand_stat_growths):
 		for x in range(30):
@@ -381,7 +381,8 @@ def randomize(	rand_depromo, rand_prepromo, rand_magic, chaos_magic, rand_promo_
 def write_config(args):
 	f = open("config.txt", 'w')
 	for x in iter(args):
-		args[x] = args[x].get()
+		if(type(args[x]) is not str):
+			args[x] = args[x].get()
 	f.write(repr(args))
 	f.close()
 
