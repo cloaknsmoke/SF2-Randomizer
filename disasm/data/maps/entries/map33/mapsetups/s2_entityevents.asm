@@ -234,9 +234,6 @@ cs_5A8CA:       textCursor 1907
                 csc_end
 cs_5A8E6:       join ALLY_ERIC
                 setF 787                ; Set after one of Creed's Mansion Force Members joins
-                setActscript ALLY_RANDOLF,eas_TwirlShrinkDisappear
-                setActscript ALLY_TYRIN,eas_TwirlShrinkDisappear
-                setActscriptWait ALLY_KARNA,eas_TwirlShrinkDisappear
                 addNewFollower ALLY_ERIC
                 csc_end
 cs_5A90E:       textCursor 1920
@@ -259,9 +256,6 @@ cs_5A93A:       textCursor 1910
                 csc_end
 cs_5A956:       join ALLY_RANDOLF
                 setF 787                ; Set after one of Creed's Mansion Force Members joins
-                setActscript ALLY_ERIC,eas_TwirlShrinkDisappear
-                setActscript ALLY_TYRIN,eas_TwirlShrinkDisappear
-                setActscriptWait ALLY_KARNA,eas_TwirlShrinkDisappear
                 addNewFollower ALLY_RANDOLF
                 csc_end
 cs_5A97E:       textCursor 1923
@@ -284,9 +278,6 @@ cs_5A9AA:       textCursor 1913
                 csc_end
 cs_5A9C6:       join ALLY_TYRIN
                 setF 787                ; Set after one of Creed's Mansion Force Members joins
-                setActscript ALLY_ERIC,eas_TwirlShrinkDisappear
-                setActscript ALLY_RANDOLF,eas_TwirlShrinkDisappear
-                setActscriptWait ALLY_KARNA,eas_TwirlShrinkDisappear
                 addNewFollower ALLY_TYRIN
                 csc_end
 cs_5A9EE:       textCursor 1926
@@ -309,9 +300,6 @@ cs_5AA1A:       textCursor 1916
                 csc_end
 cs_5AA36:       join ALLY_KARNA
                 setF 787                ; Set after one of Creed's Mansion Force Members joins
-                setActscript ALLY_ERIC,eas_TwirlShrinkDisappear
-                setActscript ALLY_RANDOLF,eas_TwirlShrinkDisappear
-                setActscriptWait ALLY_TYRIN,eas_TwirlShrinkDisappear
                 addNewFollower ALLY_KARNA
                 csc_end
 cs_5AA5E:       textCursor 1929
