@@ -322,6 +322,7 @@ def randomize(	rand_depromo, rand_prepromo, rand_magic, chaos_magic, rand_promo_
 	replace_knocked_out_higins()
 	replace_enemy_jaro()
 	replace_stone_taya()
+	replace_frozen_claude()
 	rand_promo_items = True if rand_promo_items.get() == 1 else False
 	randomize_promo_items(r_swap_dict, cur_items)
 	rand_stat_growths = True if rand_stat_growths.get() == 1 else False

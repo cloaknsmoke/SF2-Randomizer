@@ -66,14 +66,14 @@ def replace_npc_rohde_sprite():
 	f = open(loc + r"\code\common\menus\caravan\caravanactions_1.asm", 'w')
 	f.write(file)
 	f.close()
-	f = open(loc + r"\code\common\menus\caravan\displaycaravanmessagewithportrait.asm.asm", 'r')
+	f = open(loc + r"\code\common\menus\caravan\displaycaravanmessagewithportrait.asm", 'r')
 	file = f.read()
 	f.close()
 	index1 = file.find("PORTRAIT_")
 	index2 = file.find(",d0", index1)
 	base = "_PROMO" if ("BOWIE" in who_is_rohde or "SLADE" in who_is_rohde or "KIWI" in who_is_rohde or "PETER" in who_is_rohde or "GERHALT" in who_is_rohde or "CLAUDE" in who_is_rohde) else ""
 	file = file[0:index1] + "PORTRAIT_" + who_is_rohde + base + file[index2:]
-	f = open(loc + r"\code\common\menus\caravan\displaycaravanmessagewithportrait.asm.asm", 'w')
+	f = open(loc + r"\code\common\menus\caravan\displaycaravanmessagewithportrait.asm", 'w')
 	f.write(file)
 	f.close()
 
@@ -180,7 +180,7 @@ def replace_enemy_jaro():
 	f.close()
 	index1 = file3.find("mapsprite", file3.find("; 98: ZEON"))
 	index2 = file3.find("; 99: JAR")
-	file3 = file3[0:index1] + "mapsprite " + who_is_jaro + r_class_dict[new_class] + " " + file[index2:]  
+	file3 = file3[0:index1] + "mapsprite " + who_is_jaro + "_" + r_class_dict[new_class] + " " + file3[index2:]  
 	f = open(loc + "\\data\\stats\\enemies\\enemymapsprites.asm", 'w')
 	f.write(file3)
 	f.close()
@@ -220,7 +220,7 @@ def replace_stone_taya():
 	if(who_is_taya == "TAYA"):
 		file2 = file2[0:index1] + "msFixedEntity 44, 26, DOWN, MAPSPRITE_OBJECT4" + file2[index2:]
 	else:
-		file2 = file2[0:index1] + "msFixedEntity 44, 26, DOWN, MAPSPRITE_" + who_is_taya + r_class_dict[new_class] + file2[index2:]
+		file2 = file2[0:index1] + "msFixedEntity 44, 26, DOWN, MAPSPRITE_" + who_is_taya + "_" + r_class_dict[new_class] + file2[index2:]
 	f = open(loc + r"\data\maps\entries\map01\mapsetups\s1_entities.asm", 'w')
 	f.write(file2)
 	f.close()
@@ -245,26 +245,26 @@ def replace_frozen_claude():
 	f = open(loc + r"\data\maps\entries\map63\mapsetups\s6_initfunction.asm", 'r')
 	file2 = f.read()
 	f.close()
-	index1 = file2.find(",", file2.find("setSprite"))+1
+	index1 = file2.find(",", file2.find("setSprite", file2.find("; Claude joined")))+1
 	index2 = file2.find("\n", index1)
 	#special case if claude is still in his original spot since he has a unique sprite
 	if(who_is_claude == "CLAUDE"):
 		file2 = file2[0:index1] + "MAPSPRITE_POSE3" + file2[index2:]
 	else:
-		file2 = file2[0:index1] + "MAPSPRITE_" + who_is_claude + r_class_dict[new_class] + file2[index2:]
+		file2 = file2[0:index1] + "MAPSPRITE_" + who_is_claude + "_" + r_class_dict[new_class] + file2[index2:]
 	f = open(loc + r"\data\maps\entries\map63\mapsetups\s6_initfunction.asm", 'w')
 	f.write(file2)
 	f.close()
 	f = open(loc + r"\data\maps\entries\map63\mapsetups\scripts.asm", 'r')
 	file2 = f.read()
 	f.close()
-	index1 = file2.find(",", file2.find("setSprite"))+1
+	index1 = file2.find(",", file2.find("setSprite", file2.find("; Claude joined")))+1
 	index2 = file2.find("\n", index1)
 	#special case if claude is still in his original spot since he has a unique sprite
 	if(who_is_claude == "CLAUDE"):
 		file2 = file2[0:index1] + "MAPSPRITE_POSE3" + file2[index2:]
 	else:
-		file2 = file2[0:index1] + "MAPSPRITE_" + who_is_claude + r_class_dict[new_class] + file2[index2:]
+		file2 = file2[0:index1] + "MAPSPRITE_" + who_is_claude + "_" + r_class_dict[new_class] + file2[index2:]
 	f = open(loc + r"\data\maps\entries\map63\mapsetups\scripts.asm", 'w')
 	f.write(file2)
 	f.close()
@@ -775,26 +775,24 @@ def swap_characters(char_a_list, char_b_list, orig_nums, depromote, rand_promo):
 		
 		items_a = [item_1a, item_2a, item_3a, item_4a]
 		items_b = [item_1b, item_2b, item_3b, item_4b]
+		for y in range(3, -1, -1):
+			if(items_a[y] == "NOTHING"):
+				items_a.pop(y)
+			if(items_b[y] == "NOTHING"):
+				items_b.pop(y)
 		new_items(items_b, new_class_b, new_class_b in reverse_valid_promos, int(level_a), valid_weapon_level_ranges, valid_equips)
-		swap_to_b = []
-		for y in items_a:
-			if(y not in valid_weapon_level_ranges):
-				swap_to_b.append(y)
-				items_a.remove(y)
-				items_a.append("NOTHING")
-		swap_to_a = []
-		for y in items_b:
-			if(y not in valid_weapon_level_ranges):
-				swap_to_a.append(y)
-				items_b.remove(y)
-				items_b.append("NOTHING")
-				
-		for y in swap_to_a:
-			items_a.remove("NOTHING")
-			items_a.append(y)
-		for y in swap_to_b:
-			items_b.remove("NOTHING")
-			items_b.append(y)
+		for y in range(len(items_a)-1, -1, -1):
+			if(items_a[y] in valid_weapon_level_ranges):
+				items_a.pop(y)
+		for y in range(len(items_b)-1, -1, -1):
+			if(items_b[y] not in valid_weapon_level_ranges):
+				print(f"removing {items_b[y]}")
+				items_b.pop(y)
+		print(f"{items_a} {items_b}")
+		items_b.extend(items_a)
+		while(len(items_b) < 4):
+			items_b.append("NOTHING")
+		
 		text_b = "                startClass "+ new_class_b + "         ; "+str(orig_values[cur_char_b])+": "+cur_char_b + "\n"+\
 		"                startLevel "+level_a+"\n"+\
 		"                startItems &\n"+\
