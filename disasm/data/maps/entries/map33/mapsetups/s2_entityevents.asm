@@ -133,7 +133,13 @@ Map33_EntityEvent3:
                 
                  
                 chkFlg  22              ; Frayja joined
-                bne.s   byte_5A85C 
+                bne.s   byte_5A85C
+            if (STANDARD_BUILD&RECRUIT_ALL_CREED_CHARACTERS=1)
+                ; do nothing
+            else
+                chkFlg  787             ; Set after one of Creed's Mansion Force Members joins
+                bne.s   byte_5A856      
+            endif
                 script  cs_5A8CA
                 dc.w $6004
 byte_5A856:
@@ -158,6 +164,12 @@ Map33_EntityEvent4:
                  
                 chkFlg  22              ; Frayja joined
                 bne.s   byte_5A87E
+            if (STANDARD_BUILD&RECRUIT_ALL_CREED_CHARACTERS=1)
+                ; do nothing
+            else
+                chkFlg  787             ; Set after one of Creed's Mansion Force Members joins
+                bne.s   byte_5A878      
+            endif
                 script  cs_5A93A
                 dc.w $6004
 byte_5A878:
@@ -182,6 +194,12 @@ Map33_EntityEvent5:
                  
                 chkFlg  22              ; Frayja joined
                 bne.s   byte_5A8A0
+            if (STANDARD_BUILD&RECRUIT_ALL_CREED_CHARACTERS=1)
+                ; do nothing
+            else
+                chkFlg  787             ; Set after one of Creed's Mansion Force Members joins
+                bne.s   byte_5A89A      
+            endif
                 script  cs_5A9AA
                 bra.s   loc_5A89E
 byte_5A89A:
@@ -208,6 +226,12 @@ Map33_EntityEvent6:
                  
                 chkFlg  22              ; Frayja joined
                 bne.s   byte_5A8C2
+            if (STANDARD_BUILD&RECRUIT_ALL_CREED_CHARACTERS=1)
+                ; do nothing
+            else
+                chkFlg  787             ; Set after one of Creed's Mansion Force Members joins
+                bne.s   byte_5A8BC      
+            endif
                 script  cs_5AA1A
                 bra.s   loc_5A8C0
 byte_5A8BC:
@@ -234,6 +258,13 @@ cs_5A8CA:       textCursor 1907
                 csc_end
 cs_5A8E6:       join ALLY_ERIC
                 setF 787                ; Set after one of Creed's Mansion Force Members joins
+            if (STANDARD_BUILD&RECRUIT_ALL_CREED_CHARACTERS=1)
+                ; do nothing
+            else
+                setActscript ALLY_RANDOLF,eas_TwirlShrinkDisappear
+                setActscript ALLY_TYRIN,eas_TwirlShrinkDisappear
+                setActscriptWait ALLY_KARNA,eas_TwirlShrinkDisappear
+            endif
                 addNewFollower ALLY_ERIC
                 csc_end
 cs_5A90E:       textCursor 1920
@@ -256,6 +287,13 @@ cs_5A93A:       textCursor 1910
                 csc_end
 cs_5A956:       join ALLY_RANDOLF
                 setF 787                ; Set after one of Creed's Mansion Force Members joins
+            if (STANDARD_BUILD&RECRUIT_ALL_CREED_CHARACTERS=1)
+                ; do nothing
+            else
+                setActscript ALLY_ERIC,eas_TwirlShrinkDisappear
+                setActscript ALLY_TYRIN,eas_TwirlShrinkDisappear
+                setActscriptWait ALLY_KARNA,eas_TwirlShrinkDisappear
+            endif
                 addNewFollower ALLY_RANDOLF
                 csc_end
 cs_5A97E:       textCursor 1923
@@ -278,6 +316,13 @@ cs_5A9AA:       textCursor 1913
                 csc_end
 cs_5A9C6:       join ALLY_TYRIN
                 setF 787                ; Set after one of Creed's Mansion Force Members joins
+            if (STANDARD_BUILD&RECRUIT_ALL_CREED_CHARACTERS=1)
+                ; do nothing
+            else
+                setActscript ALLY_ERIC,eas_TwirlShrinkDisappear
+                setActscript ALLY_RANDOLF,eas_TwirlShrinkDisappear
+                setActscriptWait ALLY_KARNA,eas_TwirlShrinkDisappear
+            endif
                 addNewFollower ALLY_TYRIN
                 csc_end
 cs_5A9EE:       textCursor 1926
@@ -300,6 +345,13 @@ cs_5AA1A:       textCursor 1916
                 csc_end
 cs_5AA36:       join ALLY_KARNA
                 setF 787                ; Set after one of Creed's Mansion Force Members joins
+            if (STANDARD_BUILD&RECRUIT_ALL_CREED_CHARACTERS=1)
+                ; do nothing
+            else
+                setActscript ALLY_ERIC,eas_TwirlShrinkDisappear
+                setActscript ALLY_RANDOLF,eas_TwirlShrinkDisappear
+                setActscriptWait ALLY_TYRIN,eas_TwirlShrinkDisappear
+            endif
                 addNewFollower ALLY_KARNA
                 csc_end
 cs_5AA5E:       textCursor 1929
