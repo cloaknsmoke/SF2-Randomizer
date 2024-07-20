@@ -786,9 +786,7 @@ def swap_characters(char_a_list, char_b_list, orig_nums, depromote, rand_promo):
 				items_a.pop(y)
 		for y in range(len(items_b)-1, -1, -1):
 			if(items_b[y] not in valid_weapon_level_ranges):
-				print(f"removing {items_b[y]}")
 				items_b.pop(y)
-		print(f"{items_a} {items_b}")
 		items_b.extend(items_a)
 		while(len(items_b) < 4):
 			items_b.append("NOTHING")
