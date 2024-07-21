@@ -1,9 +1,9 @@
 from tkinter import *
 from tkinter import ttk
-from swap_characters import *
+from split.swap_characters import *
 import subprocess
 
-disasm_prefix = r"..\disasm"
+disasm_prefix = r".\disasm"
 
 def toggle_chars(a, b):
 	for x in range(len(a)):
@@ -836,7 +836,7 @@ for x in range(len(orig_items)):
 	ttk.Separator(char_frm, orient=VERTICAL).grid(column=x+offset, row=char_row_offset+3,sticky=N+S)
 	ttk.Separator(char_frm, orient=VERTICAL).grid(column=x+offset, row=char_row_offset+4,sticky=N+S)
 if("split" not in config):
-	subprocess.run(["split.bat"])
+	subprocess.run([r".\split\split.bat"])
 	config["split"] = "done"
 ttk.Button(char_frm, text = "Patches", command=display_patches).grid(column=0, row=1,sticky=W)
 root.mainloop()
