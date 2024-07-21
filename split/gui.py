@@ -3,6 +3,8 @@ from tkinter import ttk
 from swap_characters import *
 import subprocess
 
+disasm_prefix = r"..\disasm"
+
 def toggle_chars(a, b):
 	for x in range(len(a)):
 		if(a[x].get() == "???"):
@@ -60,9 +62,9 @@ def display_info(char, orig, frame, frame_vars, class_frames, notebook1, noteboo
 	char = orig_values[char]
 	char = "0" + str(char) if char < 10 else str(char)
 	if(orig):
-		f = open(r"..\disasm\data\stats\allies\stats\orig_stats\allystats" + char + ".asm", 'r')
+		f = open(disasm_prefix + r"\data\stats\allies\stats\orig_stats\allystats" + char + ".asm", 'r')
 	else:
-		f = open(r"..\disasm\data\stats\allies\stats\allystats" + char + ".asm", 'r')
+		f = open(disasm_prefix + r"\data\stats\allies\stats\allystats" + char + ".asm", 'r')
 	file = f.read()
 	f.close()
 	classes = file.split("forClass")
@@ -294,7 +296,7 @@ def display_info(char, orig, frame, frame_vars, class_frames, notebook1, noteboo
 		cur_class += 1
 
 def randomize(	rand_depromo, rand_prepromo, rand_magic, chaos_magic, rand_promo_items, rand_stat_growths, rand_stats, \
-				percent_change, adjust_level, promo_level, promo_elevel, orig_values, cur_values, cur_items):
+				percent_change, adjust_level, promo_level, promo_elevel, orig_values, cur_values, cur_items, name_list):
 	adjust_level = True if adjust_level.get() == 1 else False
 	promo_level = promo_level.get()
 	promo_elevel = promo_elevel.get()
@@ -311,8 +313,8 @@ def randomize(	rand_depromo, rand_prepromo, rand_magic, chaos_magic, rand_promo_
 		temp[x] = r_swap_dict[x]
 	swap_characters(orig_list, temp, orig_values, rand_depromo, rand_prepromo)
 	for x in range(30):
-		f = open("..\\disasm\\data\\stats\\allies\\stats\\orig_stats\\allystats" + ("0" if x < 10 else "") + str(x) + ".asm", 'r')
-		g = open("..\\disasm\\data\\stats\\allies\\stats\\allystats" + ("0" if x < 10 else "") + str(x) + ".asm", 'w')
+		f = open(disasm_prefix + "\\data\\stats\\allies\\stats\\orig_stats\\allystats" + ("0" if x < 10 else "") + str(x) + ".asm", 'r')
+		g = open(disasm_prefix + "\\data\\stats\\allies\\stats\\allystats" + ("0" if x < 10 else "") + str(x) + ".asm", 'w')
 		g.write(f.read())
 		f.close()
 		g.close()
@@ -378,7 +380,191 @@ def randomize(	rand_depromo, rand_prepromo, rand_magic, chaos_magic, rand_promo_
 	remove_redundant_classes()
 	for x in r_swap_dict:
 		cur_values[x] = r_swap_dict[x]
+	toggle_chars(name_list, cur_values)
+	toggle_chars(name_list, cur_values)
 	
+def display_patches():
+	f = open(disasm_prefix + r"\sf2patches.asm", 'r')
+	file = f.read()
+	f.close()
+	index1 = file.find("; Quality of life features")
+	index2 = file.find("\n\n", index1)
+	qol = {}
+	temp = file[index1:index2].splitlines()
+	for x in temp:
+		if("equ" in x):
+			temp1 = x.split("equ", 1)
+			key = temp1[0].strip()[0:-1]
+			if(";" in temp1[1]):
+				index = temp1[1].find(";")
+				val = temp1[1][1:index].strip()
+				desc = temp1[1][index+2:]
+			else:
+				val = temp1[1][1:].strip()
+				desc = ""
+			if(key in "NO_AI_JARONO_AI_PETER"):	
+				desc = "They will immediately join instead."
+			if(key in "NO_RANDOM_BATTLES"):	
+				desc = ""
+			qol[key] = [val,desc]
+	
+	index1 = file.find("; Misc. features")
+	index2 = file.find("\n\n", index1)
+	misc = {}
+	temp = file[index1:index2].splitlines()
+	for x in temp:
+		if("equ" in x):
+			temp1 = x.split("equ", 1)
+			key = temp1[0].strip()[0:-1]
+			if(";" in temp1[1]):
+				index = temp1[1].find(";")
+				val = temp1[1][1:index].strip()
+				desc = temp1[1][index+2:]
+			else:
+				val = temp1[1][1:].strip()
+				desc = ""
+			if(key in "DIFFICULTY_FACTORS"):	
+				desc = "Hard = 1.25x enemy ATT, Super = 1.56x enemy ATT, Ouch = 1.56x enemy ATT and 1.5x enemy AGI"
+			misc[key] = [val,desc]
+				
+	index1 = file.find("; AI enhancements")
+	index2 = file.find("\n\n", index1)
+	ai = {}
+	temp = file[index1:index2].splitlines()
+	for x in temp:
+		if("equ" in x):
+			temp1 = x.split("equ", 1)
+			key = temp1[0].strip()[0:-1]
+			if(";" in temp1[1]):
+				index = temp1[1].find(";")
+				val = temp1[1][1:index].strip()
+				desc = temp1[1][index+2:]
+			else:
+				val = temp1[1][1:].strip()
+				desc = ""
+			ai[key] = [val,desc]
+	
+	index1 = file.find("; Menu enhancements")
+	index2 = file.find("\n\n", index1)
+	menu = {}
+	temp = file[index1:index2].splitlines()
+	for x in temp:
+		if("equ" in x):
+			temp1 = x.split("equ", 1)
+			key = temp1[0].strip()[0:-1]
+			if(";" in temp1[1]):
+				index = temp1[1].find(";")
+				val = temp1[1][1:index].strip()
+				desc = temp1[1][index+2:]
+			else:
+				val = temp1[1][1:].strip()
+				desc = ""
+			if(key in "SHOW_ENEMY_LEVEL"):	
+				desc = "Enemies will grant full exp up to their level plus 4. At level plus 7, only 1 exp will be granted."
+			menu[key] = [val,desc]
+	
+	root = Tk()
+	root.title("Patches")
+	frm = ttk.Frame(root)
+	frm.bind("<Destroy>", func=lambda a, b=[qol, misc, ai, menu]: write_patches(b))
+	cur_row = 0
+	special_cases = "MUSCLE_MAGICMUSCLE_MAGIC_STATPERCENT_POISON_DAMAGEALTERNATE_JEWEL_ICONS_DISPLAY"
+	ttk.Label(root, text="Quality of Life").grid(column=0, row=cur_row)
+	cur_row += 1
+	for k, v in qol.items():
+		ttk.Label(root, text=k).grid(column=0, row=cur_row, sticky=W, padx=5)
+		ttk.Label(root, text=":").grid(column=1, row=cur_row, padx=5)
+		if(k not in special_cases):
+			var = IntVar(root)
+			ttk.Checkbutton(root, variable=var).grid(column=2, row=cur_row, sticky=W)
+			var.set(v[0])
+			v[0] = var
+		else:
+			var = StringVar(root)
+			ttk.Entry(root, textvariable = var).grid(column=2, row=cur_row, sticky=W)
+			var.set(v[0])
+			v[0] = var
+		ttk.Label(root, text=v[1]).grid(column=3, row=cur_row, sticky=W, padx=5)
+		cur_row += 1
+	ttk.Separator(root, orient=HORIZONTAL).grid(column=0, row=cur_row, columnspan=4, sticky=E+W)
+	ttk.Label(root, text="Miscellaneous").grid(column=0, row=cur_row+1)
+	cur_row += 2
+	for k, v in misc.items():
+		ttk.Label(root, text=k).grid(column=0, row=cur_row, sticky=W, padx=5)
+		ttk.Label(root, text=":").grid(column=1, row=cur_row, padx=5)
+		if(k not in special_cases):
+			var = IntVar(root)
+			ttk.Checkbutton(root, variable=var).grid(column=2, row=cur_row, sticky=W)
+			var.set(v[0])
+			v[0] = var
+		else:
+			var = StringVar(root)
+			ttk.Entry(root, textvariable = var).grid(column=2, row=cur_row, sticky=W)
+			var.set(v[0])
+			v[0] = var
+		ttk.Label(root, text=v[1]).grid(column=3, row=cur_row, sticky=W, padx=5)
+		cur_row += 1
+	ttk.Separator(root, orient=HORIZONTAL).grid(column=0, row=cur_row, columnspan=4, sticky=E+W)
+	ttk.Label(root, text="AI Related").grid(column=0, row=cur_row+1)
+	cur_row += 2
+	for k, v in ai.items():
+		ttk.Label(root, text=k).grid(column=0, row=cur_row, sticky=W, padx=5)
+		ttk.Label(root, text=":").grid(column=1, row=cur_row, padx=5)
+		if(k not in special_cases):
+			var = IntVar(root)
+			ttk.Checkbutton(root, variable=var).grid(column=2, row=cur_row, sticky=W)
+			var.set(v[0])
+			v[0] = var
+		else:
+			var = StringVar(root)
+			ttk.Entry(root, textvariable = var).grid(column=2, row=cur_row, sticky=W)
+			var.set(v[0])
+			v[0] = var
+		ttk.Label(root, text=v[1]).grid(column=3, row=cur_row, sticky=W, padx=5)
+		cur_row += 1
+	ttk.Separator(root, orient=HORIZONTAL).grid(column=0, row=cur_row, columnspan=4, sticky=E+W)
+	ttk.Label(root, text="Menu Related").grid(column=0, row=cur_row+1)
+	cur_row += 2
+	for k, v in menu.items():
+		ttk.Label(root, text=k).grid(column=0, row=cur_row, sticky=W, padx=5)
+		ttk.Label(root, text=":").grid(column=1, row=cur_row, padx=5)
+		if(k not in special_cases):
+			var = IntVar(root)
+			ttk.Checkbutton(root, variable=var).grid(column=2, row=cur_row, sticky=W)
+			var.set(v[0])
+			v[0] = var
+		else:
+			var = StringVar(root)
+			ttk.Entry(root, textvariable = var).grid(column=2, row=cur_row, sticky=W)
+			var.set(v[0])
+			v[0] = var
+		ttk.Label(root, text=v[1]).grid(column=3, row=cur_row, sticky=W, padx=5)
+		cur_row += 1
+	
+def write_patches(patches):
+	f = open(disasm_prefix + "/sf2patches.asm", 'r')
+	file = f.read()
+	f.close()
+	for x in patches:
+		for k,v in x.items():
+			rep_num = len(str(v[0].get()))
+			index1 = file.find(k)
+			index1 = file.find("equ", index1+len(k))+4
+			if(";" in file[index1:file.find("\n", index1)]):
+				index2 = file.find(" ", index1)
+			else:
+				index2 = file.find("\n", index1)
+			val = str(v[0].get())
+			if(len(val) < index2-index1):
+				for y in range(index2-index1 - len(val)):
+					val += " "
+			if(len(val) > index2-index1):
+				index2 += len(val)-(index2-index1)
+			file = file[0:index1] + val + file[index2:]
+	f = open(disasm_prefix + "/sf2patches.asm", 'w')
+	f.write(file)
+	f.close()
+
 def write_config(args):
 	f = open("config.txt", 'w')
 	for x in iter(args):
@@ -392,7 +578,7 @@ orig_values = {\
 "ROHDE" : 11,"RICK" : 12,"ELRIC" : 13,"ERIC" : 14,"KARNA" : 15,"RANDOLF" : 16,"TYRIN" : 17,"JANET" : 18,"HIGINS" : 19,"SKREECH" : 20,\
 "TAYA" : 21,"FRAYJA" : 22,"JARO" : 23,"GYAN" : 24,"SHEELA" : 25,"ZYNK" : 26,"CHAZ" : 27,"LEMON" : 28, "CLAUDE" : 29}
 cur_values = {}
-f = open(r"..\disasm\sf2enums.asm", 'r')
+f = open(disasm_prefix + r"\sf2enums.asm", 'r')
 file = f.read()
 f.close()
 index1 = file.find("; enum Allies")
@@ -412,16 +598,14 @@ try:
 except Exception:
 	print("Either no config or it was corrupted.")
 	config = {}
-root = Tk(screenName = "Shining Force 2 Randomizer")
+root = Tk()
+root.title("Shining Force 2 Randomizer")
 frm = ttk.Frame(root, padding=10)
 frm.grid()
 frm.bind("<Destroy>", func=lambda a, b=config: write_config(b))
 char_frm = ttk.Frame(frm, padding=10)
 char_frm.grid(column=0, row=0, padx=5)
 name_list = [x for x in range(30)]
-show_chars_con = IntVar()
-ttk.Checkbutton(char_frm, variable = show_chars_con, text="Show Characters", command=lambda a=name_list, b=cur_values : toggle_chars(a, b)).grid(column=0,row=3, padx=5)
-show_chars_con.set(0)
 for k,v in orig_values.items():
 	name_list[v] = k
 offset = 1
@@ -462,6 +646,9 @@ for x in range(len(name_list)):
 	ttk.Separator(char_frm, orient=VERTICAL).grid(column=x%char_mod+1+offset, row=cur_row_offset+4,sticky=N+S)
 for x in range(char_row_offset+4):
 	ttk.Separator(char_frm, orient=VERTICAL).grid(column=1, row=x,sticky=N+S)
+show_chars_con = IntVar()
+ttk.Checkbutton(char_frm, variable = show_chars_con, text="Show Characters", command=lambda a=name_list, b=cur_values : toggle_chars(a, b)).grid(column=0,row=cur_row_offset+3, padx=5, sticky=W)
+show_chars_con.set(0)
 rand_frm = ttk.Frame(frm, padding=10)
 rand_frm.grid(column=0, row=1, columnspan=40, sticky=W)
 rand_depromo = IntVar()
@@ -572,10 +759,10 @@ lambda a=adjust_level, b=[lvl2, lvl1], c=[promo_elevel, promo_level] : toggle_st
 cur_items = []
 ttk.Button(rand_frm, text="Randomize", command=\
 lambda a=rand_depromo, b=rand_prepromo, c=rand_magic, d=chaos_magic, e=rand_promo_items, f=rand_stat_growths, g=rand_stats,\
-h=[percent_change_pos, percent_change_neg], i=adjust_level, j=promo_level, k=promo_elevel, l=cur_values, m=cur_items : randomize(a,b,c,d,e,f,g,h,i,j,k, orig_values, l, m)).grid(column=0, row=0, sticky=W)
+h=[percent_change_pos, percent_change_neg], i=adjust_level, j=promo_level, k=promo_elevel, l=cur_values, m=cur_items, o=name_list : randomize(a,b,c,d,e,f,g,h,i,j,k, orig_values,l,m, o)).grid(column=0, row=0, sticky=W)
 
 orig_items = ["WARRIOR_PRIDE", "SILVER_TANK", "SECRET_BOOK", "VIGOR_BALL", "VIGOR_BALL", "PEGASUS_WING"]
-f = open("..\\disasm\\data\\maps\\entries\\map07\\8-other-items.asm", 'r')
+f = open(disasm_prefix + "\\data\\maps\\entries\\map07\\8-other-items.asm", 'r')
 file = f.read()
 f.close()
 index1 = file.find("143")+5
@@ -584,7 +771,7 @@ temp = file[index1:index2]
 if(";" in temp):
 	temp = temp[0:temp.find(";")-1]
 cur_items.append(temp)
-f = open("..\\disasm\\data\\maps\\entries\\map48\\7-chest-items.asm", 'r')
+f = open(disasm_prefix + "\\data\\maps\\entries\\map48\\7-chest-items.asm", 'r')
 file = f.read()
 f.close()
 index1 = file.find("146")+5
@@ -593,7 +780,7 @@ temp = file[index1:index2]
 if(";" in temp):
 	temp = temp[0:temp.find(";")-1]
 cur_items.append(temp)
-f = open("..\\disasm\\data\\maps\\entries\\map23\\8-other-items.asm", 'r')
+f = open(disasm_prefix + "\\data\\maps\\entries\\map23\\8-other-items.asm", 'r')
 file = f.read()
 f.close()
 index1 = file.find("158")+5
@@ -602,7 +789,7 @@ temp = file[index1:index2]
 if(";" in temp):
 	temp = temp[0:temp.find(";")-1]
 cur_items.append(temp)
-f = open("..\\disasm\\data\\maps\\entries\\map23\\7-chest-items.asm", 'r')
+f = open(disasm_prefix + "\\data\\maps\\entries\\map23\\7-chest-items.asm", 'r')
 file = f.read()
 f.close()
 index1 = file.find("221")+5
@@ -611,7 +798,7 @@ temp = file[index1:index2]
 if(";" in temp):
 	temp = temp[0:temp.find(";")-1]
 cur_items.append(temp)
-f = open("..\\disasm\\data\\maps\\entries\\map67\\8-other-items.asm", 'r')
+f = open(disasm_prefix + "\\data\\maps\\entries\\map67\\8-other-items.asm", 'r')
 file = f.read()
 f.close()
 index1 = file.find("214")+5
@@ -620,7 +807,7 @@ temp = file[index1:index2]
 if(";" in temp):
 	temp = temp[0:temp.find(";")-1]
 cur_items.append(temp)
-f = open("..\\disasm\\data\\maps\\entries\\map36\\8-other-items.asm", 'r')
+f = open(disasm_prefix + "\\data\\maps\\entries\\map36\\8-other-items.asm", 'r')
 file = f.read()
 f.close()
 index1 = file.find("175")+5
@@ -632,7 +819,7 @@ cur_items.append(temp)
 offset = 2
 show_items_con = IntVar()
 
-ttk.Checkbutton(char_frm, variable = show_items_con, text="Show Promo Items", command=lambda a=orig_items, b=cur_items : toggle_chars(a, b)).grid(column=0,row=char_row_offset+3, padx=5)
+ttk.Checkbutton(char_frm, variable = show_items_con, text="Show Promo Items", command=lambda a=orig_items, b=cur_items : toggle_chars(a, b)).grid(column=0,row=char_row_offset+3, padx=5, sticky=W)
 show_items_con.set(0)
 for x in range(len(orig_items)):
 	ttk.Separator(char_frm, orient=HORIZONTAL).grid(column=x+offset, row=char_row_offset+0,sticky=E+W, columnspan=4)
@@ -651,4 +838,5 @@ for x in range(len(orig_items)):
 if("split" not in config):
 	subprocess.run(["split.bat"])
 	config["split"] = "done"
+ttk.Button(char_frm, text = "Patches", command=display_patches).grid(column=0, row=1,sticky=W)
 root.mainloop()
