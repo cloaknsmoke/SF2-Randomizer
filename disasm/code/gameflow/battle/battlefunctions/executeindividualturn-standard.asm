@@ -22,12 +22,37 @@ ExecuteIndividualTurn:
                 
 @Start:         clr.w   ((DEAD_COMBATANTS_LIST_LENGTH-$1000000)).w
                 
-                ; Check if we're currently battling Taros, and Bowie is the actor
-                checkSavedByte #BATTLE_VERSUS_TAROS, CURRENT_BATTLE  ; HARDCODED battle index
-                bne.s   @IsActorAlive
-                clrFlg  112             ; Currently attacking Taros with Achilles Sword
+            if (ORIGINAL_TAROS_INVULNERABILITY=1)
+                ;
+                ; Re-implement the original Japanese version behavior,
+                ; i.e., other characters can join in the fight after Bowie delivers a hit with the Achilles Sword, 
+                ; however Taros will become invulnerable again unless he is continually attacked with it.
+                ;
+                movem.l d1-d2/a0,-(sp)
                 
-@IsActorAlive:  jsr     GetCurrentHP
+                ; Currently in a battle with an invulnerable enemy?
+                lea     table_InvulnerableEnemyBattles, a0
+                getSavedByte CURRENT_BATTLE,d1
+                moveq   #2,d2
+                jsr     (FindSpecialPropertyBytesAddressForObject).w
+                bcs.s   @TarosEnd
+                
+                ; Moving actor is an ally and is carrying the required weapon in their inventory?
+                move.w  combatant(a6),d0
+                bmi.s   @TarosEnd
+                
+                addq.w  #1,a0
+                move.b  (a0),d1
+                jsr     GetItemSlotContainingIndex
+                bmi.s   @TarosEnd
+                
+                ; If all of the above is true, then the enemy becomes invulnerable again
+                clrFlg  112             ; Currently attacking Taros with Achilles Sword
+@TarosEnd:      movem.l (sp)+,d1-d2/a0
+            endif
+                
+                ; Is actor alive?
+                jsr     GetCurrentHP
                 tst.w   d1
                 beq.w   @Done           ; skip turn if actor is dead
                 
@@ -137,15 +162,23 @@ ExecuteIndividualTurn:
                 ; Check if casting Egress
 @CastSpell:     move.w  ((BATTLEACTION_ITEM_OR_SPELL-$1000000)).w,d0
                 andi.w  #SPELLENTRY_MASK_INDEX,d0
-                cmpi.w  #SPELL_EGRESS,d0
-                bne.s   @Continue
+                lea     table_EgressSpells(pc), a0
+                move.w  d0,d1
+                clr.w   d2
+                jsr     (FindSpecialPropertyBytesAddressForObject).w
+                bcs.s   @Continue
+                
                 bra.w   ExecuteBattleaction_Egress
                 
-                ; Check if using Angel Wing
+                ; Check if using an "Egress item" (e.g., Angel Wing)
 @UseItem:       move.w  ((BATTLEACTION_ITEM_OR_SPELL-$1000000)).w,d0
                 andi.w  #ITEMENTRY_MASK_INDEX,d0
-                cmpi.w  #ITEM_ANGEL_WING,d0
-                bne.s   @Continue
+                lea     table_EgressItems(pc), a0
+                move.w  d0,d1
+                clr.w   d2
+                jsr     (FindSpecialPropertyBytesAddressForObject).w
+                bcs.s   @Continue
+                
                 bra.w   ExecuteBattleaction_AngelWing
                 
                 ; Prepare enemy attack coming out of a trapped chest 
@@ -231,6 +264,15 @@ DetermineRandomAttackSpell:
                 move.w  ((BATTLEACTION_ITEM_OR_SPELL-$1000000)).w,((BATTLEACTION_ITEM_OR_SPELL_COPY-$1000000)).w
                 move.w  #BATTLEACTION_CAST_SPELL,((CURRENT_BATTLEACTION-$1000000)).w
                 jsr     GetCurrentLevel
+            if (FIX_KIWI_BREATH_UPGRADE_LEVELS=1)
+                ; Base Kiwi's breath upgrades on effective rather than current level
+                move.w  d1,d7
+                jsr     GetClassType
+                beq.s   @NotPromoted
+                
+                addi.w  #CHAR_CLASS_EXTRALEVEL,d7
+@NotPromoted:   move.w  d7,d1
+            endif
                 clr.w   d0
                 
                 ; Check upgrade level 1
