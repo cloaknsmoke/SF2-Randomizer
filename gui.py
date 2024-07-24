@@ -574,6 +574,12 @@ def write_config(args):
 	f.write(repr(args))
 	f.close()
 
+def build():
+	os.chdir("build")
+	subprocess.run(["buildstandard.bat"])
+	os.chdir("..")
+	Path(r".\build\standardbuild-last.bin").rename(Path(r".\sf2.bin"))
+
 orig_values = {\
 "BOWIE" : 0,"SARAH" : 1,"CHESTER" : 2,"JAHA" : 3,"KAZIN" : 4,"SLADE" : 5,"KIWI" : 6,"PETER" : 7,"MAY" : 8,"GERHALT" : 9,"LUKE" : 10,\
 "ROHDE" : 11,"RICK" : 12,"ELRIC" : 13,"ERIC" : 14,"KARNA" : 15,"RANDOLF" : 16,"TYRIN" : 17,"JANET" : 18,"HIGINS" : 19,"SKREECH" : 20,\
@@ -840,5 +846,5 @@ if("split" not in config):
 	subprocess.run([r".\split\split.bat"])
 	config["split"] = "done"
 ttk.Button(char_frm, text = "Patches", command=display_patches).grid(column=0, row=1,sticky=W)
-ttk.Button(char_frm, text = "Build", command=lambda : [os.chdir("build"), subprocess.run(["buildstandard.bat"]),os.chdir("..")]).grid(column=0, row=3,sticky=W)
+ttk.Button(char_frm, text = "Build", command=build).grid(column=0, row=3,sticky=W)
 root.mainloop()
