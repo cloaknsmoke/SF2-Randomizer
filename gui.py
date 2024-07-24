@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from split.swap_characters import *
 import subprocess
+import os
 
 disasm_prefix = r".\disasm"
 
@@ -468,7 +469,7 @@ def display_patches():
 	frm = ttk.Frame(root)
 	frm.bind("<Destroy>", func=lambda a, b=[qol, misc, ai, menu]: write_patches(b))
 	cur_row = 0
-	special_cases = "MUSCLE_MAGICMUSCLE_MAGIC_STATPERCENT_POISON_DAMAGEALTERNATE_JEWEL_ICONS_DISPLAY"
+	special_cases = "MUSCLE_MAGICMUSCLE_MAGIC_STATPERCENT_POISON_DAMAGEALTERNATE_JEWEL_ICONS_DISPLAYORIGINAL_TAROS_INVULNERABILITY"
 	ttk.Label(root, text="Quality of Life").grid(column=0, row=cur_row)
 	cur_row += 1
 	for k, v in qol.items():
@@ -839,4 +840,5 @@ if("split" not in config):
 	subprocess.run([r".\split\split.bat"])
 	config["split"] = "done"
 ttk.Button(char_frm, text = "Patches", command=display_patches).grid(column=0, row=1,sticky=W)
+ttk.Button(char_frm, text = "Build", command=lambda : [os.chdir("build"), subprocess.run(["buildstandard.bat"]),os.chdir("..")]).grid(column=0, row=3,sticky=W)
 root.mainloop()
