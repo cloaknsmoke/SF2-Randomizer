@@ -3653,7 +3653,7 @@ MAPSPRITE_WILLARD: equ $ae
 MAPSPRITE_ZALBARD: equ $af
 MAPSPRITE_CAMEELA: equ $b0
 MAPSPRITE_PRISM_FLOWER: equ $b1
-MAPSPRITE_RED_BARON: equ $b2 ; Duplicate of 57, go without Portrait
+MAPSPRITE_RED_BARON: equ $4C ; Duplicate of 57, go without Portrait
 MAPSPRITE_GESHP: equ $b3
 MAPSPRITE_ODD_EYE: equ $b4
 MAPSPRITE_FILLER3: equ $b5 ; Filling for ???
