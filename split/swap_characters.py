@@ -3,7 +3,7 @@ import random
 import re
 import sys
 
-loc = r"..\disasm"
+loc = r".\disasm"
 
 def swap_ALLY_r(p, a, b):
 	if(len(a) != len(b)):
@@ -251,7 +251,7 @@ def replace_frozen_claude():
 	if(who_is_claude == "CLAUDE"):
 		file2 = file2[0:index1] + "MAPSPRITE_POSE3" + file2[index2:]
 	else:
-		file2 = file2[0:index1] + "MAPSPRITE_" + who_is_claude + "_" + r_class_dict[new_class] + file2[index2:]
+		file2 = file2[0:index1] + "ALLY_" + who_is_claude + file2[index2:]
 	f = open(loc + r"\data\maps\entries\map63\mapsetups\s6_initfunction.asm", 'w')
 	f.write(file2)
 	f.close()
@@ -264,7 +264,7 @@ def replace_frozen_claude():
 	if(who_is_claude == "CLAUDE"):
 		file2 = file2[0:index1] + "MAPSPRITE_POSE3" + file2[index2:]
 	else:
-		file2 = file2[0:index1] + "MAPSPRITE_" + who_is_claude + "_" + r_class_dict[new_class] + file2[index2:]
+		file2 = file2[0:index1] + "ALLY_" + who_is_claude + file2[index2:]
 	f = open(loc + r"\data\maps\entries\map63\mapsetups\scripts.asm", 'w')
 	f.write(file2)
 	f.close()

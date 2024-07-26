@@ -578,7 +578,7 @@ def build():
 	os.chdir("build")
 	subprocess.run(["buildstandard.bat"])
 	os.chdir("..")
-	Path(r".\build\standardbuild-last.bin").rename(Path(r".\sf2.bin"))
+	Path(r".\build\standardbuild-last.bin").replace(Path(r".\sf2.bin"))
 
 orig_values = {\
 "BOWIE" : 0,"SARAH" : 1,"CHESTER" : 2,"JAHA" : 3,"KAZIN" : 4,"SLADE" : 5,"KIWI" : 6,"PETER" : 7,"MAY" : 8,"GERHALT" : 9,"LUKE" : 10,\
@@ -843,7 +843,9 @@ for x in range(len(orig_items)):
 	ttk.Separator(char_frm, orient=VERTICAL).grid(column=x+offset, row=char_row_offset+3,sticky=N+S)
 	ttk.Separator(char_frm, orient=VERTICAL).grid(column=x+offset, row=char_row_offset+4,sticky=N+S)
 if("split" not in config):
-	subprocess.run([r".\split\split.bat"])
+	os.chdir("split")
+	subprocess.run([r"split.bat"])
+	os.chdir("..")
 	config["split"] = "done"
 ttk.Button(char_frm, text = "Patches", command=display_patches).grid(column=0, row=1,sticky=W)
 ttk.Button(char_frm, text = "Build", command=build).grid(column=0, row=3,sticky=W)
