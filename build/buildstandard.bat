@@ -56,5 +56,3 @@ IF EXIST "%buildname%.bin" (
     echo "%buildname%.bin" does not exist, probably due to an assembly error. Check output.log.
 )
 
-
-pause
