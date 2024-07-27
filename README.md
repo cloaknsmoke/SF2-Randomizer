@@ -55,7 +55,7 @@ sf2patches.asm. It saves automatically when the window is closed. All fixes incl
 ## Stat viewer
 
 Due to the nature of randomization, it's possible you might want to review how good or bad characters are after randomization or maybe just the order you recruit. By default, who joins and where is 
-not shown in case you want to keep the mystery. Ther is a checkbox to reveal the randomized characters. They replace the character above them. 
+not shown in case you want to keep the mystery. There is a checkbox to reveal the randomized characters. They replace the character above them. 
 
 Clicking on a character button will open a viewer of their stats and spells as well as their promotions' stats and spells. This will still work even if you don't have them revealed. Obviously, their 
 name will be shown in the stats screen. Clicking a new character moves the previous one to the second area so you can compare them. 
