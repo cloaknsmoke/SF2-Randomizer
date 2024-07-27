@@ -11,19 +11,19 @@ The purpose of this project is to allow certain aspects of the game to be random
 experience as vanilla as possible except for a few select changes.
 
 ## New additions:
--Claude, Zynk, and Lemon have new base classes in the event that they start in your party before promotion. They will only promote to their original class. 
--New sprites for Rohde, Higins, Skreech, Taya, Frayja, Jaro, Gyan, Sheela, Zynk, Chaz, Lemon, and Claude were added for their base classes
--New sprites for Rohde, Higins, Taya, Frayja, Jaro, Gyan, Sheela, and Chaz were added for their alternate promotion path.
--A new portrait was added for Claude's base class.
--New spell tables have been added for Chaz as a Sorcerer and Taya as a Mage/Wizard. They are roughly in line with the other similar characters.
--I changed Hell Blast to Wind Blast because I think it makes more sense.
--The second Vigor Ball has been swapped with one of the mithrils earlier in the game so that it's actually relevant. The pegasus wing is still in Pacalon though.
--Lemon starts with a weapon that is not cursed in addition the the Dark Sword.
--Kiwi, Zynk, and Claude have resistances to magic that actually make sense instead of ones that do almost nothing.
--All characters that can cast magic by default will now gain experience from healing and healing items. 
--The Achilles Sword is now a ring that can be equipped by any class. It has no stats associated with it. All it does is allow you to attack Taros if you equip it and let you get Rohde.
--The Levanter is now exclusively equippable by BDBTs. It always bugged me that only Bowie could use it even though he gets an amazing weapon 2 battles after the blacksmith.
--Spell learn levels have been scaled down to be between 1 and 52 (32 promoted). Some characters had to get to level 40 promoted to learn some spells. No enemy outside of bosses can give you experience beyond level 31 promoted. I personally consider this a design flaw.
+- Claude, Zynk, and Lemon have new base classes in the event that they start in your party before promotion. They will only promote to their original class. 
+- New sprites for Rohde, Higins, Skreech, Taya, Frayja, Jaro, Gyan, Sheela, Zynk, Chaz, Lemon, and Claude were added for their base classes
+- New sprites for Rohde, Higins, Taya, Frayja, Jaro, Gyan, Sheela, and Chaz were added for their alternate promotion path.
+- A new portrait was added for Claude's base class.
+- New spell tables have been added for Chaz as a Sorcerer and Taya as a Mage/Wizard. They are roughly in line with the other similar characters.
+- I changed Hell Blast to Wind Blast because I think it makes more sense.
+- The second Vigor Ball has been swapped with one of the mithrils earlier in the game so that it's actually relevant. The pegasus wing is still in Pacalon though.
+- Lemon starts with a weapon that is not cursed in addition the the Dark Sword.
+- Kiwi, Zynk, and Claude have resistances to magic that actually make sense instead of ones that do almost nothing.
+- All characters that can cast magic by default will now gain experience from healing and healing items. 
+- The Achilles Sword is now a ring that can be equipped by any class. It has no stats associated with it. All it does is allow you to attack Taros if you equip it and let you get Rohde.
+- The Levanter is now exclusively equippable by BDBTs. It always bugged me that only Bowie could use it even though he gets an amazing weapon 2 battles after the blacksmith.
+- Spell learn levels have been scaled down to be between 1 and 52 (32 promoted). Some characters had to get to level 40 promoted to learn some spells. No enemy outside of bosses can give you experience beyond level 31 promoted. I personally consider this a design flaw.
 
 The gui will automatically extract the rom and well as make certain changes when opened for the first time. It won't work properly if sf2.bin is not already in the rom folder.
 
@@ -31,8 +31,7 @@ The gui will automatically extract the rom and well as make certain changes when
 
 The point in the game that each character joins. It will be based on the location a character joins in the original game. No new characters are introduced, so each character will still only join at a predefined point in the story.
 The randomized characters have several options:
-- Allow depromotion - Characters that normally cannot join as an unpromoted class will have new class definitions added to allow them to start in a base class appropriate for their original promoted
-- class
+- Allow depromotion - Characters that normally cannot join as an unpromoted class will have new class definitions added to allow them to start in a base class appropriate for their original promoted class
 - Allow random promotion path - Characters that join promoted will be given a random promotion from among their promotion branches. For instance, even if Frayja joins at a point where he would already be promoted, he might join as a Master Monk instead of Vicar with this option enabled. This obviously does not affect classes that only have 1 promotion.
 - Randomize learned spells - The spells all character will learn get shuffled. No new spells are added except for the two special exceptions stated above. If a character joins in a "magic exclusive" class that is expected to gain exp from magic and not weapon combat, they will get a starter spell from among [Heal, Blaze, Freeze, Blast] as their level 1 spell so long as they join at or before Ribble (May). The level spells are learned are based on when the character originally learned spells. Any spells that has at least 2 levels can be replaced by any other spell with at least 2 levels.
 - Each will be assigned randomly to the set of levels the original could be learned at. This has necessitated adding some slots for characters with level 2 or 3 spells. They aren't used unless you randomize the spells. Also, due to a game engine limitation, so character can learn 16 spells. At least one spell must be a level 2 or 3 spell for this reason.
