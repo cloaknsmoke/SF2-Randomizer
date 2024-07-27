@@ -5,6 +5,12 @@ A disassembly of the game "Shining Force II" for documentation and fan-project p
 This project is based on the dissasembly of Shining Force II. The original can be found [here](https://github.com/ShiningForceCentral/SF2DISASM)
 
 
+# Requirements
+
+You need to have an original Shining Force II NTSC rom in bin format. This is a basic requirement for the disasm as well.
+You must have Python installed. The gui is written in Python, so you will need Python to run it. 
+You can clone the repo or just download it as a zip and unzip it somewhere. After putting the rom in the right folder, just run gui.py
+
 # Randomizer
 
 The purpose of this project is to allow certain aspects of the game to be randomized in order to provide a new experience to veteran players. I tried to keep the rest of the
