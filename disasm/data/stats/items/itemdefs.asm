@@ -786,7 +786,7 @@ table_ItemDefinitions:
                              NONE, 0
                 
                 ; 69: Levanter
-                equipFlags   HERO
+                equipFlags   BDBT
                 equipFlags2  NONE
                 range        1, 1
                 price        14000
