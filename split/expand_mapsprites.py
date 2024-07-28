@@ -15,7 +15,7 @@ for x in adds:
 	entries2.append(padded)
 	
 
-for x in Path("..\\disasm\\data\\graphics\\mapsprites").iterdir():
+for x in Path(".\\disasm\\data\\graphics\\mapsprites").iterdir():
 	if(not x.name.endswith("bin")):
 		continue
 	name = x.stem
@@ -32,9 +32,9 @@ for x in Path("..\\disasm\\data\\graphics\\mapsprites").iterdir():
 	entries[padded] = padded_c
 	
 for x in sorted(list(entries), reverse=True):
-	p = Path(f"..\\disasm\\data\\graphics\\mapsprites\\{x}.bin")
+	p = Path(f".\\disasm\\data\\graphics\\mapsprites\\{x}.bin")
 	p.rename(p.with_name(f"{entries[x]}.bin"))
 	
 for x in entries2:
-	p = Path(f"..\\disasm\\data\\graphics\\mapsprites\\{x}.bin")
+	p = Path(f".\\disasm\\data\\graphics\\mapsprites\\{x}.bin")
 	p.touch()

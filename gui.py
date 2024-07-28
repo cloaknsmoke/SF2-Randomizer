@@ -297,7 +297,8 @@ def display_info(char, orig, frame, frame_vars, class_frames, notebook1, noteboo
 		cur_class += 1
 
 def randomize(	rand_depromo, rand_prepromo, rand_magic, chaos_magic, rand_promo_items, rand_stat_growths, rand_stats, \
-				percent_change, adjust_level, promo_level, promo_elevel, orig_values, cur_values, cur_items, name_list):
+				percent_change, adjust_level, promo_level, promo_elevel, orig_values, cur_values, cur_items, name_list, \
+				orig_items):
 	adjust_level = True if adjust_level.get() == 1 else False
 	promo_level = promo_level.get()
 	promo_elevel = promo_elevel.get()
@@ -383,6 +384,8 @@ def randomize(	rand_depromo, rand_prepromo, rand_magic, chaos_magic, rand_promo_
 		cur_values[x] = r_swap_dict[x]
 	toggle_chars(name_list, cur_values)
 	toggle_chars(name_list, cur_values)
+	toggle_chars(orig_items, cur_items)
+	toggle_chars(orig_items, cur_items)
 	
 def display_patches():
 	f = open(disasm_prefix + r"\sf2patches.asm", 'r')
@@ -764,9 +767,7 @@ if(adjust_level.get() == 1):
 ttk.Checkbutton(rand_frm, variable = adjust_level, text="Adjust Levels", command=\
 lambda a=adjust_level, b=[lvl2, lvl1], c=[promo_elevel, promo_level] : toggle_state(b, c, a, 20)).grid(column=0,row=3, padx=5, sticky=W)
 cur_items = []
-ttk.Button(rand_frm, text="Randomize", command=\
-lambda a=rand_depromo, b=rand_prepromo, c=rand_magic, d=chaos_magic, e=rand_promo_items, f=rand_stat_growths, g=rand_stats,\
-h=[percent_change_pos, percent_change_neg], i=adjust_level, j=promo_level, k=promo_elevel, l=cur_values, m=cur_items, o=name_list : randomize(a,b,c,d,e,f,g,h,i,j,k, orig_values,l,m, o)).grid(column=0, row=0, sticky=W)
+
 
 orig_items = ["WARRIOR_PRIDE", "SILVER_TANK", "SECRET_BOOK", "VIGOR_BALL", "VIGOR_BALL", "PEGASUS_WING"]
 f = open(disasm_prefix + "\\data\\maps\\entries\\map07\\8-other-items.asm", 'r')
@@ -825,7 +826,10 @@ if(";" in temp):
 cur_items.append(temp)
 offset = 2
 show_items_con = IntVar()
-
+ttk.Button(rand_frm, text="Randomize", command=\
+lambda a=rand_depromo, b=rand_prepromo, c=rand_magic, d=chaos_magic, e=rand_promo_items, f=rand_stat_growths, g=rand_stats,\
+h=[percent_change_pos, percent_change_neg], i=adjust_level, j=promo_level, k=promo_elevel, l=cur_values, m=cur_items, \
+o=name_list, p=orig_items: randomize(a,b,c,d,e,f,g,h,i,j,k, orig_values,l,m, o,p)).grid(column=0, row=0, sticky=W)
 ttk.Checkbutton(char_frm, variable = show_items_con, text="Show Promo Items", command=lambda a=orig_items, b=cur_items : toggle_chars(a, b)).grid(column=0,row=char_row_offset+3, padx=5, sticky=W)
 show_items_con.set(0)
 for x in range(len(orig_items)):
@@ -843,8 +847,16 @@ for x in range(len(orig_items)):
 	ttk.Separator(char_frm, orient=VERTICAL).grid(column=x+offset, row=char_row_offset+3,sticky=N+S)
 	ttk.Separator(char_frm, orient=VERTICAL).grid(column=x+offset, row=char_row_offset+4,sticky=N+S)
 if("split" not in config):
+	os.chdir("disasm")
+	subprocess.run([r"../tools/splitrom.exe", r"../rom/sf2.bin", r"../split/sf2splits.txt"])
+	os.chdir("..")
+	import split.expand_mapsprites
+	import split.expand_portraits
 	os.chdir("split")
-	subprocess.run([r"split.bat"])
+	subprocess.run([r"patch_battlesprites.bat"])
+	subprocess.run([r"patch_mapsprites.bat"])
+	subprocess.run([r"patch_text.bat"])
+	subprocess.run([r"patch_icon.bat"])
 	os.chdir("..")
 	config["split"] = "done"
 ttk.Button(char_frm, text = "Patches", command=display_patches).grid(column=0, row=1,sticky=W)

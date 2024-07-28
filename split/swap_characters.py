@@ -1144,7 +1144,7 @@ def randomize_growths(ally_num):
 	
 def randomize_stats(ally_num, pos_change, neg_change):
 	pos_change = (pos_change+100)/100.0
-	neg_change = neg_change/100.0
+	neg_change = (100-neg_change)/100.0
 	f = open(loc + "\\data\\stats\\allies\\stats\\allystats" + (str(ally_num) if ally_num > 9 else ("0" + str(ally_num))) +".asm", 'r')
 	file = f.read()
 	f.close()
