@@ -773,7 +773,7 @@ lambda a=adjust_level, b=[lvl2, lvl1], c=[promo_elevel, promo_level] : toggle_st
 cur_items = []
 
 
-orig_items = ["WARRIOR_PRIDE", "SILVER_TANK", "SECRET_BOOK", "VIGOR_BALL", "VIGOR_BALL", "PEGASUS_WING"]
+orig_items = ["WARRIORS_PRIDE", "SILVER_TANK", "SECRET_BOOK", "VIGOR_BALL", "VIGOR_BALL", "PEGASUS_WING"]
 f = open(disasm_prefix + "\\data\\maps\\entries\\map07\\8-other-items.asm", 'r')
 file = f.read()
 f.close()
