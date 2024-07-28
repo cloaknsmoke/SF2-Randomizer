@@ -397,6 +397,15 @@ def build(saved_orig, swaps, orig_values, rand_depromo, rand_prepromo,adjust_lev
 	os.chdir("..")
 	Path(r".\build\standardbuild-last.bin").replace(Path(r".\sf2.bin"))
 	
+def scroll_handler(e, yview, xview):
+	# 8 for vertical, 9 for horizontal
+	if(e.state == 8):
+		yview(int(e.delta/-30), UNITS)
+	elif(e.state == 9):
+		xview(int(e.delta/-30), UNITS)
+	else:
+		print(f"{e.state} how did we get here?")
+	
 def display_patches():
 	f = open(disasm_prefix + r"\sf2patches.asm", 'r')
 	file = f.read()
@@ -479,80 +488,94 @@ def display_patches():
 	
 	root = Tk()
 	root.title("Patches")
+	root.geometry("1600x1050")
 	frm = ttk.Frame(root)
 	frm.bind("<Destroy>", func=lambda a, b=[qol, misc, ai, menu]: write_patches(b))
+	outer_frm = ttk.Frame(root)
+	outer_frm.pack(fill=BOTH, expand=1)
+	canv = Canvas(outer_frm)
+	data_frm = ttk.Frame(canv)
+	canv.create_window(0,0,window=data_frm)
+	scrollbary = ttk.Scrollbar(outer_frm, orient=VERTICAL,command=canv.yview)
+	scrollbary.pack(side=RIGHT, fill=Y)
+	scrollbarx = ttk.Scrollbar(outer_frm, orient=HORIZONTAL,command=canv.xview)
+	scrollbarx.pack(side=BOTTOM, fill=X)
+	canv.pack(fill=BOTH, expand=1)
+	canv.configure(yscrollcommand=scrollbary.set, xscrollcommand=scrollbarx.set)
+	canv.bind('<Configure>', lambda e: canv.configure(scrollregion=canv.bbox("all")))
+	data_frm.bind_all('<MouseWheel>', lambda e : scroll_handler(e, canv.yview_scroll, canv.xview_scroll))
 	cur_row = 0
 	special_cases = "MUSCLE_MAGICMUSCLE_MAGIC_STATPERCENT_POISON_DAMAGEALTERNATE_JEWEL_ICONS_DISPLAYORIGINAL_TAROS_INVULNERABILITY"
-	ttk.Label(root, text="Quality of Life").grid(column=0, row=cur_row)
+	ttk.Label(data_frm, text="Quality of Life").grid(column=0, row=cur_row)
 	cur_row += 1
 	for k, v in qol.items():
-		ttk.Label(root, text=k).grid(column=0, row=cur_row, sticky=W, padx=5)
-		ttk.Label(root, text=":").grid(column=1, row=cur_row, padx=5)
+		ttk.Label(data_frm, text=k).grid(column=0, row=cur_row, sticky=W, padx=5)
+		ttk.Label(data_frm, text=":").grid(column=1, row=cur_row, padx=5)
 		if(k not in special_cases):
-			var = IntVar(root)
-			ttk.Checkbutton(root, variable=var).grid(column=2, row=cur_row, sticky=W)
+			var = IntVar(data_frm)
+			ttk.Checkbutton(data_frm, variable=var).grid(column=2, row=cur_row, sticky=W)
 			var.set(v[0])
 			v[0] = var
 		else:
-			var = StringVar(root)
-			ttk.Entry(root, textvariable = var).grid(column=2, row=cur_row, sticky=W)
+			var = StringVar(data_frm)
+			ttk.Entry(data_frm, textvariable = var).grid(column=2, row=cur_row, sticky=W)
 			var.set(v[0])
 			v[0] = var
-		ttk.Label(root, text=v[1]).grid(column=3, row=cur_row, sticky=W, padx=5)
+		ttk.Label(data_frm, text=v[1]).grid(column=3, row=cur_row, sticky=W, padx=5)
 		cur_row += 1
-	ttk.Separator(root, orient=HORIZONTAL).grid(column=0, row=cur_row, columnspan=4, sticky=E+W)
-	ttk.Label(root, text="Miscellaneous").grid(column=0, row=cur_row+1)
+	ttk.Separator(data_frm, orient=HORIZONTAL).grid(column=0, row=cur_row, columnspan=4, sticky=E+W)
+	ttk.Label(data_frm, text="Miscellaneous").grid(column=0, row=cur_row+1)
 	cur_row += 2
 	for k, v in misc.items():
-		ttk.Label(root, text=k).grid(column=0, row=cur_row, sticky=W, padx=5)
-		ttk.Label(root, text=":").grid(column=1, row=cur_row, padx=5)
+		ttk.Label(data_frm, text=k).grid(column=0, row=cur_row, sticky=W, padx=5)
+		ttk.Label(data_frm, text=":").grid(column=1, row=cur_row, padx=5)
 		if(k not in special_cases):
-			var = IntVar(root)
-			ttk.Checkbutton(root, variable=var).grid(column=2, row=cur_row, sticky=W)
+			var = IntVar(data_frm)
+			ttk.Checkbutton(data_frm, variable=var).grid(column=2, row=cur_row, sticky=W)
 			var.set(v[0])
 			v[0] = var
 		else:
-			var = StringVar(root)
-			ttk.Entry(root, textvariable = var).grid(column=2, row=cur_row, sticky=W)
+			var = StringVar(data_frm)
+			ttk.Entry(data_frm, textvariable = var).grid(column=2, row=cur_row, sticky=W)
 			var.set(v[0])
 			v[0] = var
-		ttk.Label(root, text=v[1]).grid(column=3, row=cur_row, sticky=W, padx=5)
+		ttk.Label(data_frm, text=v[1]).grid(column=3, row=cur_row, sticky=W, padx=5)
 		cur_row += 1
-	ttk.Separator(root, orient=HORIZONTAL).grid(column=0, row=cur_row, columnspan=4, sticky=E+W)
-	ttk.Label(root, text="AI Related").grid(column=0, row=cur_row+1)
+	ttk.Separator(data_frm, orient=HORIZONTAL).grid(column=0, row=cur_row, columnspan=4, sticky=E+W)
+	ttk.Label(data_frm, text="AI Related").grid(column=0, row=cur_row+1)
 	cur_row += 2
 	for k, v in ai.items():
-		ttk.Label(root, text=k).grid(column=0, row=cur_row, sticky=W, padx=5)
-		ttk.Label(root, text=":").grid(column=1, row=cur_row, padx=5)
+		ttk.Label(data_frm, text=k).grid(column=0, row=cur_row, sticky=W, padx=5)
+		ttk.Label(data_frm, text=":").grid(column=1, row=cur_row, padx=5)
 		if(k not in special_cases):
-			var = IntVar(root)
-			ttk.Checkbutton(root, variable=var).grid(column=2, row=cur_row, sticky=W)
+			var = IntVar(data_frm)
+			ttk.Checkbutton(data_frm, variable=var).grid(column=2, row=cur_row, sticky=W)
 			var.set(v[0])
 			v[0] = var
 		else:
-			var = StringVar(root)
-			ttk.Entry(root, textvariable = var).grid(column=2, row=cur_row, sticky=W)
+			var = StringVar(data_frm)
+			ttk.Entry(data_frm, textvariable = var).grid(column=2, row=cur_row, sticky=W)
 			var.set(v[0])
 			v[0] = var
-		ttk.Label(root, text=v[1]).grid(column=3, row=cur_row, sticky=W, padx=5)
+		ttk.Label(data_frm, text=v[1]).grid(column=3, row=cur_row, sticky=W, padx=5)
 		cur_row += 1
-	ttk.Separator(root, orient=HORIZONTAL).grid(column=0, row=cur_row, columnspan=4, sticky=E+W)
-	ttk.Label(root, text="Menu Related").grid(column=0, row=cur_row+1)
+	ttk.Separator(data_frm, orient=HORIZONTAL).grid(column=0, row=cur_row, columnspan=4, sticky=E+W)
+	ttk.Label(data_frm, text="Menu Related").grid(column=0, row=cur_row+1)
 	cur_row += 2
 	for k, v in menu.items():
-		ttk.Label(root, text=k).grid(column=0, row=cur_row, sticky=W, padx=5)
-		ttk.Label(root, text=":").grid(column=1, row=cur_row, padx=5)
+		ttk.Label(data_frm, text=k).grid(column=0, row=cur_row, sticky=W, padx=5)
+		ttk.Label(data_frm, text=":").grid(column=1, row=cur_row, padx=5)
 		if(k not in special_cases):
-			var = IntVar(root)
-			ttk.Checkbutton(root, variable=var).grid(column=2, row=cur_row, sticky=W)
+			var = IntVar(data_frm)
+			ttk.Checkbutton(data_frm, variable=var).grid(column=2, row=cur_row, sticky=W)
 			var.set(v[0])
 			v[0] = var
 		else:
-			var = StringVar(root)
-			ttk.Entry(root, textvariable = var).grid(column=2, row=cur_row, sticky=W)
+			var = StringVar(data_frm)
+			ttk.Entry(data_frm, textvariable = var).grid(column=2, row=cur_row, sticky=W)
 			var.set(v[0])
 			v[0] = var
-		ttk.Label(root, text=v[1]).grid(column=3, row=cur_row, sticky=W, padx=5)
+		ttk.Label(data_frm, text=v[1]).grid(column=3, row=cur_row, sticky=W, padx=5)
 		cur_row += 1
 	
 def write_patches(patches):
