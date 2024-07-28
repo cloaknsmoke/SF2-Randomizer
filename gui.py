@@ -298,7 +298,7 @@ def display_info(char, orig, frame, frame_vars, class_frames, notebook1, noteboo
 
 def randomize(	rand_depromo, rand_prepromo, rand_magic, chaos_magic, rand_promo_items, rand_stat_growths, rand_stats, \
 				percent_change, adjust_level, promo_level, promo_elevel, orig_values, cur_values, cur_items, name_list, \
-				orig_items):
+				orig_items, saved_orig, swaps):
 	adjust_level = True if adjust_level.get() == 1 else False
 	promo_level = promo_level.get()
 	promo_elevel = promo_elevel.get()
@@ -310,23 +310,15 @@ def randomize(	rand_depromo, rand_prepromo, rand_magic, chaos_magic, rand_promo_
 	rand_prepromo = True if rand_prepromo.get() == 1 else False
 	orig_list, swap_dict = determine_swap_list(rand_depromo, rand_prepromo, promo_elevel, promo_level)
 	r_swap_dict = {k : v for v, k in swap_dict.items()}
-	temp = [x for x in range(30)]
-	for x in temp:
-		temp[x] = r_swap_dict[x]
-	swap_characters(orig_list, temp, orig_values, rand_depromo, rand_prepromo)
+	for x in range(30):
+		saved_orig[x] = orig_list[x]
+		swaps[x] = r_swap_dict[x]
 	for x in range(30):
 		f = open(disasm_prefix + "\\data\\stats\\allies\\stats\\orig_stats\\allystats" + ("0" if x < 10 else "") + str(x) + ".asm", 'r')
 		g = open(disasm_prefix + "\\data\\stats\\allies\\stats\\allystats" + ("0" if x < 10 else "") + str(x) + ".asm", 'w')
 		g.write(f.read())
 		f.close()
 		g.close()
-	replace_npc_rohde_sprite()
-	replace_spinning_elric()
-	replace_knocked_out_luke()
-	replace_knocked_out_higins()
-	replace_enemy_jaro()
-	replace_stone_taya()
-	replace_frozen_claude()
 	rand_promo_items = True if rand_promo_items.get() == 1 else False
 	randomize_promo_items(r_swap_dict, cur_items)
 	rand_stat_growths = True if rand_stat_growths.get() == 1 else False
@@ -375,17 +367,35 @@ def randomize(	rand_depromo, rand_prepromo, rand_magic, chaos_magic, rand_promo_
 			frayja_spells = [1,11,49,52,4,15,32,37,29,36,40,45,42]
 			sheela_spells = [1,5,36,51,7,18,38,47,11,24,32,41,13,20,28,44]
 			chaz_spells = [1,10,49,52,5,15,22,40,35,38,42,46,36]
-		randomize_spells(temp, spells_1, spells_2, levels, starter_spells, bowie_spells,sarah_spells,kazin_spells,sorc_spells,slade_spells,karna_spells,tyrin_spells,taya_spells,frayja_spells,sheela_spells,chaz_spells)
+		randomize_spells(swaps, spells_1, spells_2, levels, starter_spells, bowie_spells,sarah_spells,kazin_spells,sorc_spells,slade_spells,karna_spells,tyrin_spells,taya_spells,frayja_spells,sheela_spells,chaz_spells)
 	
-	if(adjust_level):
-		adjust_levels(promo_elevel, promo_level, orig_values)
-	remove_redundant_classes()
 	for x in r_swap_dict:
 		cur_values[x] = r_swap_dict[x]
 	toggle_chars(name_list, cur_values)
 	toggle_chars(name_list, cur_values)
 	toggle_chars(orig_items, cur_items)
 	toggle_chars(orig_items, cur_items)
+	
+def build(saved_orig, swaps, orig_values, rand_depromo, rand_prepromo,adjust_level, promo_elevel, promo_level):
+	rand_depromo = True if rand_depromo.get() == 1 else False
+	rand_prepromo = True if rand_prepromo.get() == 1 else False
+	promo_level = promo_level.get()
+	promo_elevel = promo_elevel.get()
+	swap_characters(saved_orig, swaps, orig_values, rand_depromo, rand_prepromo)
+	replace_npc_rohde_sprite()
+	replace_spinning_elric()
+	replace_knocked_out_luke()
+	replace_knocked_out_higins()
+	replace_enemy_jaro()
+	replace_stone_taya()
+	replace_frozen_claude()
+	if(adjust_level):
+		adjust_levels(promo_elevel, promo_level, orig_values)
+	remove_redundant_classes()
+	os.chdir("build")
+	subprocess.run(["buildstandard.bat"])
+	os.chdir("..")
+	Path(r".\build\standardbuild-last.bin").replace(Path(r".\sf2.bin"))
 	
 def display_patches():
 	f = open(disasm_prefix + r"\sf2patches.asm", 'r')
@@ -576,12 +586,6 @@ def write_config(args):
 			args[x] = args[x].get()
 	f.write(repr(args))
 	f.close()
-
-def build():
-	os.chdir("build")
-	subprocess.run(["buildstandard.bat"])
-	os.chdir("..")
-	Path(r".\build\standardbuild-last.bin").replace(Path(r".\sf2.bin"))
 
 orig_values = {\
 "BOWIE" : 0,"SARAH" : 1,"CHESTER" : 2,"JAHA" : 3,"KAZIN" : 4,"SLADE" : 5,"KIWI" : 6,"PETER" : 7,"MAY" : 8,"GERHALT" : 9,"LUKE" : 10,\
@@ -826,10 +830,12 @@ if(";" in temp):
 cur_items.append(temp)
 offset = 2
 show_items_con = IntVar()
+swaps = [x for x in range(30)]
+saved_orig = [x for x in range(30)]
 ttk.Button(rand_frm, text="Randomize", command=\
 lambda a=rand_depromo, b=rand_prepromo, c=rand_magic, d=chaos_magic, e=rand_promo_items, f=rand_stat_growths, g=rand_stats,\
 h=[percent_change_pos, percent_change_neg], i=adjust_level, j=promo_level, k=promo_elevel, l=cur_values, m=cur_items, \
-o=name_list, p=orig_items: randomize(a,b,c,d,e,f,g,h,i,j,k, orig_values,l,m, o,p)).grid(column=0, row=0, sticky=W)
+o=name_list, p=orig_items, q=saved_orig, r=swaps: randomize(a,b,c,d,e,f,g,h,i,j,k, orig_values,l,m, o,p,q,r)).grid(column=0, row=0, sticky=W)
 ttk.Checkbutton(char_frm, variable = show_items_con, text="Show Promo Items", command=lambda a=orig_items, b=cur_items : toggle_chars(a, b)).grid(column=0,row=char_row_offset+3, padx=5, sticky=W)
 show_items_con.set(0)
 for x in range(len(orig_items)):
@@ -860,5 +866,5 @@ if("split" not in config):
 	os.chdir("..")
 	config["split"] = "done"
 ttk.Button(char_frm, text = "Patches", command=display_patches).grid(column=0, row=1,sticky=W)
-ttk.Button(char_frm, text = "Build", command=build).grid(column=0, row=3,sticky=W)
+ttk.Button(char_frm, text = "Build", command=lambda a=saved_orig, b=swaps, c=orig_values, d=rand_depromo, e=rand_prepromo, f=adjust_level, g=promo_elevel, h=promo_level : build(a,b,c,d,e,f,g,h)).grid(column=0, row=3,sticky=W)
 root.mainloop()
