@@ -419,7 +419,7 @@ def display_patches():
 			if(key in "NO_AI_JARONO_AI_PETER"):	
 				desc = "They will immediately join instead."
 			if(key in "NO_RANDOM_BATTLES"):	
-				desc = ""
+				desc = "Disables random battles. Also disables the initial encounter."
 			qol[key] = [val,desc]
 	
 	index1 = file.find("; Misc. features")
