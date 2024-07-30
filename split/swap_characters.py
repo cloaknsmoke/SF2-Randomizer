@@ -211,17 +211,17 @@ def replace_stone_taya():
 	for v,k in class_dict.items():
 		for x in k:
 			r_class_dict[x] = v
-	f = open(loc + r"\data\maps\entries\map01\mapsetups\s1_entities.asm", 'r')
+	f = open(loc + r"\data\maps\entries\map01\mapsetups\s6_initfunction.asm", 'r')
 	file2 = f.read()
 	f.close()
-	index1 = file2.find("msFixedEntity 44, 26, DOWN,")
-	index2 = file2.find(", eas_InitFixedSprite")
-	#special case for if taya is still in her original spot since she gets a special sprite
-	if(who_is_taya == "TAYA"):
-		file2 = file2[0:index1] + "msFixedEntity 44, 26, DOWN, MAPSPRITE_OBJECT4" + file2[index2:]
+	index1 = file2.find(",", file2.find("setSprite", file2.find("; Taya joined")))+1
+	index2 = file2.find("\n", index1)
+	#special case if taya is still in her original spot since she has a unique sprite
+	if(who_is_claude == "TAYA"):
+		file2 = file2[0:index1] + "MAPSPRITE_OBJECT4" + file2[index2:]
 	else:
-		file2 = file2[0:index1] + "msFixedEntity 44, 26, DOWN, MAPSPRITE_" + who_is_taya + "_" + r_class_dict[new_class] + file2[index2:]
-	f = open(loc + r"\data\maps\entries\map01\mapsetups\s1_entities.asm", 'w')
+		file2 = file2[0:index1] + "ALLY_" + who_is_taya + file2[index2:]
+	f = open(loc + r"\data\maps\entries\map63\mapsetups\s6_initfunction.asm", 'w')
 	f.write(file2)
 	f.close()
 	

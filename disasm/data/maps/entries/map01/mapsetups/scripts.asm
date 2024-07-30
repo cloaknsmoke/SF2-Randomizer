@@ -10,6 +10,8 @@ cs_5E772:       textCursor 3649
                 flashScreenWhite $1E
                 csWait 30
                 flashScreenWhite $1E
+				setSprite ALLY_TAYA,ALLY_TAYA
+                setFacing ALLY_TAYA,DOWN
                 stopEntity ALLY_TAYA
                 csWait 30
                 flashScreenWhite $1E
