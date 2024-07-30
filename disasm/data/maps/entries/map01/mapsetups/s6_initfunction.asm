@@ -9,12 +9,15 @@ ms_map1_InitFunction:
                 
                  
                 chkFlg  21              ; Taya joined
-                beq.s   return_5E770
-                move.w  #136,d0
-                jsr     MoveEntityOutOfMap
+                bne.s   return_5E770
+                script  cs_new01
 return_5E770:
                 
                 rts
 
     ; End of function ms_map1_InitFunction
 
+cs_new01:       setSprite ALLY_TAYA,MAPSPRITE_OBJECT4
+                setFacing ALLY_TAYA,DOWN
+                stopEntity ALLY_TAYA
+				csc_end

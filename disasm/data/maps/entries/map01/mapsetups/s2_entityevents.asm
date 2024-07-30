@@ -2,6 +2,7 @@
 ; ASM FILE data\maps\entries\map01\mapsetups\s2_entityevents.asm :
 ; 0x5E694..0x5E720 : 
 ms_map1_EntityEvents:
+                msEntityEvent ALLY_TAYA, UP, Map1_EntityEvent8-ms_map1_EntityEvents
                 msEntityEvent 128, UP, Map1_EntityEvent0-ms_map1_EntityEvents
                 msEntityEvent 129, UP, Map1_EntityEvent1-ms_map1_EntityEvents
                 msEntityEvent 130, UP, Map1_EntityEvent2-ms_map1_EntityEvents
@@ -10,7 +11,6 @@ ms_map1_EntityEvents:
                 msEntityEvent 133, UP, Map1_EntityEvent5-ms_map1_EntityEvents
                 msEntityEvent 134, UP, Map1_EntityEvent6-ms_map1_EntityEvents
                 msEntityEvent 135, UP, Map1_EntityEvent7-ms_map1_EntityEvents
-                msEntityEvent 136, UP, Map1_EntityEvent8-ms_map1_EntityEvents
                 msDefaultEntityEvent Map1_DefaultEntityEvent-ms_map1_EntityEvents
 
 ; =============== S U B R O U T I N E =======================================

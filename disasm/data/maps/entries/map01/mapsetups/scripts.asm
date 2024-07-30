@@ -10,8 +10,6 @@ cs_5E772:       textCursor 3649
                 flashScreenWhite $1E
                 csWait 30
                 flashScreenWhite $1E
-                setPos 136,63,62,DOWN
-                setPos ALLY_TAYA,44,26,DOWN
                 stopEntity ALLY_TAYA
                 csWait 30
                 flashScreenWhite $1E

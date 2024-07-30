@@ -169,6 +169,7 @@ MapSetups:      msMap 3, ms_map3
                 msMap 0, ms_map0
                 msMapEnd
                 msMap 1, ms_map1
+				msFlag 21, ms_map1_flag21 ; Taya joined
                 msMapEnd
                 msMap 2, ms_map2
                 msFlag 530, ms_map2_flag530 ; Battle 30 completed

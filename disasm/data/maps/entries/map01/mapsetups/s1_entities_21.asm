@@ -1,8 +1,7 @@
 
-; ASM FILE data\maps\entries\map01\mapsetups\s1_entities.asm :
+; ASM FILE data\maps\entries\map01\mapsetups\s1_entities_21.asm :
 ; 0x5E642..0x5E694 : 
-ms_map1_Entities:
-                msFixedEntity 44, 26, DOWN, ALLY_TAYA, eas_Init
+ms_map1_flag21_Entities:
                 msFixedEntity 41, 8, DOWN, MAPSPRITE_BLANK, eas_Init
                 msFixedEntity 43, 8, DOWN, MAPSPRITE_BLANK, eas_Init
                 msFixedEntity 45, 10, LEFT, MAPSPRITE_BLANK, eas_Init
