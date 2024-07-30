@@ -395,7 +395,7 @@ def build(saved_orig, swaps, orig_values, rand_depromo, rand_prepromo,adjust_lev
 	os.chdir("build")
 	subprocess.run(["buildstandard.bat"])
 	os.chdir("..")
-	Path(r".\build\standardbuild-last.bin").replace(Path(r".\sf2.bin"))
+	Path(r".\build\standardbuild-last.bin").replace(Path(r".\sf2_randomized.bin"))
 	
 def scroll_handler(e, yview, xview):
 	# 8 for vertical, 9 for horizontal
