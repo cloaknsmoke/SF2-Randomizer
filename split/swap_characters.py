@@ -217,7 +217,7 @@ def replace_stone_taya():
 	index1 = file2.find(",", file2.find("setSprite", file2.find("; Taya joined")))+1
 	index2 = file2.find("\n", index1)
 	#special case if taya is still in her original spot since she has a unique sprite
-	if(who_is_claude == "TAYA"):
+	if(who_is_taya == "TAYA"):
 		file2 = file2[0:index1] + "MAPSPRITE_OBJECT4" + file2[index2:]
 	else:
 		file2 = file2[0:index1] + "ALLY_" + who_is_taya + file2[index2:]
