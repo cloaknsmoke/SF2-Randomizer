@@ -221,7 +221,7 @@ def replace_stone_taya():
 		file2 = file2[0:index1] + "MAPSPRITE_OBJECT4" + file2[index2:]
 	else:
 		file2 = file2[0:index1] + "ALLY_" + who_is_taya + file2[index2:]
-	f = open(loc + r"\data\maps\entries\map63\mapsetups\s6_initfunction.asm", 'w')
+	f = open(loc + r"\data\maps\entries\map01\mapsetups\s6_initfunction.asm", 'w')
 	f.write(file2)
 	f.close()
 	
